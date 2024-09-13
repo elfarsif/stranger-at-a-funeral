@@ -64,18 +64,24 @@ public class Character {
     public void input(){
         float speed = 1f;
         float delta = Gdx.graphics.getDeltaTime();
+        boolean keyPressed = false;
+
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             this.sprite.translateY(speed*delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             this.currentTextures = texturesWalking;
             this.sprite.translateY(-speed*delta);
+            keyPressed = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             this.sprite.translateX(-speed*delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             this.sprite.translateX(speed*delta);
+        }
+        if(!keyPressed){
+            this.currentTextures = texturesStanding;
         }
     }
 }
