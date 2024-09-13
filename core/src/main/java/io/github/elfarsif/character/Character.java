@@ -11,7 +11,9 @@ import java.util.List;
 
 public class Character {
     Texture currentTexture;
-    List<Texture> textures;
+    List<Texture> currentTextures;
+    List<Texture> texturesStanding;
+    List<Texture> texturesWalking;
     Sprite sprite;
     int currentTextureIndex = 0;
     float animationTime = 0;
@@ -19,14 +21,23 @@ public class Character {
 
     public Character(){
         Ressource res = new Ressource();
-        this.textures = new ArrayList<>();
-        textures.add(res.getMainDownStanding1());
-        textures.add(res.getMainDownStanding2());
-        textures.add(res.getMainDownStanding3());
-        textures.add(res.getMainDownStanding4());
-        textures.add(res.getMainDownStanding5());
+        this.texturesStanding = new ArrayList<>();
+        texturesStanding.add(res.getMainDownStanding1());
+        texturesStanding.add(res.getMainDownStanding2());
+        texturesStanding.add(res.getMainDownStanding3());
+        texturesStanding.add(res.getMainDownStanding4());
+        texturesStanding.add(res.getMainDownStanding5());
 
-        this.currentTexture = textures.get(0);
+        this.texturesWalking = new ArrayList<>();
+        texturesWalking.add(res.getMainWalkingDown1());
+        texturesWalking.add(res.getMainWalkingDown2());
+        texturesWalking.add(res.getMainWalkingDown3());
+        texturesWalking.add(res.getMainWalkingDown4());
+        texturesWalking.add(res.getMainWalkingDown5());
+
+        this.currentTextures   = texturesStanding;
+
+        this.currentTexture = texturesStanding.get(0);
         this.sprite = new Sprite(currentTexture);
         this.sprite.setSize(0.5f,0.5f);
     }
@@ -35,14 +46,16 @@ public class Character {
         animationTime += delta;
         if (animationTime > animationInterval) {
             currentTextureIndex++;
-            if (currentTextureIndex >= textures.size()) {
+            if (currentTextureIndex >= currentTextures.size()) {
                 currentTextureIndex = 0;
             }
-            this.currentTexture = textures.get(currentTextureIndex);
+            this.currentTexture = currentTextures.get(currentTextureIndex);
             this.sprite.setTexture(currentTexture);
             animationTime = 0;
         }
     }
+
+
 
     public Sprite getSprite(){
         return this.sprite;
@@ -55,6 +68,7 @@ public class Character {
             this.sprite.translateY(speed*delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            this.currentTextures = texturesWalking;
             this.sprite.translateY(-speed*delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
