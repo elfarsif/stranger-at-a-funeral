@@ -1,5 +1,7 @@
 package io.github.elfarsif.character;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.elfarsif.Ressource;
@@ -44,5 +46,22 @@ public class Character {
 
     public Sprite getSprite(){
         return this.sprite;
+    }
+
+    public void input(){
+        float speed = 1f;
+        float delta = Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            this.sprite.translateY(speed*delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            this.sprite.translateY(-speed*delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            this.sprite.translateX(-speed*delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            this.sprite.translateX(speed*delta);
+        }
     }
 }

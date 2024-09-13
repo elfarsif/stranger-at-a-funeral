@@ -40,23 +40,8 @@ public class GameScreen implements Screen {
         game.batch.end();
     }
 
-
-
     private void input() {
-        float speed = 1f;
-        float delta = Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Keys.UP)) {
-            this.character.getSprite().translateY(speed*delta);
-        }
-        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-            this.character.getSprite().translateY(-speed*delta);
-        }
-        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            this.character.getSprite().translateX(-speed*delta);
-        }
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-            this.character.getSprite().translateX(speed*delta);
-        }
+       this.character.input();
     }
 
     @Override
