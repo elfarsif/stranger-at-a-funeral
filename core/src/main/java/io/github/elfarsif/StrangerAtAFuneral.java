@@ -1,21 +1,27 @@
 package io.github.elfarsif;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Drop extends Game {
+public class StrangerAtAFuneral extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
 
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont(); // use libGDX's default Arial font
-        this.setScreen(new MainMenuScreen(this));
+        font = new BitmapFont();
+        this.setScreen(new GameScreen(this));
+
+        //Set the application to full screen
+        DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+        Gdx.graphics.setFullscreenMode(displayMode);
     }
 
     public void render() {
-        super.render(); // important!
+        super.render();
     }
 
     public void dispose() {
