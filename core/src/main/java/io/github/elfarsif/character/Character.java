@@ -14,6 +14,7 @@ public class Character {
     List<Texture> currentTextures;
     List<Texture> texturesStanding;
     List<Texture> texturesWalking;
+    List<Texture> texturesWalkingUp;
     Sprite sprite;
     int currentTextureIndex = 0;
     float animationTime = 0;
@@ -27,6 +28,7 @@ public class Character {
         texturesStanding.add(res.getMainDownStanding3());
         texturesStanding.add(res.getMainDownStanding4());
         texturesStanding.add(res.getMainDownStanding5());
+        texturesStanding.add(res.getMainDownStanding6());
 
         this.texturesWalking = new ArrayList<>();
         texturesWalking.add(res.getMainWalkingDown1());
@@ -34,6 +36,15 @@ public class Character {
         texturesWalking.add(res.getMainWalkingDown3());
         texturesWalking.add(res.getMainWalkingDown4());
         texturesWalking.add(res.getMainWalkingDown5());
+        texturesWalking.add(res.getMainWalkingDown6());
+
+        this.texturesWalkingUp = new ArrayList<>();
+        texturesWalkingUp.add(res.getMainWalkingUp1());
+        texturesWalkingUp.add(res.getMainWalkingUp2());
+        texturesWalkingUp.add(res.getMainWalkingUp3());
+        texturesWalkingUp.add(res.getMainWalkingUp4());
+        texturesWalkingUp.add(res.getMainWalkingUp5());
+        texturesWalkingUp.add(res.getMainWalkingUp6());
 
         this.currentTextures   = texturesStanding;
 
@@ -67,7 +78,9 @@ public class Character {
         boolean keyPressed = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            this.currentTextures = texturesWalkingUp;
             this.sprite.translateY(speed*delta);
+            keyPressed = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             this.currentTextures = texturesWalking;
