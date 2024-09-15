@@ -29,14 +29,14 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         input();
-        this.character.updateCharacterTexture(delta);
+        this.character.getCharacterTextureUpdater().updateCharacterTexture(delta);
         ScreenUtils.clear(Color.BLUE);
 
         viewport.apply();
         game.batch.setProjectionMatrix(viewport.getCamera().combined);
 
         game.batch.begin();
-        this.character.getSprite().draw(game.batch);
+        this.character.getCharacterTextureUpdater().getSprite().draw(game.batch);
         game.batch.end();
     }
 
