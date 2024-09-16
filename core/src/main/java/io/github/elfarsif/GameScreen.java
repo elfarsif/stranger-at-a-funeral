@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
         this.character.getCharacterTextureUpdater().updateCharacterTexture(delta);
         ScreenUtils.clear(Color.BLUE);
 
+        camera.position.set(this.character.getCharacterTextureUpdater().getSprite().getX(), this.character.getCharacterTextureUpdater().getSprite().getY(), 0);
         camera.update();
         renderer.setView(camera);
         renderer.render();
