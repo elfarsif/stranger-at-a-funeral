@@ -28,7 +28,7 @@ public class InputHandler {
             this.textureUpdater.sprite.translateX(-speed*delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.textureUpdater.sprite.translateX(speed*delta);
+            moveRight(speed, delta);
         }
         if(!keyPressed){
             this.textureUpdater.currentTextures = this.textureListInitializer.texturesStanding;
@@ -46,6 +46,13 @@ public class InputHandler {
         this.textureUpdater.sprite.translateY(-speed * delta);
         keyPressed = true;
     }
+
+    private void moveRight(float speed, float delta) {
+        this.textureUpdater.currentTextures = this.textureListInitializer.texturesWalkingRight;
+        this.textureUpdater.sprite.translateX(speed * delta);
+        keyPressed = true;
+    }
+
 
 
 }

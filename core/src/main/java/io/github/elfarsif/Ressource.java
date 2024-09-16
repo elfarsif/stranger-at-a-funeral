@@ -25,6 +25,12 @@ public class Ressource {
     Texture mainWalkingUp5 = new Texture("mainCharacter/walkingUp/up5.png");
     Texture mainWalkingUp6 = new Texture("mainCharacter/walkingUp/up6.png");
 
+    Texture walkingRight1 = new Texture("mainCharacter/walkingRight/right1.png");
+    Texture walkingRight2 = new Texture("mainCharacter/walkingRight/right2.png");
+    Texture walkingRight3 = new Texture("mainCharacter/walkingRight/right3.png");
+    Texture walkingRight4 = new Texture("mainCharacter/walkingRight/right4.png");
+    Texture walkingRight5 = new Texture("mainCharacter/walkingRight/right5.png");
+    Texture walkingRight6 = new Texture("mainCharacter/walkingRight/right6.png");
 
     public Texture getMainDownStanding1(){
         return mainDownStanding1;
@@ -92,6 +98,30 @@ public class Ressource {
 
     public Texture getMainWalkingUp6(){
         return mainWalkingUp6;
+    }
+
+    public Texture getWalkingRight1() {
+        return walkingRight1;
+    }
+
+    public Texture getWalkingRight6() {
+        return walkingRight6;
+    }
+
+    public Texture getWalkingRight2() {
+        return walkingRight2;
+    }
+
+    public Texture getWalkingRight4() {
+        return walkingRight4;
+    }
+
+    public Texture getWalkingRight5() {
+        return walkingRight5;
+    }
+
+    public Texture getWalkingRight3() {
+        return walkingRight3;
     }
 
 }

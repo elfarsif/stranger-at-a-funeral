@@ -10,13 +10,25 @@ public class TextureListInitializer {
     List<Texture> texturesStanding;
     List<Texture> texturesWalking;
     List<Texture> texturesWalkingUp;
-    Ressource res = new Ressource();
+    List<Texture> texturesWalkingRight;
+    Ressource res;
 
     public TextureListInitializer() {
         res = new Ressource();
         setStandingTextures();
         setWalkingDownTextures();
         setWalkingUpTextures();
+        setWalkingRightTextures();
+    }
+
+    private void setWalkingRightTextures() {
+        this.texturesWalkingRight = new ArrayList<>();
+        texturesWalkingRight.add(res.getWalkingRight1());
+        texturesWalkingRight.add(res.getWalkingRight2());
+        texturesWalkingRight.add(res.getWalkingRight3());
+        texturesWalkingRight.add(res.getWalkingRight4());
+        texturesWalkingRight.add(res.getWalkingRight5());
+        texturesWalkingRight.add(res.getWalkingRight6());
     }
 
     private void setWalkingUpTextures() {
