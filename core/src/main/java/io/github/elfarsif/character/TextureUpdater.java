@@ -10,7 +10,7 @@ public class TextureUpdater {
     List<Texture> currentTextures;
     int currentTextureIndex = 0;
     float animationTime = 0;
-    float animationInterval = 0.3f;
+    float animationInterval = 0.15f;
     Sprite sprite;
 
     public TextureUpdater(TextureListInitializer textureListInitializer){

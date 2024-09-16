@@ -32,26 +32,30 @@ public class Ressource {
     Texture walkingRight5 = new Texture("mainCharacter/walkingRight/right5.png");
     Texture walkingRight6 = new Texture("mainCharacter/walkingRight/right6.png");
 
+
+    Texture walkingLeft1 = new Texture("mainCharacter/walkingLeft/left1.png");
+    Texture walkingLeft2 = new Texture("mainCharacter/walkingLeft/left2.png");
+    Texture walkingLeft3 = new Texture("mainCharacter/walkingLeft/left3.png");
+    Texture walkingLeft4 = new Texture("mainCharacter/walkingLeft/left4.png");
+    Texture walkingLeft5 = new Texture("mainCharacter/walkingLeft/left5.png");
+    Texture walkingLeft6 = new Texture("mainCharacter/walkingLeft/left6.png");
+
+
     public Texture getMainDownStanding1(){
         return mainDownStanding1;
     }
-
     public Texture getMainDownStanding2(){
         return mainDownStanding2;
     }
-
     public Texture getMainDownStanding3(){
         return mainDownStanding3;
     }
-
     public Texture getMainDownStanding4(){
         return mainDownStanding4;
     }
-
     public Texture getMainDownStanding5(){
         return mainDownStanding5;
     }
-
     public Texture getMainDownStanding6(){
         return mainDownStanding6;
     }
@@ -71,7 +75,6 @@ public class Ressource {
     public Texture getMainWalkingDown5(){
         return mainWalkingDown5;
     }
-
     public Texture getMainWalkingDown6(){
         return mainWalkingDown6;
     }
@@ -79,23 +82,18 @@ public class Ressource {
     public Texture getMainWalkingUp1(){
         return mainWalkingUp1;
     }
-
     public Texture getMainWalkingUp2(){
         return mainWalkingUp2;
     }
-
     public Texture getMainWalkingUp3(){
         return mainWalkingUp3;
     }
-
     public Texture getMainWalkingUp4(){
         return mainWalkingUp4;
     }
-
     public Texture getMainWalkingUp5(){
         return mainWalkingUp5;
     }
-
     public Texture getMainWalkingUp6(){
         return mainWalkingUp6;
     }
@@ -103,25 +101,39 @@ public class Ressource {
     public Texture getWalkingRight1() {
         return walkingRight1;
     }
-
     public Texture getWalkingRight6() {
         return walkingRight6;
     }
-
     public Texture getWalkingRight2() {
         return walkingRight2;
     }
-
     public Texture getWalkingRight4() {
         return walkingRight4;
     }
-
     public Texture getWalkingRight5() {
         return walkingRight5;
     }
-
     public Texture getWalkingRight3() {
         return walkingRight3;
+    }
+
+    public Texture getWalkingLeft1() {
+        return walkingLeft1;
+    }
+    public Texture getWalkingLeft2() {
+        return walkingLeft2;
+    }
+    public Texture getWalkingLeft3() {
+        return walkingLeft3;
+    }
+    public Texture getWalkingLeft4() {
+        return walkingLeft4;
+    }
+    public Texture getWalkingLeft5() {
+        return walkingLeft5;
+    }
+    public Texture getWalkingLeft6() {
+        return walkingLeft6;
     }
 
 }

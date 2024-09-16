@@ -7,6 +7,7 @@ public class InputHandler {
     TextureUpdater textureUpdater;
     TextureListInitializer textureListInitializer;
     boolean keyPressed;
+    float speed = 1f;
 
     public InputHandler(TextureUpdater textureUpdater, TextureListInitializer textureListInitializer){
         this.textureUpdater = textureUpdater;
@@ -14,7 +15,6 @@ public class InputHandler {
     }
 
     public void execute(){
-        float speed = 1f;
         float delta = Gdx.graphics.getDeltaTime();
         keyPressed = false;
 
@@ -25,7 +25,7 @@ public class InputHandler {
             moveDown(speed, delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.textureUpdater.sprite.translateX(-speed*delta);
+            moveLeft(speed, delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             moveRight(speed, delta);
@@ -50,6 +50,12 @@ public class InputHandler {
     private void moveRight(float speed, float delta) {
         this.textureUpdater.currentTextures = this.textureListInitializer.texturesWalkingRight;
         this.textureUpdater.sprite.translateX(speed * delta);
+        keyPressed = true;
+    }
+
+    private void moveLeft(float speed, float delta) {
+        this.textureUpdater.currentTextures = this.textureListInitializer.texturesWalkingLeft;
+        this.textureUpdater.sprite.translateX(-speed * delta);
         keyPressed = true;
     }
 
