@@ -7,7 +7,7 @@ public class InputHandler {
     TextureUpdater textureUpdater;
     TextureListInitializer textureListInitializer;
     boolean keyPressed;
-    float speed = 1f;
+    float speed = 68f;
 
     public InputHandler(TextureUpdater textureUpdater, TextureListInitializer textureListInitializer){
         this.textureUpdater = textureUpdater;

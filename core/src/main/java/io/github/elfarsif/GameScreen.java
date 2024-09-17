@@ -29,24 +29,24 @@ public class GameScreen implements Screen {
 
     public GameScreen(final StrangerAtAFuneral game) {
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("grass.tmx");
-        float unitScale = 1 / 200f;
+        map = loader.load("tilemaps/main/main.tmx");
+        float unitScale = 1f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 8, 5);
+        camera.setToOrtho(false, 600, 300);
 
 
 
         this.game = game;
         this.character = new Character();
-        viewport = new FitViewport(8, 5,camera);
+        viewport = new FitViewport(600, 300,camera);
     }
 
     @Override
     public void render(float delta) {
         input();
         this.character.getCharacterTextureUpdater().updateCharacterTexture(delta);
-        ScreenUtils.clear(Color.BLUE);
+        ScreenUtils.clear(Color.BLACK);
 
         camera.position.set(this.character.getCharacterTextureUpdater().getSprite().getX(), this.character.getCharacterTextureUpdater().getSprite().getY(), 0);
         camera.update();

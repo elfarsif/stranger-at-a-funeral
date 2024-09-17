@@ -17,7 +17,7 @@ public class TextureUpdater {
         this.currentTextures   = textureListInitializer.texturesStanding;
         this.currentTexture = textureListInitializer.texturesStanding.get(0);
         this.sprite = new Sprite(currentTexture);
-        this.sprite.setSize(0.4f,0.4f);
+        this.sprite.setSize(23f,23f);
 
     }
 
