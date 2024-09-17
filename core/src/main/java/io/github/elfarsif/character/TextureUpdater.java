@@ -10,14 +10,14 @@ public class TextureUpdater {
     List<Texture> currentTextures;
     int currentTextureIndex = 0;
     float animationTime = 0;
-    float animationInterval = 0.3f;
+    float animationInterval = 0.15f;
     Sprite sprite;
 
     public TextureUpdater(TextureListInitializer textureListInitializer){
         this.currentTextures   = textureListInitializer.texturesStanding;
         this.currentTexture = textureListInitializer.texturesStanding.get(0);
         this.sprite = new Sprite(currentTexture);
-        this.sprite.setSize(0.5f,0.5f);
+        this.sprite.setSize(23f,23f);
 
     }
 
