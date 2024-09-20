@@ -30,9 +30,6 @@
             "scaleInEditor": 1
         },
         "main_house_interior.tmx": {
-            "expandedGroupLayers": [
-                7
-            ],
             "expandedObjectLayers": [
                 10,
                 9
@@ -40,8 +37,8 @@
             "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 181.66666666666663,
-                "y": 330.3333333333333
+                "x": 183.33333333333334,
+                "y": 332
             }
         },
         "modern_interior_all.tsx": {
@@ -69,11 +66,11 @@
                 6,
                 5
             ],
-            "scale": 0.75,
+            "scale": 4,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 884,
-                "y": 862.6666666666667
+                "x": 901.5,
+                "y": 709
             }
         }
     },

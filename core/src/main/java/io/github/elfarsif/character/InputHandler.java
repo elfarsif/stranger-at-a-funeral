@@ -21,7 +21,7 @@ public class InputHandler {
     float speed = 68f;
     //collision
     private List<Rectangle> collisionRectangles;
-    private TiledMap shipMap;
+    private TiledMap map;
     private TiledMap houseMap;
 
     public InputHandler(TextureUpdater textureUpdater, TextureListInitializer textureListInitializer, MapManager mapManager){
@@ -34,11 +34,11 @@ public class InputHandler {
 
         houseMap = loader.load("tilemaps/main_house_interior.tmx");
 
-        shipMap = loader.load("tilemaps/ship.tmx");
+        map = loader.load("tilemaps/ship.tmx");
 
         collisionRectangles = new ArrayList<Rectangle>();
 
-        for (MapObject object: houseMap.getLayers().get("door").getObjects()) {
+        for (MapObject object:map.getLayers().get("walls").getObjects()) {
             if (object instanceof RectangleMapObject) {
                 RectangleMapObject rectangleObject = (RectangleMapObject) object;
                 Rectangle rectangle = rectangleObject.getRectangle();
@@ -59,12 +59,8 @@ public class InputHandler {
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            if (isColliding(this.textureUpdater.sprite)){
-                if(mapManager.map.getLayers().get("doors") != null){
-                    System.out.println("there is a door");
-                }
-                System.out.println(mapManager.map.getLayers().size());
-                this.mapManager.setMap(shipMap);
+            if (!isColliding(this.textureUpdater.sprite)){
+                this.mapManager.setMap(map);
                 System.out.println("map changed");
             }
             moveDown(speed, delta);
