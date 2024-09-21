@@ -23,7 +23,8 @@ public class GameScreen implements Screen {
 
 
     public GameScreen(StrangerAtAFuneral game) {
-        mapManager = new MapManager();
+        TmxMapLoader loader = new TmxMapLoader();
+        mapManager = new MapManager(loader);
         setScreenSettings(game);
     }
 
