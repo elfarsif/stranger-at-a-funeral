@@ -40,5 +40,13 @@ public class PlayerMovesUp {
         verify(sprite, times(1)).translateY(-1);
     }
 
+    @When("the player moves left")
+    public void thePlayerMovesLeft() {
+        game.moveLeft(sprite);
+    }
 
+    @Then("the translateX function is called with {int}")
+    public void theTranslateXFunctionIsCalledWith(int yAmount) {
+        verify(sprite, times(1)).translateX(yAmount);
+    }
 }

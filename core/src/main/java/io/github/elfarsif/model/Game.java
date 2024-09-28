@@ -26,4 +26,8 @@ public class Game {
     public void moveDown(Sprite sprite) {
         sprite.translateY(-1);
     }
+
+    public void moveLeft(Sprite sprite) {
+        sprite.translateX(-1);
+    }
 }

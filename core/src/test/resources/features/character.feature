@@ -15,3 +15,9 @@ Feature: Player movement
 
     When the player moves down
     Then the translateY function is called with -1
+
+    When the player moves left
+    Then the translateX function is called with -1
+
+
+
