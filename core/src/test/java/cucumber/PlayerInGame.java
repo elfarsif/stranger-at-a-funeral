@@ -1,5 +1,6 @@
 package cucumber;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -48,6 +49,5 @@ public class PlayerInGame {
         String assetFileName = map.getAssetFileName();
         assertThat(assetFileName).isEqualTo("tilemaps/main_house_interior.tmx");
     }
-
 
 }

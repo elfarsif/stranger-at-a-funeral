@@ -22,4 +22,8 @@ public class Game {
     public Map getMap() {
         return this.map;
     }
+
+    public void moveDown(Sprite sprite) {
+        sprite.translateY(-1);
+    }
 }

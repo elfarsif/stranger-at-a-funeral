@@ -8,10 +8,10 @@ Feature: Player movement
     And the playable character asset is standing
     And the game map is the main house
 
-  Scenario: Player moves up
+  Scenario: Player moves
     Given there is a player
     When the player moves up
     Then the translateY function is called with 1
 
-
-
+    When the player moves down
+    Then the translateY function is called with -1

@@ -85,6 +85,9 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             game.moveUp(sprite);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            game.moveDown(sprite);
+        }
     }
 
 
