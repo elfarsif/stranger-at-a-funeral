@@ -19,5 +19,6 @@ Feature: Player movement
     When the player moves left
     Then the translateX function is called with -1
 
-
+    When the player moves right
+    Then the translateX function is called with 1
 

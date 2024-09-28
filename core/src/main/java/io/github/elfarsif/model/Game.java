@@ -30,4 +30,8 @@ public class Game {
     public void moveLeft(Sprite sprite) {
         sprite.translateX(-1);
     }
+
+    public void moveRight(Sprite sprite) {
+        sprite.translateX(1);
+    }
 }

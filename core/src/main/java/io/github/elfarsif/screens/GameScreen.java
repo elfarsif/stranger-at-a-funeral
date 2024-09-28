@@ -91,6 +91,9 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             game.moveLeft(sprite);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            game.moveRight(sprite);
+        }
     }
 
 

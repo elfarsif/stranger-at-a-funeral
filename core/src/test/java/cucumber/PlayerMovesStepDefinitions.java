@@ -1,7 +1,6 @@
 package cucumber;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +9,7 @@ import io.github.elfarsif.model.Game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class PlayerMovesUp {
+public class PlayerMovesStepDefinitions {
     Game game;
     Sprite sprite;
 
