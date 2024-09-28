@@ -1,6 +1,5 @@
 package cucumber;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -38,7 +37,7 @@ public class PlayerInGame {
     public void thenAsset() {
         Player player = game.getPlayer();
         PlayableCharacter playableCharacter = new PlayableCharacter();
-        String assetFileName = playableCharacter.getAssetFileName();
+        String assetFileName = playableCharacter.getCurrentAssetFileName();
 
         assertThat(assetFileName).isEqualTo("mainCharacter/playerDownStanding1.png");
     }

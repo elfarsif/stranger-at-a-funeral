@@ -22,3 +22,14 @@ Feature: Player movement
     When the player moves right
     Then the translateX function is called with 1
 
+  Scenario Outline: Player standing animation
+    Given playable character is currently using "<initialAsset>"
+    When you update the texture
+    Then the character is currently using "<updatedAsset>"
+
+    Examples:
+      |description                |initialAsset                                               |updatedAsset|
+      |first asset change|mainCharacter/playerDownStanding1.png|mainCharacter/playerDownStanding2.png    |
+      |second asset change     |mainCharacter/playerDownStanding2.png|mainCharacter/playerDownStanding3.png    |
+      |last asset change        |mainCharacter/playerDownStanding5.png|mainCharacter/playerDownStanding6.png    |
+      |loop asset to first      |mainCharacter/playerDownStanding6.png|mainCharacter/playerDownStanding1.png    |

@@ -17,7 +17,6 @@ import io.github.elfarsif.StrangerAtAFuneral;
 import io.github.elfarsif.character.Character;
 import io.github.elfarsif.model.Game;
 import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
 
 public class GameScreen implements Screen {
 
@@ -52,7 +51,7 @@ public class GameScreen implements Screen {
 
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
-        sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getAssetFileName()));
+        sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 600, 300);
 
@@ -78,6 +77,8 @@ public class GameScreen implements Screen {
 
         gameGdx.batch.begin();
         sprite.draw(gameGdx.batch);
+        sprite.setTexture(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
+        game.getPlayer().getPlayableCharacter().updateTexture();
         gameGdx.batch.end();
     }
 
