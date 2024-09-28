@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.elfarsif.screens.GameScreen;
 
 public class StrangerAtAFuneral extends Game {
     public SpriteBatch batch;
@@ -14,7 +15,6 @@ public class StrangerAtAFuneral extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.setScreen(new GameScreen(this));
-
         //Set the application to full screen
         DisplayMode displayMode = Gdx.graphics.getDisplayMode();
         Gdx.graphics.setFullscreenMode(displayMode);

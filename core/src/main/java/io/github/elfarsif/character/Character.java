@@ -1,7 +1,6 @@
 package io.github.elfarsif.character;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import io.github.elfarsif.MapManager;
 
 public class Character {
 
@@ -9,10 +8,11 @@ public class Character {
     TextureUpdater textureUpdater;
     InputHandler inputHandler;
 
-    public Character(){
+
+    public Character(MapManager mapManager) {
         this.textureListInitializer = new TextureListInitializer();
         this.textureUpdater = new TextureUpdater(textureListInitializer);
-        this.inputHandler = new InputHandler(textureUpdater, textureListInitializer);
+        this.inputHandler = new InputHandler(textureUpdater, textureListInitializer, mapManager);
     }
 
     public void input(){
@@ -28,5 +28,9 @@ public class Character {
         return textureUpdater;
     }
 
+
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
 
 }
