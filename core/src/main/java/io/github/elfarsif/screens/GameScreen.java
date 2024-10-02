@@ -1,8 +1,12 @@
 package io.github.elfarsif.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -11,57 +15,86 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.github.elfarsif.MapManager;
 import io.github.elfarsif.StrangerAtAFuneral;
 import io.github.elfarsif.character.Character;
+import io.github.elfarsif.model.Game;
+import io.github.elfarsif.model.PlayableCharacter;
 
 public class GameScreen implements Screen {
 
-    StrangerAtAFuneral game;
+    StrangerAtAFuneral gameGdx;
     Character character;
     FitViewport viewport;
-    private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private MapManager mapManager;
+    private Sprite sprite;
+    private OrthogonalTiledMapRenderer renderer;
+    Game game;
 
 
-    public GameScreen(StrangerAtAFuneral game) {
-        mapManager = new MapManager();
-        setScreenSettings(game);
+    public GameScreen(StrangerAtAFuneral gameGdx) {
+        game = new Game();
+        game.start();
+        PlayableCharacter playableCharacter = new PlayableCharacter();
+        game.getPlayer().setPlayableCharacter(playableCharacter);
+
+        TmxMapLoader loader = new TmxMapLoader();
+        TiledMap map = loader.load(game.getMap().getAssetFileName());
+
+        float unitScale = 1f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+
+        setScreenSettings(gameGdx);
     }
 
-    public void setScreenSettings(final StrangerAtAFuneral game){
-        this.character = new Character(mapManager);
-        float unitScale = 1f;
-        renderer = new OrthogonalTiledMapRenderer(mapManager.map, unitScale);
+    public void handleModel(){
+
+    }
+
+
+    public void setScreenSettings(final StrangerAtAFuneral gameGdx){
+        sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 600, 300);
 
-        this.game = game;
+        this.gameGdx = gameGdx;
         viewport = new FitViewport(600, 300,camera);
     }
 
     @Override
     public void render(float delta) {
         input();
-        this.character.getCharacterTextureUpdater().updateCharacterTexture(delta);
         ScreenUtils.clear(Color.BLACK);
 
-        camera.position.set(this.character.getCharacterTextureUpdater().getSprite().getX(), this.character.getCharacterTextureUpdater().getSprite().getY(), 0);
+        camera.position.set(100,100, 0);
         //handle collision logix
-
-        camera.update();
+        //set map
         renderer.setView(camera);
         renderer.render();
 
-        viewport.apply();
-        game.batch.setProjectionMatrix(viewport.getCamera().combined);
+        camera.update();
 
-        game.batch.begin();
-        this.character.getCharacterTextureUpdater().getSprite().draw(game.batch);
-        game.batch.end();
+        viewport.apply();
+        gameGdx.batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        gameGdx.batch.begin();
+        sprite.draw(gameGdx.batch);
+        sprite.setTexture(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
+        game.getPlayer().getPlayableCharacter().updateTexture(delta);
+        gameGdx.batch.end();
     }
 
     private void input() {
-       this.character.input();
-       renderer.setMap(this.mapManager.map);
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            game.moveUp(sprite);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            game.moveDown(sprite);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            game.moveLeft(sprite);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            game.moveRight(sprite);
+        }
     }
 
 
@@ -89,7 +122,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        renderer.dispose();
     }
 
 }

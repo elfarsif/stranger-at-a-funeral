@@ -6,6 +6,8 @@ import java.util.List;
 public class PlayableCharacter {
     List<String> assetFiles;
     int currentAssetIndex = 0;
+    float timeAccumulator = 0f;
+    float frameDuration = 0.15f;
 
     public PlayableCharacter() {
         assetFiles = new ArrayList<>();
@@ -29,6 +31,14 @@ public class PlayableCharacter {
         }
     }
 
+    public void updateTexture(float delta){
+        timeAccumulator += delta;
+        if(timeAccumulator > frameDuration){
+            updateTexture();
+            timeAccumulator = 0;
+        }
+    }
+
     private void updateToFirstAsset() {
         currentAssetIndex = 0;
     }
@@ -40,4 +50,17 @@ public class PlayableCharacter {
     public void setCurrentAsserIndex(String assetFileName) {
         currentAssetIndex = assetFiles.indexOf(assetFileName);
     }
+
+    public void setTimeAccumulator(float timeAccumulator) {
+        this.timeAccumulator = timeAccumulator;
+    }
+
+    public void setFrameDuration(float frameDuration) {
+        this.frameDuration = frameDuration;
+    }
+
+    public float getTimeAccumulator() {
+        return timeAccumulator;
+    }
+
 }

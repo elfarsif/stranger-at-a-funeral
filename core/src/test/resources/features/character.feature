@@ -33,3 +33,9 @@ Feature: Player movement
       |second asset change     |mainCharacter/playerDownStanding2.png|mainCharacter/playerDownStanding3.png    |
       |last asset change        |mainCharacter/playerDownStanding5.png|mainCharacter/playerDownStanding6.png    |
       |loop asset to first      |mainCharacter/playerDownStanding6.png|mainCharacter/playerDownStanding1.png    |
+
+  Scenario: Player standing animation fps
+    Given the delta is 0.017426183, the timeAccumulator is 0.140937225, and the frameDuration is 0.15
+    When a playable character is updated with delta
+    Then the update texture is called and time accumulator is reset
+
