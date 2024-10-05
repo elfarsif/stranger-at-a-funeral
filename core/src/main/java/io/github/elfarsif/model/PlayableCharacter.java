@@ -11,6 +11,10 @@ public class PlayableCharacter {
 
     public PlayableCharacter() {
         assetFiles = new ArrayList<>();
+        initiliazeAssetFiles();
+    }
+
+    private void initiliazeAssetFiles() {
         assetFiles.add("mainCharacter/playerDownStanding1.png");
         assetFiles.add("mainCharacter/playerDownStanding2.png");
         assetFiles.add("mainCharacter/playerDownStanding3.png");
@@ -63,4 +67,27 @@ public class PlayableCharacter {
         return timeAccumulator;
     }
 
+    public void updateTextureWalkingRight(){
+        assetFiles.clear();
+        assetFiles.add("mainCharacter/walkingRight/right1.png");
+        assetFiles.add("mainCharacter/walkingRight/right2.png");
+        assetFiles.add("mainCharacter/walkingRight/right3.png");
+        assetFiles.add("mainCharacter/walkingRight/right4.png");
+        assetFiles.add("mainCharacter/walkingRight/right5.png");
+        assetFiles.add("mainCharacter/walkingRight/right6.png");
+    }
+
+    public List<String> getAssetFiles() {
+        return assetFiles;
+    }
+
+    public void updateTextureWalkingUp(){
+        assetFiles.clear();
+        assetFiles.add("mainCharacter/walkingUp/up1.png");
+        assetFiles.add("mainCharacter/walkingUp/up2.png");
+        assetFiles.add("mainCharacter/walkingUp/up3.png");
+        assetFiles.add("mainCharacter/walkingUp/up4.png");
+        assetFiles.add("mainCharacter/walkingUp/up5.png");
+        assetFiles.add("mainCharacter/walkingUp/up6.png");
+    }
 }

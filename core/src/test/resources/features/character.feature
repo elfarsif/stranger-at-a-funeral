@@ -9,9 +9,11 @@ Feature: Player movement
     And the game map is the main house
 
   Scenario: Player moves
-    Given there is a player
+    Given there is a player and playable character
+
     When the player moves up
     Then the translateY function is called with 1
+    And the player animation is walking up
 
     When the player moves down
     Then the translateY function is called with -1
@@ -21,6 +23,7 @@ Feature: Player movement
 
     When the player moves right
     Then the translateX function is called with 1
+    And the player animation is walking right
 
   Scenario Outline: Player standing animation
     Given playable character is currently using "<initialAsset>"
@@ -37,5 +40,5 @@ Feature: Player movement
   Scenario: Player standing animation fps
     Given the delta is 0.017426183, the timeAccumulator is 0.140937225, and the frameDuration is 0.15
     When a playable character is updated with delta
-    Then the update texture is called and time accumulator is reset
+    Then the next assets is shown and the timeAccumulator is reset
 

@@ -17,6 +17,8 @@ public class Game {
 
     public void moveUp(Sprite sprite) {
         sprite.translateY(1);
+        PlayableCharacter playableCharacter = player.getPlayableCharacter();
+        playableCharacter.updateTextureWalkingUp();
     }
 
     public Map getMap() {
@@ -33,5 +35,11 @@ public class Game {
 
     public void moveRight(Sprite sprite) {
         sprite.translateX(1);
+        PlayableCharacter playableCharacter = player.getPlayableCharacter();
+        playableCharacter.updateTextureWalkingRight();
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

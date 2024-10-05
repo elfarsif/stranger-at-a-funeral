@@ -29,7 +29,7 @@ public class StandingAnimationFps {
         mockCharacter.updateTexture(delta);
     }
 
-    @Then("the update texture is called and time accumulator is reset")
+    @Then("the next assets is shown and the timeAccumulator is reset")
     public void theUpdateTextureIsCalledAndTimeAccumulatorIsReset() {
         assertThat(mockCharacter.getTimeAccumulator()).isEqualTo(0);
         verify(mockCharacter,times(1)).updateTexture();
