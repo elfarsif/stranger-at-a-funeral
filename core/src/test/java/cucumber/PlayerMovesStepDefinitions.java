@@ -52,6 +52,11 @@ public class PlayerMovesStepDefinitions {
         verify(sprite, times(1)).translateY(-1);
     }
 
+    @And("the player animation is walking down")
+    public void thePlayerAnimationIsWalkingDown() {
+        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Down")).isTrue();
+    }
+
     @When("the player moves left")
     public void thePlayerMovesLeft() {
         game.moveLeft(sprite);
@@ -60,6 +65,12 @@ public class PlayerMovesStepDefinitions {
     @Then("the translateX function is called with -1")
     public void theTranslateXFunctionIsCalledWith() {
         verify(sprite, times(1)).translateX(-1);
+    }
+
+    @And("the player animation is walking left")
+    public void thePlayerAnimationIsWalkingLeft() {
+        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Left")).isTrue();
+        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves right")

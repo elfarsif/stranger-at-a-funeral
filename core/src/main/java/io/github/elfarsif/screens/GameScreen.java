@@ -18,6 +18,8 @@ import io.github.elfarsif.character.Character;
 import io.github.elfarsif.model.Game;
 import io.github.elfarsif.model.PlayableCharacter;
 
+import java.util.Iterator;
+
 public class GameScreen implements Screen {
 
     StrangerAtAFuneral gameGdx;
@@ -43,17 +45,19 @@ public class GameScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
 
         setScreenSettings(gameGdx);
+        setInitialPlayerPosition();
     }
 
-    public void handleModel(){
-
+    private void setInitialPlayerPosition() {
+        game.setCharacterInHouse();
+        sprite.setPosition(game.getPlayer().getPlayableCharacter().getX(),
+            game.getPlayer().getPlayableCharacter().getY());
     }
-
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
         sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 600, 300);
+        camera.setToOrtho(false, 100, 300);
 
         this.gameGdx = gameGdx;
         viewport = new FitViewport(600, 300,camera);
@@ -83,6 +87,8 @@ public class GameScreen implements Screen {
     }
 
     private void input() {
+        this.game.isMoving = false;
+
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             game.moveUp(sprite);
         }
@@ -95,6 +101,7 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             game.moveRight(sprite);
         }
+        game.stopMoving();
     }
 
 

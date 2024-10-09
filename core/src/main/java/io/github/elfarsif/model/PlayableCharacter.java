@@ -8,13 +8,16 @@ public class PlayableCharacter {
     int currentAssetIndex = 0;
     float timeAccumulator = 0f;
     float frameDuration = 0.15f;
+    float X = 0f;
+    float Y = 0f;
 
     public PlayableCharacter() {
         assetFiles = new ArrayList<>();
-        initiliazeAssetFiles();
+        updateTextureStanding();
     }
 
-    private void initiliazeAssetFiles() {
+    public void updateTextureStanding() {
+        assetFiles.clear();
         assetFiles.add("mainCharacter/playerDownStanding1.png");
         assetFiles.add("mainCharacter/playerDownStanding2.png");
         assetFiles.add("mainCharacter/playerDownStanding3.png");
@@ -89,5 +92,41 @@ public class PlayableCharacter {
         assetFiles.add("mainCharacter/walkingUp/up4.png");
         assetFiles.add("mainCharacter/walkingUp/up5.png");
         assetFiles.add("mainCharacter/walkingUp/up6.png");
+    }
+
+    public void updateTextureWalkingDown(){
+        assetFiles.clear();
+        assetFiles.add("mainCharacter/walkingDown/down1.png");
+        assetFiles.add("mainCharacter/walkingDown/down2.png");
+        assetFiles.add("mainCharacter/walkingDown/down3.png");
+        assetFiles.add("mainCharacter/walkingDown/down4.png");
+        assetFiles.add("mainCharacter/walkingDown/down5.png");
+        assetFiles.add("mainCharacter/walkingDown/down6.png");
+    }
+
+    public void updateTextureWalkingLeft(){
+        assetFiles.clear();
+        assetFiles.add("mainCharacter/walkingLeft/left1.png");
+        assetFiles.add("mainCharacter/walkingLeft/left2.png");
+        assetFiles.add("mainCharacter/walkingLeft/left3.png");
+        assetFiles.add("mainCharacter/walkingLeft/left4.png");
+        assetFiles.add("mainCharacter/walkingLeft/left5.png");
+        assetFiles.add("mainCharacter/walkingLeft/left6.png");
+    }
+
+    public float getX() {
+        return X;
+    }
+
+    public void setX(float x) {
+        this.X = x;
+    }
+
+    public float getY() {
+        return Y;
+    }
+
+    public void setY(float Y) {
+        this.Y = Y;
     }
 }
