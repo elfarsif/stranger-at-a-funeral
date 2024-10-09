@@ -5,10 +5,13 @@
     },
     "activeFile": "ship.tmx",
     "expandedProjectPaths": [
-        "mainHouse",
-        "."
+        ".",
+        "mainHouse"
     ],
     "fileStates": {
+        "Chicken.tsx": {
+            "scaleInDock": 1
+        },
         "Grass_Middle.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -30,18 +33,15 @@
             "scaleInEditor": 1
         },
         "main_house_interior.tmx": {
-            "expandedGroupLayers": [
-                7
-            ],
             "expandedObjectLayers": [
-                10,
-                9
+                9,
+                10
             ],
-            "scale": 3,
+            "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 181.66666666666663,
-                "y": 330.3333333333333
+                "x": 282,
+                "y": 286.66666666666663
             }
         },
         "modern_interior_all.tsx": {
@@ -66,14 +66,14 @@
         },
         "ship.tmx": {
             "expandedObjectLayers": [
-                6,
-                5
+                5,
+                6
             ],
-            "scale": 0.75,
+            "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 884,
-                "y": 862.6666666666667
+                "x": 514.5,
+                "y": 821.5
             }
         }
     },
@@ -105,6 +105,7 @@
         "Grass_Middle.tsx",
         "Interiors_16x16.tsx"
     ],
+    "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,

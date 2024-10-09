@@ -1,5 +1,6 @@
 package cucumber;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerInGame {
     Game game;
+    Map map;
+    Player player;
+    PlayableCharacter playableCharacter;
 
     @Given("there is no game")
     public void given() {
@@ -35,18 +39,28 @@ public class PlayerInGame {
 
     @Then("the playable character asset is standing")
     public void thenAsset() {
-        Player player = game.getPlayer();
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        String assetFileName = playableCharacter.getCurrentAssetFileName();
+        player = game.getPlayer();
+        playableCharacter = new PlayableCharacter();
+        game.getPlayer().setPlayableCharacter(playableCharacter);
+        String assetFileName = game.getPlayer().getPlayableCharacter().getCurrentAssetFileName();
 
         assertThat(assetFileName).isEqualTo("mainCharacter/playerDownStanding1.png");
     }
 
     @Then("the game map is the main house")
     public void thenHouse(){
-        Map map = game.getMap();
+        map = game.getMap();
         String assetFileName = map.getAssetFileName();
         assertThat(assetFileName).isEqualTo("tilemaps/main_house_interior.tmx");
     }
 
+    @And("the playable character is standing in the main house")
+    public void thePlayableCharacterIsStandingInTheMainHouse() {
+
+        game.setCharacterInHouse();
+        assertThat(game.getPlayer().getPlayableCharacter().getX())
+            .isEqualTo((float)7.5*16);
+        assertThat(game.getPlayer().getPlayableCharacter().getY())
+            .isEqualTo((float)5*16);
+    }
 }
