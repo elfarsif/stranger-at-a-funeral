@@ -1,13 +1,13 @@
 package io.github.elfarsif.model;
 
 public class Player {
-    PlayableCharacter playableCharacter;
+    Character character;
 
-    public void setPlayableCharacter(PlayableCharacter playableCharacter) {
-        this.playableCharacter = playableCharacter;
+    public void setPlayableCharacter(Character character) {
+        this.character = character;
     }
 
-    public PlayableCharacter getPlayableCharacter() {
-        return this.playableCharacter;
+    public Character getPlayableCharacter() {
+        return this.character;
     }
 }

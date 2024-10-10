@@ -14,18 +14,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.github.elfarsif.MapManager;
 import io.github.elfarsif.StrangerAtAFuneral;
-import io.github.elfarsif.character.Character;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.Map;
-import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
-
-import java.util.Iterator;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 public class GameScreen implements Screen {
 
     StrangerAtAFuneral gameGdx;
-    Character character;
+    io.github.elfarsif.character.Character character;
     FitViewport viewport;
     private OrthographicCamera camera;
     private MapManager mapManager;
@@ -36,10 +31,10 @@ public class GameScreen implements Screen {
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
         Player player = new Player();
-        Map map = new Map();
-        game = new Game(player,map);
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        game.getPlayer().setPlayableCharacter(playableCharacter);
+        Map map = new HouseMap();
+        Character character = new Character();
+        game = new Game(player,map,character);
+        game.getPlayer().setPlayableCharacter(character);
 
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tiledMap = loader.load(game.getMap().getAssetFileName());

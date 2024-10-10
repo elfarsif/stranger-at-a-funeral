@@ -3,10 +3,8 @@ package cucumber;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.Map;
-import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,10 +14,10 @@ public class PlayerMovesThenStops {
     @Given("the player is moving right")
     public void thePlayerIsMovingRight() {
         Player player = new Player();
-        Map map = new Map();
-        game = new Game(player,map);
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        game.getPlayer().setPlayableCharacter(playableCharacter);
+        Map map = new HouseMap();
+        Character character = new Character();
+        game = new Game(player,map,character);
+        game.getPlayer().setPlayableCharacter(character);
         game.isMoving = true;
     }
 

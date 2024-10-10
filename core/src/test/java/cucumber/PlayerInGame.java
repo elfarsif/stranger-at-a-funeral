@@ -4,10 +4,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.Map;
-import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,17 +13,18 @@ public class PlayerInGame {
     Game game;
     Map map;
     Player player;
-    PlayableCharacter playableCharacter;
+    Character character;
 
     @Given("there is no game")
     public void given() {
         player = new Player();
-        map = new Map();
+        map = new HouseMap();
+        character = new Character();
     }
 
     @When("the game has started")
     public void when() {
-        game = new Game(player,map);
+        game = new Game(player,map,character);
     }
 
     @Then("there is a player in the game")
@@ -41,8 +40,7 @@ public class PlayerInGame {
     @Then("the playable character asset is standing")
     public void thenAsset() {
         player = game.getPlayer();
-        playableCharacter = new PlayableCharacter();
-        game.getPlayer().setPlayableCharacter(playableCharacter);
+        game.getPlayer().setPlayableCharacter(character);
         String assetFileName = game.getPlayer().getPlayableCharacter().getCurrentAssetFileName();
 
         assertThat(assetFileName).isEqualTo("mainCharacter/playerDownStanding1.png");

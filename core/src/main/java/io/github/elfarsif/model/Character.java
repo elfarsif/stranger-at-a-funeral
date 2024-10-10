@@ -3,7 +3,7 @@ package io.github.elfarsif.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayableCharacter {
+public class Character {
     List<String> assetFiles;
     int currentAssetIndex = 0;
     float timeAccumulator = 0f;
@@ -11,7 +11,7 @@ public class PlayableCharacter {
     float X = 0f;
     float Y = 0f;
 
-    public PlayableCharacter() {
+    public Character() {
         assetFiles = new ArrayList<>();
         updateTextureStanding();
     }

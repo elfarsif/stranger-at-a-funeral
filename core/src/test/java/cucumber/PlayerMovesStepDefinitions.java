@@ -5,10 +5,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.Map;
-import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -20,10 +18,10 @@ public class PlayerMovesStepDefinitions {
     @Given("there is a player and playable character")
     public void given() {
         Player player = new Player();
-        Map map = new Map();
-        game = new Game(player, map);
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        player.setPlayableCharacter(playableCharacter);
+        Map map = new HouseMap();
+        Character character = new Character();
+        game = new Game(player, map,character);
+        player.setPlayableCharacter(character);
         game.setPlayer(player);
         sprite = mock(Sprite.class);
     }

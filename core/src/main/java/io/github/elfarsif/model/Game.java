@@ -3,13 +3,15 @@ package io.github.elfarsif.model;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Game {
+    Character character;
     Player player;
     Map map;
     public boolean isMoving = false;
 
-    public Game(Player player, Map map) {
+    public Game(Player player, Map map, Character character) {
         this.player = player;
         this.map = map;
+        this.character = character;
     }
 
     public Player getPlayer() {
@@ -18,8 +20,8 @@ public class Game {
 
     public void moveUp(Sprite sprite) {
         sprite.translateY(1);
-        PlayableCharacter playableCharacter = player.getPlayableCharacter();
-        playableCharacter.updateTextureWalkingUp();
+        Character character = player.getPlayableCharacter();
+        character.updateTextureWalkingUp();
         isMoving = true;
     }
 
@@ -41,8 +43,8 @@ public class Game {
 
     public void moveRight(Sprite sprite) {
         sprite.translateX(1);
-        PlayableCharacter playableCharacter = player.getPlayableCharacter();
-        playableCharacter.updateTextureWalkingRight();
+        Character character = player.getPlayableCharacter();
+        character.updateTextureWalkingRight();
         isMoving = true;
     }
 
