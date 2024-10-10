@@ -42,7 +42,7 @@ public class PlayerMovesStepDefinitions {
 
     @When("the player moves down")
     public void thePlayerMovesDown() {
-        game.moveDown(sprite);
+        game.move(character,"down");
     }
 
     @Then("the translateY function is called with -1")
@@ -57,7 +57,7 @@ public class PlayerMovesStepDefinitions {
 
     @When("the player moves left")
     public void thePlayerMovesLeft() {
-        game.moveLeft(sprite);
+        game.move(character, "left");
     }
 
     @Then("the translateX function is called with -1")
@@ -73,7 +73,7 @@ public class PlayerMovesStepDefinitions {
 
     @When("the player moves right")
     public void thePlayerMovesRight() {
-        game.moveRight(sprite);
+        game.move(character,"right");
     }
 
     @Then("the translateX function is called with 1")

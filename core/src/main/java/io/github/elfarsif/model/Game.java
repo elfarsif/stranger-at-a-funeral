@@ -16,7 +16,7 @@ public class Game {
         return this.character;
     }
 
-    public void moveUp(Sprite sprite) {
+    private void moveUp(Sprite sprite) {
         sprite.translateY(1);
         character.updateTextureWalkingUp();
         isMoving = true;
@@ -26,19 +26,19 @@ public class Game {
         return this.map;
     }
 
-    public void moveDown(Sprite sprite) {
+    private void moveDown(Sprite sprite) {
         sprite.translateY(-1);
         this.character.updateTextureWalkingDown();
         isMoving = true;
     }
 
-    public void moveLeft(Sprite sprite) {
+    private void moveLeft(Sprite sprite) {
         sprite.translateX(-1);
         this.character.updateTextureWalkingLeft();
         isMoving = true;
     }
 
-    public void moveRight(Sprite sprite) {
+    private void moveRight(Sprite sprite) {
         sprite.translateX(1);
         character.updateTextureWalkingRight();
         isMoving = true;
@@ -59,5 +59,15 @@ public class Game {
         if(direction.equals("up")){
             this.moveUp(character.sprite);
         }
+        if(direction.equals("down")){
+            this.moveDown(character.sprite);
+        }
+        if(direction.equals("left")){
+            this.moveLeft(character.sprite);
+        }
+        if(direction.equals("right")){
+            this.moveRight(character.sprite);
+        }
+
     }
 }
