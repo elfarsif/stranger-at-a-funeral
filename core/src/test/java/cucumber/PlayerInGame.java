@@ -19,12 +19,13 @@ public class PlayerInGame {
 
     @Given("there is no game")
     public void given() {
-        game = new Game();
+        player = new Player();
+        map = new Map();
     }
 
     @When("the game has started")
     public void when() {
-        game.start();
+        game = new Game(player,map);
     }
 
     @Then("there is a player in the game")

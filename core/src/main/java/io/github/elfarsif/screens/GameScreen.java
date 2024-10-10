@@ -16,7 +16,9 @@ import io.github.elfarsif.MapManager;
 import io.github.elfarsif.StrangerAtAFuneral;
 import io.github.elfarsif.character.Character;
 import io.github.elfarsif.model.Game;
+import io.github.elfarsif.model.Map;
 import io.github.elfarsif.model.PlayableCharacter;
+import io.github.elfarsif.model.Player;
 
 import java.util.Iterator;
 
@@ -33,16 +35,17 @@ public class GameScreen implements Screen {
 
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
-        game = new Game();
-        game.start();
+        Player player = new Player();
+        Map map = new Map();
+        game = new Game(player,map);
         PlayableCharacter playableCharacter = new PlayableCharacter();
         game.getPlayer().setPlayableCharacter(playableCharacter);
 
         TmxMapLoader loader = new TmxMapLoader();
-        TiledMap map = loader.load(game.getMap().getAssetFileName());
+        TiledMap tiledMap = loader.load(game.getMap().getAssetFileName());
 
         float unitScale = 1f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        renderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 
         setScreenSettings(gameGdx);
         setInitialPlayerPosition();

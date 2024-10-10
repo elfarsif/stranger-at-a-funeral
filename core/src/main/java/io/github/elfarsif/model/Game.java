@@ -7,9 +7,9 @@ public class Game {
     Map map;
     public boolean isMoving = false;
 
-    public void start() {
-        this.player = new Player();
-        this.map = new Map();
+    public Game(Player player, Map map) {
+        this.player = player;
+        this.map = map;
     }
 
     public Player getPlayer() {

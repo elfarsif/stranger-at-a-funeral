@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.elfarsif.model.Game;
+import io.github.elfarsif.model.Map;
 import io.github.elfarsif.model.PlayableCharacter;
 import io.github.elfarsif.model.Player;
 
@@ -18,8 +19,9 @@ public class PlayerMovesStepDefinitions {
 
     @Given("there is a player and playable character")
     public void given() {
-        game = new Game();
         Player player = new Player();
+        Map map = new Map();
+        game = new Game(player, map);
         PlayableCharacter playableCharacter = new PlayableCharacter();
         player.setPlayableCharacter(playableCharacter);
         game.setPlayer(player);
