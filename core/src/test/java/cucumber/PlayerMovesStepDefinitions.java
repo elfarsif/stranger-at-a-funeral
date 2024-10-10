@@ -17,12 +17,9 @@ public class PlayerMovesStepDefinitions {
 
     @Given("there is a player and playable character")
     public void given() {
-        Player player = new Player();
         Map map = new HouseMap();
         Character character = new Character();
-        game = new Game(player, map,character);
-        player.setPlayableCharacter(character);
-        game.setPlayer(player);
+        game = new Game(map,character);
         sprite = mock(Sprite.class);
     }
 
@@ -38,8 +35,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking up")
     public void thePlayerAnimationIsWalkingUp() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Up")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Up")).isTrue();
+        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves down")
@@ -54,7 +51,7 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking down")
     public void thePlayerAnimationIsWalkingDown() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Down")).isTrue();
+        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Down")).isTrue();
     }
 
     @When("the player moves left")
@@ -69,8 +66,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking left")
     public void thePlayerAnimationIsWalkingLeft() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Left")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Left")).isTrue();
+        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves right")
@@ -85,8 +82,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking right")
     public void thePlayerAnimationIsWalkingRight() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Right")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Right")).isTrue();
+        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
     }
 
 

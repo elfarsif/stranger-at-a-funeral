@@ -4,23 +4,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Game {
     Character character;
-    Player player;
     Map map;
     public boolean isMoving = false;
 
-    public Game(Player player, Map map, Character character) {
-        this.player = player;
+    public Game(Map map, Character character) {
         this.map = map;
         this.character = character;
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public Character getCharacter() {
+        return this.character;
     }
 
     public void moveUp(Sprite sprite) {
         sprite.translateY(1);
-        Character character = player.getPlayableCharacter();
         character.updateTextureWalkingUp();
         isMoving = true;
     }
@@ -31,35 +28,30 @@ public class Game {
 
     public void moveDown(Sprite sprite) {
         sprite.translateY(-1);
-        this.player.getPlayableCharacter().updateTextureWalkingDown();
+        this.character.updateTextureWalkingDown();
         isMoving = true;
     }
 
     public void moveLeft(Sprite sprite) {
         sprite.translateX(-1);
-        this.player.getPlayableCharacter().updateTextureWalkingLeft();
+        this.character.updateTextureWalkingLeft();
         isMoving = true;
     }
 
     public void moveRight(Sprite sprite) {
         sprite.translateX(1);
-        Character character = player.getPlayableCharacter();
         character.updateTextureWalkingRight();
         isMoving = true;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public void stopMoving(){
         if(!isMoving){
-            player.getPlayableCharacter().updateTextureStanding();
+            character.updateTextureStanding();
         }
     }
 
     public void setCharacterInHouse() {
-        player.getPlayableCharacter().setX((float) 7.5*16);
-        player.getPlayableCharacter().setY((float) 5*16);
+        character.setX((float) 7.5*16);
+        character.setY((float) 5*16);
     }
 }

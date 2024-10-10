@@ -13,11 +13,9 @@ public class PlayerMovesThenStops {
 
     @Given("the player is moving right")
     public void thePlayerIsMovingRight() {
-        Player player = new Player();
         Map map = new HouseMap();
         Character character = new Character();
-        game = new Game(player,map,character);
-        game.getPlayer().setPlayableCharacter(character);
+        game = new Game(map,character);
         game.isMoving = true;
     }
 
@@ -28,6 +26,6 @@ public class PlayerMovesThenStops {
 
     @Then("the player animation is standing")
     public void thePlayerAnimationIsStanding() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Standing")).isTrue();
+        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Standing")).isTrue();
     }
 }

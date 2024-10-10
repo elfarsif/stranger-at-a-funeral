@@ -30,11 +30,9 @@ public class GameScreen implements Screen {
 
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
-        Player player = new Player();
         Map map = new HouseMap();
         Character character = new Character();
-        game = new Game(player,map,character);
-        game.getPlayer().setPlayableCharacter(character);
+        game = new Game(map,character);
 
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tiledMap = loader.load(game.getMap().getAssetFileName());
@@ -48,12 +46,12 @@ public class GameScreen implements Screen {
 
     private void setInitialPlayerPosition() {
         game.setCharacterInHouse();
-        sprite.setPosition(game.getPlayer().getPlayableCharacter().getX(),
-            game.getPlayer().getPlayableCharacter().getY());
+        sprite.setPosition(game.getCharacter().getX(),
+            game.getCharacter().getY());
     }
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
-        sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
+        sprite = new Sprite(new Texture(game.getCharacter().getCurrentAssetFileName()));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 100, 300);
 
@@ -79,8 +77,8 @@ public class GameScreen implements Screen {
 
         gameGdx.batch.begin();
         sprite.draw(gameGdx.batch);
-        sprite.setTexture(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
-        game.getPlayer().getPlayableCharacter().updateTexture(delta);
+        sprite.setTexture(new Texture(game.getCharacter().getCurrentAssetFileName()));
+        game.getCharacter().updateTexture(delta);
         gameGdx.batch.end();
     }
 

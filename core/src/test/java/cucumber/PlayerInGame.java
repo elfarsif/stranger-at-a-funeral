@@ -12,36 +12,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerInGame {
     Game game;
     Map map;
-    Player player;
     Character character;
 
     @Given("there is no game")
     public void given() {
-        player = new Player();
         map = new HouseMap();
         character = new Character();
     }
 
     @When("the game has started")
     public void when() {
-        game = new Game(player,map,character);
+        game = new Game(map,character);
     }
 
     @Then("there is a player in the game")
     public void then() {
-        assertThat(game.getPlayer()).isNotNull();
+        assertThat(game.getCharacter()).isNotNull();
     }
 
     @Then("the player is a Player object")
     public void then2(){
-        assertThat(game.getPlayer()).isInstanceOf(Player.class);
+        assertThat(game.getCharacter()).isInstanceOf(Character.class);
     }
 
     @Then("the playable character asset is standing")
     public void thenAsset() {
-        player = game.getPlayer();
-        game.getPlayer().setPlayableCharacter(character);
-        String assetFileName = game.getPlayer().getPlayableCharacter().getCurrentAssetFileName();
+        String assetFileName = game.getCharacter().getCurrentAssetFileName();
 
         assertThat(assetFileName).isEqualTo("mainCharacter/playerDownStanding1.png");
     }
@@ -57,9 +53,9 @@ public class PlayerInGame {
     public void thePlayableCharacterIsStandingInTheMainHouse() {
 
         game.setCharacterInHouse();
-        assertThat(game.getPlayer().getPlayableCharacter().getX())
+        assertThat(game.getCharacter().getX())
             .isEqualTo((float)7.5*16);
-        assertThat(game.getPlayer().getPlayableCharacter().getY())
+        assertThat(game.getCharacter().getY())
             .isEqualTo((float)5*16);
     }
 }
