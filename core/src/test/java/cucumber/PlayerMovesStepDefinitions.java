@@ -13,19 +13,20 @@ import static org.mockito.Mockito.*;
 
 public class PlayerMovesStepDefinitions {
     Game game;
+    Character character;
     Sprite sprite;
 
     @Given("there is a player and playable character")
     public void given() {
         Map map = new HouseMap();
-        Character character = new Character();
-        game = new Game(map,character);
         sprite = mock(Sprite.class);
+        character = new Character(sprite);
+        game = new Game(map,character);
     }
 
     @When("the player moves up")
     public void when() {
-        game.moveUp(sprite);
+        game.move(character,"up");
     }
 
     @Then("the translateY function is called with 1")

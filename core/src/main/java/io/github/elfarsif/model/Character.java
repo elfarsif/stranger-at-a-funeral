@@ -1,5 +1,8 @@
 package io.github.elfarsif.model;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +13,15 @@ public class Character {
     float frameDuration = 0.15f;
     float X = 0f;
     float Y = 0f;
+    Sprite sprite;
 
     public Character() {
+        assetFiles = new ArrayList<>();
+        updateTextureStanding();
+    }
+
+    public Character(Sprite sprite) {
+        this.sprite = sprite;
         assetFiles = new ArrayList<>();
         updateTextureStanding();
     }
@@ -129,4 +139,13 @@ public class Character {
     public void setY(float Y) {
         this.Y = Y;
     }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
 }

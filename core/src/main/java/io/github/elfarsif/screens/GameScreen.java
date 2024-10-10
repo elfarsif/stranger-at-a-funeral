@@ -20,18 +20,19 @@ import io.github.elfarsif.model.Character;
 public class GameScreen implements Screen {
 
     StrangerAtAFuneral gameGdx;
-    io.github.elfarsif.character.Character character;
     FitViewport viewport;
     private OrthographicCamera camera;
     private MapManager mapManager;
     private Sprite sprite;
     private OrthogonalTiledMapRenderer renderer;
     Game game;
+    Character character;
+
 
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
         Map map = new HouseMap();
-        Character character = new Character();
+        character = new Character();
         game = new Game(map,character);
 
         TmxMapLoader loader = new TmxMapLoader();
@@ -51,7 +52,8 @@ public class GameScreen implements Screen {
     }
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
-        sprite = new Sprite(new Texture(game.getCharacter().getCurrentAssetFileName()));
+        sprite = new Sprite(new Texture(character.getCurrentAssetFileName()));
+        character.setSprite(sprite);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 100, 300);
 
@@ -86,7 +88,7 @@ public class GameScreen implements Screen {
         this.game.isMoving = false;
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            game.moveUp(sprite);
+            game.move(character,"up");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             game.moveDown(sprite);

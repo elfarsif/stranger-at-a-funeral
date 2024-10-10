@@ -54,4 +54,10 @@ public class Game {
         character.setX((float) 7.5*16);
         character.setY((float) 5*16);
     }
+
+    public void move(Character character, String direction) {
+        if(direction.equals("up")){
+            this.moveUp(character.sprite);
+        }
+    }
 }
