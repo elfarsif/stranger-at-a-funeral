@@ -1,31 +1,30 @@
 package cucumber;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.elfarsif.model.PlayableCharacter;
+import io.github.elfarsif.model.Character;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerStandingStepDefinitions {
-    PlayableCharacter playableCharacter;
+    Character character;
 
     @Given("playable character is currently using {string}")
     public void playableCharacterIsCurrentlyUsing(String firstAsset) {
-        playableCharacter = new PlayableCharacter();
-        playableCharacter.setCurrentAsserIndex(firstAsset);
-        assertThat(playableCharacter.getCurrentAssetFileName()).isEqualTo(firstAsset);
+        character = new Character();
+        character.setCurrentAsserIndex(firstAsset);
+        assertThat(character.getCurrentAssetFileName()).isEqualTo(firstAsset);
     }
 
     @When("you update the texture")
     public void youUpdateTheTexture() {
-        playableCharacter.updateTexture();
+        character.updateTexture();
     }
 
     @Then("the character is currently using {string}")
     public void theCharacterIsCurrentlyUsing(String secondAsset) {
-        assertThat(playableCharacter.getCurrentAssetFileName()).isEqualTo(secondAsset);
+        assertThat(character.getCurrentAssetFileName()).isEqualTo(secondAsset);
     }
 
 }

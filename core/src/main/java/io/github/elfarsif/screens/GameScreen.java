@@ -14,48 +14,48 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.github.elfarsif.MapManager;
 import io.github.elfarsif.StrangerAtAFuneral;
-import io.github.elfarsif.character.Character;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.PlayableCharacter;
-
-import java.util.Iterator;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 public class GameScreen implements Screen {
 
     StrangerAtAFuneral gameGdx;
-    Character character;
     FitViewport viewport;
     private OrthographicCamera camera;
     private MapManager mapManager;
     private Sprite sprite;
     private OrthogonalTiledMapRenderer renderer;
     Game game;
+    Character character;
+    Map map;
+    MovementHandler movementHandler;
+
 
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
-        game = new Game();
-        game.start();
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        game.getPlayer().setPlayableCharacter(playableCharacter);
+        map = new HouseMap();
+        character = new Character();
+        movementHandler = new MovementHandler(character);
+        game = new Game(map,character,movementHandler);
 
         TmxMapLoader loader = new TmxMapLoader();
-        TiledMap map = loader.load(game.getMap().getAssetFileName());
+        TiledMap tiledMap = loader.load(map.getAssetFileName());
 
         float unitScale = 1f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        renderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 
         setScreenSettings(gameGdx);
         setInitialPlayerPosition();
     }
 
     private void setInitialPlayerPosition() {
-        game.setCharacterInHouse();
-        sprite.setPosition(game.getPlayer().getPlayableCharacter().getX(),
-            game.getPlayer().getPlayableCharacter().getY());
+        map.addCharacter(character);
+        sprite.setPosition(character.getX(), character.getY());
     }
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
-        sprite = new Sprite(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
+        sprite = new Sprite(new Texture(character.getCurrentAssetFileName()));
+        character.setSprite(sprite);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 100, 300);
 
@@ -81,27 +81,28 @@ public class GameScreen implements Screen {
 
         gameGdx.batch.begin();
         sprite.draw(gameGdx.batch);
-        sprite.setTexture(new Texture(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName()));
-        game.getPlayer().getPlayableCharacter().updateTexture(delta);
+        sprite.setTexture(new Texture(character.getCurrentAssetFileName()));
+        character.updateTexture(delta);
         gameGdx.batch.end();
     }
 
     private void input() {
-        this.game.isMoving = false;
+        movementHandler.isMoving = false;
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            game.moveUp(sprite);
+            game.move(character,"up");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            game.moveDown(sprite);
+            game.move(character,"down");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            game.moveLeft(sprite);
+            game.move(character,"left");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            game.moveRight(sprite);
+            game.move(character,"right");
         }
-        game.stopMoving();
+
+        movementHandler.stopMoving();
     }
 
 

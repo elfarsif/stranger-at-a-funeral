@@ -5,30 +5,29 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.elfarsif.model.Game;
-import io.github.elfarsif.model.PlayableCharacter;
-import io.github.elfarsif.model.Player;
+import io.github.elfarsif.model.*;
+import io.github.elfarsif.model.Character;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class PlayerMovesStepDefinitions {
     Game game;
+    Character character;
     Sprite sprite;
 
     @Given("there is a player and playable character")
     public void given() {
-        game = new Game();
-        Player player = new Player();
-        PlayableCharacter playableCharacter = new PlayableCharacter();
-        player.setPlayableCharacter(playableCharacter);
-        game.setPlayer(player);
+        Map map = new HouseMap();
         sprite = mock(Sprite.class);
+        character = new Character(sprite);
+        MovementHandler movementHandler = new MovementHandler(character);
+        game = new Game(map,character,movementHandler);
     }
 
     @When("the player moves up")
     public void when() {
-        game.moveUp(sprite);
+        game.move(character,"up");
     }
 
     @Then("the translateY function is called with 1")
@@ -38,13 +37,13 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking up")
     public void thePlayerAnimationIsWalkingUp() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Up")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Up")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves down")
     public void thePlayerMovesDown() {
-        game.moveDown(sprite);
+        game.move(character,"down");
     }
 
     @Then("the translateY function is called with -1")
@@ -54,12 +53,12 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking down")
     public void thePlayerAnimationIsWalkingDown() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Down")).isTrue();
+        assertThat(character.getCurrentAssetFileName().contains("Down")).isTrue();
     }
 
     @When("the player moves left")
     public void thePlayerMovesLeft() {
-        game.moveLeft(sprite);
+        game.move(character, "left");
     }
 
     @Then("the translateX function is called with -1")
@@ -69,13 +68,13 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking left")
     public void thePlayerAnimationIsWalkingLeft() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Left")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Left")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves right")
     public void thePlayerMovesRight() {
-        game.moveRight(sprite);
+        game.move(character,"right");
     }
 
     @Then("the translateX function is called with 1")
@@ -85,8 +84,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking right")
     public void thePlayerAnimationIsWalkingRight() {
-        assertThat(game.getPlayer().getPlayableCharacter().getCurrentAssetFileName().contains("Right")).isTrue();
-        assertThat(game.getPlayer().getPlayableCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Right")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
 

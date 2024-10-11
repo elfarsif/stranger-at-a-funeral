@@ -3,61 +3,29 @@ package io.github.elfarsif.model;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Game {
-    Player player;
+    Character character;
     Map map;
-    public boolean isMoving = false;
+    MovementHandler movementHandler;
 
-    public void start() {
-        this.player = new Player();
-        this.map = new Map();
+    public Game(Map map, Character character, MovementHandler movementHandler) {
+        this.map = map;
+        this.character = character;
+        this.movementHandler = movementHandler;
     }
 
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public void moveUp(Sprite sprite) {
-        sprite.translateY(1);
-        PlayableCharacter playableCharacter = player.getPlayableCharacter();
-        playableCharacter.updateTextureWalkingUp();
-        isMoving = true;
-    }
-
-    public Map getMap() {
-        return this.map;
-    }
-
-    public void moveDown(Sprite sprite) {
-        sprite.translateY(-1);
-        this.player.getPlayableCharacter().updateTextureWalkingDown();
-        isMoving = true;
-    }
-
-    public void moveLeft(Sprite sprite) {
-        sprite.translateX(-1);
-        this.player.getPlayableCharacter().updateTextureWalkingLeft();
-        isMoving = true;
-    }
-
-    public void moveRight(Sprite sprite) {
-        sprite.translateX(1);
-        PlayableCharacter playableCharacter = player.getPlayableCharacter();
-        playableCharacter.updateTextureWalkingRight();
-        isMoving = true;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void stopMoving(){
-        if(!isMoving){
-            player.getPlayableCharacter().updateTextureStanding();
+    public void move(Character character, String direction) {
+        if(direction.equals("up")){
+            this.movementHandler.moveUp(character.sprite);
+        }
+        if(direction.equals("down")){
+            this.movementHandler.moveDown(character.sprite);
+        }
+        if(direction.equals("left")){
+            this.movementHandler.moveLeft(character.sprite);
+        }
+        if(direction.equals("right")){
+            this.movementHandler.moveRight(character.sprite);
         }
     }
 
-    public void setCharacterInHouse() {
-        player.getPlayableCharacter().setX((float) 7.5*16);
-        player.getPlayableCharacter().setY((float) 5*16);
-    }
 }
