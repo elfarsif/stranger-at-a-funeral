@@ -5,4 +5,10 @@ public class HouseMap implements Map{
     public String getAssetFileName() {
         return "tilemaps/main_house_interior.tmx" ;
     }
+
+    @Override
+    public void addCharacter(Character character) {
+        character.setX((float) 7.5*16);
+        character.setY((float) 5*16);
+    }
 }

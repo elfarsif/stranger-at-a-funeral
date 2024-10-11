@@ -27,16 +27,19 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     Game game;
     Character character;
+    Map map;
+    MovementHandler movementHandler;
 
 
 
     public GameScreen(StrangerAtAFuneral gameGdx) {
-        Map map = new HouseMap();
+        map = new HouseMap();
         character = new Character();
-        game = new Game(map,character);
+        movementHandler = new MovementHandler(character);
+        game = new Game(map,character,movementHandler);
 
         TmxMapLoader loader = new TmxMapLoader();
-        TiledMap tiledMap = loader.load(game.getMap().getAssetFileName());
+        TiledMap tiledMap = loader.load(map.getAssetFileName());
 
         float unitScale = 1f;
         renderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
@@ -46,9 +49,8 @@ public class GameScreen implements Screen {
     }
 
     private void setInitialPlayerPosition() {
-        game.setCharacterInHouse();
-        sprite.setPosition(game.getCharacter().getX(),
-            game.getCharacter().getY());
+        map.addCharacter(character);
+        sprite.setPosition(character.getX(), character.getY());
     }
 
     public void setScreenSettings(final StrangerAtAFuneral gameGdx){
@@ -79,13 +81,13 @@ public class GameScreen implements Screen {
 
         gameGdx.batch.begin();
         sprite.draw(gameGdx.batch);
-        sprite.setTexture(new Texture(game.getCharacter().getCurrentAssetFileName()));
-        game.getCharacter().updateTexture(delta);
+        sprite.setTexture(new Texture(character.getCurrentAssetFileName()));
+        character.updateTexture(delta);
         gameGdx.batch.end();
     }
 
     private void input() {
-        this.game.isMoving = false;
+        movementHandler.isMoving = false;
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             game.move(character,"up");
@@ -99,7 +101,8 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             game.move(character,"right");
         }
-        game.stopMoving();
+
+        movementHandler.stopMoving();
     }
 
 

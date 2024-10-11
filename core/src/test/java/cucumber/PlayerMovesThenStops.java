@@ -10,22 +10,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerMovesThenStops {
     Game game;
+    Character character;
+    MovementHandler movementHandler;
 
     @Given("the player is moving right")
     public void thePlayerIsMovingRight() {
         Map map = new HouseMap();
-        Character character = new Character();
-        game = new Game(map,character);
-        game.isMoving = true;
+        character = new Character();
+        movementHandler = new MovementHandler(character);
+        game = new Game(map,character,movementHandler);
+        movementHandler.isMoving = true;
     }
 
     @When("the player stops moving")
     public void thePlayerStopsMoving() {
-        game.isMoving = false;
+        movementHandler.isMoving = false;
     }
 
     @Then("the player animation is standing")
     public void thePlayerAnimationIsStanding() {
-        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Standing")).isTrue();
+        assertThat(character.getCurrentAssetFileName().contains("Standing")).isTrue();
     }
 }

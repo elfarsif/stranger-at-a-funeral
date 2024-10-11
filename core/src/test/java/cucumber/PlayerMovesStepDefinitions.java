@@ -21,7 +21,8 @@ public class PlayerMovesStepDefinitions {
         Map map = new HouseMap();
         sprite = mock(Sprite.class);
         character = new Character(sprite);
-        game = new Game(map,character);
+        MovementHandler movementHandler = new MovementHandler(character);
+        game = new Game(map,character,movementHandler);
     }
 
     @When("the player moves up")
@@ -36,8 +37,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking up")
     public void thePlayerAnimationIsWalkingUp() {
-        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Up")).isTrue();
-        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Up")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves down")
@@ -52,7 +53,7 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking down")
     public void thePlayerAnimationIsWalkingDown() {
-        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Down")).isTrue();
+        assertThat(character.getCurrentAssetFileName().contains("Down")).isTrue();
     }
 
     @When("the player moves left")
@@ -67,8 +68,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking left")
     public void thePlayerAnimationIsWalkingLeft() {
-        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Left")).isTrue();
-        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Left")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
     @When("the player moves right")
@@ -83,8 +84,8 @@ public class PlayerMovesStepDefinitions {
 
     @And("the player animation is walking right")
     public void thePlayerAnimationIsWalkingRight() {
-        assertThat(game.getCharacter().getCurrentAssetFileName().contains("Right")).isTrue();
-        assertThat(game.getCharacter().getAssetFiles().size()).isEqualTo(6);
+        assertThat(character.getCurrentAssetFileName().contains("Right")).isTrue();
+        assertThat(character.getAssetFiles().size()).isEqualTo(6);
     }
 
 
