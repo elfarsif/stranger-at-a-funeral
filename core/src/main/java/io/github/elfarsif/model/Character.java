@@ -11,8 +11,8 @@ public class Character {
     int currentAssetIndex = 0;
     float timeAccumulator = 0f;
     float frameDuration = 0.15f;
-    float X = 0f;
-    float Y = 0f;
+    float X ;
+    float Y;
     Sprite sprite;
 
     public Character() {

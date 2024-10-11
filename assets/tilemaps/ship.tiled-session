@@ -38,10 +38,10 @@
                 10
             ],
             "scale": 1.5,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 282,
-                "y": 286.66666666666663
+                "x": 166.66666666666666,
+                "y": 162.66666666666663
             }
         },
         "modern_interior_all.tsx": {
@@ -72,8 +72,8 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 514.5,
-                "y": 821.5
+                "x": 263.75,
+                "y": 694
             }
         }
     },

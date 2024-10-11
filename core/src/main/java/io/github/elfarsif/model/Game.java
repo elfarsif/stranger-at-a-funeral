@@ -26,7 +26,6 @@ public class Game {
         if(direction.equals("right")){
             this.movementHandler.moveRight(character.sprite);
         }
-
     }
 
 }
