@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
     Map map;
     MovementHandler movementHandler;
     Wall wall;
+    Collision collision;
 
 
 
@@ -39,6 +40,8 @@ public class GameScreen implements Screen {
         game = new Game(map,character,movementHandler);
         WallObjectInitializer wallObjectInitializer = new WallObjectInitializer(map);
         wall = new Wall(map, wallObjectInitializer);
+        CollisionWrapperGdx collisionWrapperGdx = new CollisionWrapperGdx(character, wall);
+        collision = new Collision(character, wall, collisionWrapperGdx);
 
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tiledMap = loader.load(map.getAssetFileName());
@@ -102,7 +105,7 @@ public class GameScreen implements Screen {
             game.move(character,"left");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if(!isColliding(character.getSprite())){
+            if(!collision.isValid()){
                 game.move(character,"right");
             }
         }
