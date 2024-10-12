@@ -28,19 +28,23 @@ public class PlayerWalksIntoWall {
     Character character;
     Wall wall;
     Collision collision;
+    WallObjectInitializer wallObjectInitializer;
 
     @Given("there is a character and a wall")
     public void thereIsACharacterAndAWall() {
         character = new Character();
         Map map = new HouseMap();
-        WallObjectInitializer wallObjectInitializer = mock(WallObjectInitializer.class);
+        wallObjectInitializer = mock(WallObjectInitializer.class);
         wall = new Wall(map, wallObjectInitializer);
 
+        verifyWallsAreExtractedFromTiledMap();
 
 
+    }
+
+    private void verifyWallsAreExtractedFromTiledMap() {
         wall.initilizeCollisionObjects();
         verify(wallObjectInitializer,times((1))).initialize();
-
     }
 
     @When("the character walks into the wall")
@@ -54,8 +58,3 @@ public class PlayerWalksIntoWall {
     }
 }
 
-class Car{
-    void drive(){
-
-    }
-}

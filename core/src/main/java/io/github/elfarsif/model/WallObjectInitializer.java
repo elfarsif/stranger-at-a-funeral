@@ -11,8 +11,13 @@ import java.util.List;
 
 
 public class WallObjectInitializer {
+    Map map;
+
+    public WallObjectInitializer(Map map) {
+        this.map = map;
+    }
+
     public List<Rectangle> initialize() {
-        Map map = new HouseMap();
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tiledMap =loader.load(map.getAssetFileName());
         List<Rectangle> collisionRectangles = new ArrayList<>();
@@ -24,7 +29,6 @@ public class WallObjectInitializer {
                 collisionRectangles.add(rectangle);
             }
         }
-
         return collisionRectangles;
     }
 }

@@ -7,28 +7,21 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import io.github.elfarsif.MapManager;
 import io.github.elfarsif.StrangerAtAFuneral;
 import io.github.elfarsif.model.*;
 import io.github.elfarsif.model.Character;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameScreen implements Screen {
 
     StrangerAtAFuneral gameGdx;
     FitViewport viewport;
     private OrthographicCamera camera;
-    private MapManager mapManager;
     private Sprite sprite;
     private OrthogonalTiledMapRenderer renderer;
     Game game;
@@ -44,7 +37,7 @@ public class GameScreen implements Screen {
         character = new Character();
         movementHandler = new MovementHandler(character);
         game = new Game(map,character,movementHandler);
-        WallObjectInitializer wallObjectInitializer = new WallObjectInitializer();
+        WallObjectInitializer wallObjectInitializer = new WallObjectInitializer(map);
         wall = new Wall(map, wallObjectInitializer);
 
         TmxMapLoader loader = new TmxMapLoader();
