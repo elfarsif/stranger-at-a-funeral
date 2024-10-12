@@ -51,4 +51,10 @@ Feature: Player movement
     Then the player animation is standing
 
 
+  Scenario: Player walks into wall
+    Given there is a character and a wall
+    When the character walks into the wall
+    Then the character cant move past the wall
+
+
 

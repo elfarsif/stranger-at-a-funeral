@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "ship.tmx",
+    "activeFile": "main_house_interior.tmx",
     "expandedProjectPaths": [
         ".",
         "mainHouse"
@@ -40,8 +40,8 @@
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 166.66666666666666,
-                "y": 162.66666666666663
+                "x": -226.99999999999997,
+                "y": -6.666666666666671
             }
         },
         "modern_interior_all.tsx": {
@@ -72,8 +72,8 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 263.75,
-                "y": 694
+                "x": 559,
+                "y": 821
             }
         }
     },
@@ -92,11 +92,11 @@
     ],
     "project": "ship.tiled-project",
     "recentFiles": [
+        "ship.tmx",
         "Room_Builder_16x16.tsx",
         "Modern_Exteriors_Complete_Tileset.tsx",
         "modern_interior_all.tsx",
         "main_house_interior.tmx",
-        "ship.tmx",
         "animated_Christmas_chimney.tsx",
         "modern_interior_all_2.tsx",
         "modern_interior_all_1.tsx",
