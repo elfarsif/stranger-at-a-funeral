@@ -1,19 +1,20 @@
-package io.github.elfarsif.model;
+package io.github.elfarsif.model.gdx;
 
 import com.badlogic.gdx.math.Rectangle;
+import io.github.elfarsif.model.Character;
+import io.github.elfarsif.model.map.Obstacle;
 
-public class CollisionWrapperGdx {
+public class CollisionWrapper {
     Character character;
-    Wall wall;
+    Obstacle obstacle;
 
-    public CollisionWrapperGdx(Character character, Wall wall) {
+    public CollisionWrapper(Character character, Obstacle obstacle) {
         this.character = character;
-        this.wall = wall;
+        this.obstacle = obstacle;
     }
 
     public boolean checkCharacterOverlapsWall() {
-
-        for(Rectangle rectangle: wall.collisionRectangles){
+        for(Rectangle rectangle: obstacle.getCollisionRectangles()){
             if(character.getSprite().getBoundingRectangle().overlaps(rectangle)){
                 return true;
             }

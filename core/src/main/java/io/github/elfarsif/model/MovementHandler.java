@@ -22,22 +22,31 @@ public class MovementHandler {
         isMoving = true;
     }
 
-    void moveLeft(Sprite sprite) {
+    public void moveLeft(Sprite sprite) {
         character.sprite.translateX(-1);
         this.character.updateTextureWalkingLeft();
         isMoving = true;
     }
 
-    void moveRight(Sprite sprite) {
-        character.sprite.translateX(1);
-        character.updateTextureWalkingRight();
-        isMoving = true;
+    public void moveRight(Sprite sprite) {
+        if(character.isTouchingObject){
+            moveWithoutMotion(character);
+        }else {
+            character.sprite.translateX(1);
+            character.updateTextureWalkingRight();
+            isMoving = true;
+        }
     }
 
     public void stopMoving(){
         if(!isMoving){
             character.updateTextureStanding();
         }
+    }
+
+    public void moveWithoutMotion(Character character) {
+        character.updateTextureWalkingRight();
+        isMoving = true;
     }
 
 }

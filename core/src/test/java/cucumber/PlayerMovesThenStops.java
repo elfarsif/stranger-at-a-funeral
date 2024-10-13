@@ -5,6 +5,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.elfarsif.model.*;
 import io.github.elfarsif.model.Character;
+import io.github.elfarsif.model.map.HouseMap;
+import io.github.elfarsif.model.map.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

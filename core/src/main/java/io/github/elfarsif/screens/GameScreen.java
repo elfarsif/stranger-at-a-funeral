@@ -16,6 +16,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.github.elfarsif.StrangerAtAFuneral;
 import io.github.elfarsif.model.*;
 import io.github.elfarsif.model.Character;
+import io.github.elfarsif.model.gdx.CollisionWrapper;
+import io.github.elfarsif.model.gdx.MapObjectExtractor;
+import io.github.elfarsif.model.map.HouseMap;
+import io.github.elfarsif.model.map.Map;
+import io.github.elfarsif.model.map.Obstacle;
+import io.github.elfarsif.model.map.Wall;
 
 public class GameScreen implements Screen {
 
@@ -28,7 +34,7 @@ public class GameScreen implements Screen {
     Character character;
     Map map;
     MovementHandler movementHandler;
-    Wall wall;
+    Obstacle obstacle;
     Collision collision;
 
 
@@ -38,10 +44,10 @@ public class GameScreen implements Screen {
         character = new Character();
         movementHandler = new MovementHandler(character);
         game = new Game(map,character,movementHandler);
-        WallObjectInitializer wallObjectInitializer = new WallObjectInitializer(map);
-        wall = new Wall(map, wallObjectInitializer);
-        CollisionWrapperGdx collisionWrapperGdx = new CollisionWrapperGdx(character, wall);
-        collision = new Collision(character, wall, collisionWrapperGdx);
+        MapObjectExtractor mapObjectExtractor = new MapObjectExtractor(map);
+        obstacle = new Wall(map, mapObjectExtractor);
+        CollisionWrapper collisionWrapper = new CollisionWrapper(character, obstacle);
+        collision = new Collision(character, obstacle, collisionWrapper);
 
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tiledMap = loader.load(map.getAssetFileName());
@@ -51,7 +57,7 @@ public class GameScreen implements Screen {
 
         setScreenSettings(gameGdx);
         setInitialPlayerPosition();
-        wall.initilizeCollisionObjects();
+        obstacle.initializeCollisionObjects();
     }
 
     private void setInitialPlayerPosition() {
@@ -96,7 +102,7 @@ public class GameScreen implements Screen {
         movementHandler.isMoving = false;
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            game.move(character,"up");
+            game.move(character, "up");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             game.move(character,"down");
@@ -107,6 +113,9 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             if(!collision.isValid()){
                 game.move(character,"right");
+            }else {
+                character.setIsTouchingObject(true);
+                movementHandler.moveWithoutMotion(character);
             }
         }
 
@@ -115,7 +124,7 @@ public class GameScreen implements Screen {
 
 
     private boolean isColliding(Sprite sprite){
-        for(Rectangle rectangle: wall.getCollisionRectangles()){
+        for(Rectangle rectangle: obstacle.getCollisionRectangles()){
             if(sprite.getBoundingRectangle().overlaps(rectangle)){
                 return true;
             }

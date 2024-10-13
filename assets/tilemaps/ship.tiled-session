@@ -34,14 +34,14 @@
         },
         "main_house_interior.tmx": {
             "expandedObjectLayers": [
-                9,
-                10
+                10,
+                9
             ],
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": -226.99999999999997,
-                "y": -6.666666666666671
+                "x": 165.99999999999994,
+                "y": 162.66666666666663
             }
         },
         "modern_interior_all.tsx": {
@@ -66,14 +66,14 @@
         },
         "ship.tmx": {
             "expandedObjectLayers": [
-                5,
-                6
+                6,
+                5
             ],
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 559,
-                "y": 821
+                "x": 573,
+                "y": 917.3333333333333
             }
         }
     },

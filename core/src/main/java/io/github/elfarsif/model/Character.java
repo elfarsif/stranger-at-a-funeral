@@ -14,6 +14,7 @@ public class Character {
     float X ;
     float Y;
     Sprite sprite;
+    boolean isTouchingObject = false;
 
     public Character() {
         assetFiles = new ArrayList<>();
@@ -148,4 +149,7 @@ public class Character {
         this.sprite = sprite;
     }
 
+    public void setIsTouchingObject(boolean isTouchingObject) {
+       this.isTouchingObject = isTouchingObject;
+    }
 }

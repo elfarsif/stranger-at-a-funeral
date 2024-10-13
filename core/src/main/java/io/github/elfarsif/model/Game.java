@@ -1,6 +1,6 @@
 package io.github.elfarsif.model;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import io.github.elfarsif.model.map.Map;
 
 public class Game {
     Character character;

@@ -1,12 +1,11 @@
-package io.github.elfarsif.model;
+package io.github.elfarsif.model.map;
 
 import com.badlogic.gdx.math.Rectangle;
 import io.github.elfarsif.model.gdx.MapObjectExtractor;
-import io.github.elfarsif.model.map.Map;
 
 import java.util.List;
 
-public class Wall implements Obstacle{
+public class Wall implements Obstacle {
     Map map;
     MapObjectExtractor mapObjectExtractor;
     List<Rectangle> collisionRectangles;
