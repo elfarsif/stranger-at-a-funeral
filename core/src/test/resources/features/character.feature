@@ -56,5 +56,7 @@ Feature: Player movement
     When the character walks into the wall
     Then the character cant move past the wall
 
-
-
+ Scenario: Player moves away from wall
+   Given the character is touching a wall
+   When the character moves away from the wall
+   Then the character is no longer touching the wall
