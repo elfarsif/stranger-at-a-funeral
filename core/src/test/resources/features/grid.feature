@@ -9,6 +9,8 @@ Feature: Game Grid
     Given I have a grid and a character
     When I add a character to the grid
     Then the grid at 0, 0 is not empty
+
     When I remove the character from the grid
     Then the grid at 0, 0 is empty
+
 
