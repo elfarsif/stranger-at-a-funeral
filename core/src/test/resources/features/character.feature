@@ -1,62 +1,80 @@
-Feature: Player movement
+Feature: Character Class
 
-  Scenario: Game start initializes game features
-    Given there is no game
-    When the game has started
-    Then there is a player in the game
-    And the player is a Player object
-    And the playable character asset is standing
-    And the game map is the main house
-    And the playable character is standing in the main house
+  Scenario: There is a character
+    Given I have no character
+    When I create a character
+    Then they should be standing
 
-  Scenario: Player moves
-    Given there is a player and playable character
+  Scenario: Character changes State
+    Given The character is standing
+    When I change the state of the character to walking
+    Then the character should not be standing
 
-    When the player moves up
-    Then the translateY function is called with 1
-    And the player animation is walking up
+  Scenario: Character standing sprite texture
+    Given I have a  new character
+    When the character is standing
+    Then current texture filename should be "mainCharacter/standing1.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing2.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing3.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing4.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing5.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing6.png"
+    When the character updates its texture
+    Then texture should be "mainCharacter/standing1.png"
 
-    When the player moves down
-    Then the translateY function is called with -1
-    And the player animation is walking down
+  Scenario: Character walking
+    Given I have a character at 0, 0
+    When I move right
+    Then the character should be at 1, 0
+    When I move left
+    Then the character should be at 0, 0
+    When I move up
+    Then the character should be at 0, 1
+    When I move down
+    Then the character should be at 0, 0
 
-    When the player moves left
-    Then the translateX function is called with -1
-    And the player animation is walking left
+  Scenario: Character walks into wall to the right
+    Given there is a wall at 1, 0 and a character at 0, 0
+    When there is a colliding object to the right
+    Then the character is colliding to the right
 
-    When the player moves right
-    Then the translateX function is called with 1
-    And the player animation is walking right
+    When the character moves right
+    Then the character should still be at 0, 0
 
-  Scenario Outline: Player standing animation
-    Given playable character is currently using "<initialAsset>"
-    When you update the texture
-    Then the character is currently using "<updatedAsset>"
+    When the character moves left
+    Then the character should not be colliding with right wall
 
-    Examples:
-      |description                |initialAsset                                               |updatedAsset|
-      |first asset change|mainCharacter/playerDownStanding1.png|mainCharacter/playerDownStanding2.png    |
-      |second asset change     |mainCharacter/playerDownStanding2.png|mainCharacter/playerDownStanding3.png    |
-      |last asset change        |mainCharacter/playerDownStanding5.png|mainCharacter/playerDownStanding6.png    |
-      |loop asset to first      |mainCharacter/playerDownStanding6.png|mainCharacter/playerDownStanding1.png    |
+    ##Walking into wall to the left
+    Given there is a wall at 0, 0 and a character at 1, 0
+    When there is a colliding object to the left
+    Then the character is colliding to the left
 
-  Scenario: Player standing animation fps
-    Given the delta is 0.017426183, the timeAccumulator is 0.140937225, and the frameDuration is 0.15
-    When a playable character is updated with delta
-    Then the next assets is shown and the timeAccumulator is reset
+    When the character moves left
+    Then the character should still be at 1, 0
 
-  Scenario: Player moves then stops
-    Given the player is moving right
-    When the player stops moving
-    Then the player animation is standing
+    When the character moves right
+    Then the character should not be colliding with left wall
+
+    ##Walking into wall to the top
+    Given there is a wall at 1, 0 and a character at 0, 0
+#    When there is a colliding object to the top
+#    Then the character is colliding to the top
 
 
-  Scenario: Player walks into wall
-    Given there is a character and a wall
-    When the character walks into the wall
-    Then the character cant move past the wall
+  ##Multiple walls
 
- Scenario: Player moves away from wall
-   Given the character is touching a wall
-   When the character moves away from the wall
-   Then the character is no longer touching the wall
+
+
+
+
+# Unit Tests
+  Scenario: Null Character state
+    Given I have a character
+    When I set the character state to null
+    Then then a null character state exception should be thrown
+    And the error message should be "Character State cannot be null"

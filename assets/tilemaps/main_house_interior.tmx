@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="12" height="19" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="3">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="12" height="19" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="4">
  <tileset firstgid="1" source="Modern_Exteriors_Complete_Tileset.tsx"/>
  <tileset firstgid="61953" source="Room_Builder_16x16.tsx"/>
  <tileset firstgid="70237" source="modern_interior_all_1.tsx"/>
@@ -54,6 +54,7 @@
  </layer>
  <objectgroup id="9" name="walls">
   <object id="1" x="162" y="98" width="9.5" height="129.5"/>
+  <object id="3" x="16" y="224" width="96" height="16"/>
  </objectgroup>
  <objectgroup id="10" name="door">
   <object id="2" x="113.333" y="240.333" width="29.3333" height="12"/>
