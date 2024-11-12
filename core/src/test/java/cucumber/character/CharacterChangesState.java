@@ -3,6 +3,7 @@ package cucumber.character;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.elfarsif.Map;
 import io.github.elfarsif.character.Character;
 import io.github.elfarsif.character.CharacterState;
 
@@ -14,7 +15,8 @@ public class CharacterChangesState {
 
     @Given("The character is standing")
     public void theCharacterIsStanding() {
-        character = new Character();
+        Map map = new Map();
+        character = new Character(map);
     }
 
     @When("I change the state of the character to walking")

@@ -3,6 +3,7 @@ package cucumber.character;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.elfarsif.Map;
 import io.github.elfarsif.Wall;
 import io.github.elfarsif.character.Character;
 
@@ -14,7 +15,8 @@ public class CharacterWalksIntoWall {
 
     @Given("there is a wall at {int}, {int} and a character at {int}, {int}")
     public void thereIsAWallAtAndACharacterAt(int wallX, int wallY, int characterX, int characterY) {
-        character = new Character();
+        Map map = new Map();
+        character = new Character(map);
         character.setPosition(characterX, characterY);
         wall = new Wall();
         wall.setPosition(wallX, wallY);
@@ -75,5 +77,16 @@ public class CharacterWalksIntoWall {
 
     @Then("the character is colliding to the top")
     public void theCharacterIsCollidingToTheTop() {
+        assertThat(character.isCollidingTop()).isTrue();
+    }
+
+    @When("there is a colliding object to the bottom")
+    public void theCharacterIsCollidingToTheBottom() {
+        assertThat(character.verifyCollisionBottom(wall)).isTrue();
+    }
+
+    @Then("the character is colliding to the bottom")
+    public void thereIsACollidingObjectToTheBottom() {
+        assertThat(character.isCollidingBottom()).isTrue();
     }
 }

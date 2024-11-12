@@ -1,6 +1,7 @@
 package cucumber.character;
 
 import io.cucumber.java.en.And;
+import io.github.elfarsif.Map;
 import io.github.elfarsif.character.Character;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,7 +16,8 @@ public class CharacterStateSetAsNull {
 
     @Given("I have a character")
     public void iHaveACharacter() {
-        character = new Character();
+        Map map = new Map();
+        character = new Character(map);
     }
 
     @When("I set the character state to null")

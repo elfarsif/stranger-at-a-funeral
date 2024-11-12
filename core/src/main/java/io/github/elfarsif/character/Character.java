@@ -1,5 +1,6 @@
 package io.github.elfarsif.character;
 
+import io.github.elfarsif.Map;
 import io.github.elfarsif.Wall;
 
 import java.util.ArrayList;
@@ -20,11 +21,15 @@ public class Character {
     boolean isCollidingRight;
     boolean isCollidingLeft;
     boolean isCollidingTop;
+    boolean isCollidingBottom;
+    Map map;
 
 
-    public Character() {
+
+    public Character(Map map){
         this.characterState = CharacterState.STANDING;
         initializeTextures();
+        this.map = map;
     }
 
     public void initializeTextures() {
@@ -49,7 +54,7 @@ public class Character {
         if (direction.equals("right") && !isCollidingRight) {
             x++;
             isCollidingLeft = false;
-        } else if (direction.equals("left") && !isCollidingLeft) {
+        } else if (direction.equals("left") && !isCollidingLeft && checkCharacterIsWithinMapBounds("left")) {
             x--;
             isCollidingRight = false;
         }else if (direction.equals("up")) {
@@ -58,6 +63,15 @@ public class Character {
             y--;
         }
 
+    }
+
+    private boolean checkCharacterIsWithinMapBounds(String direction) {
+        boolean isWithinMapBounds = true;
+        if (direction.equals("left")) {
+            isWithinMapBounds = map.isValidPosition(x-1,y);
+
+        }
+        return isWithinMapBounds;
     }
 
     public boolean verifyCollisionRight(Wall wall) {
@@ -117,4 +131,22 @@ public class Character {
         return isCollidingLeft;
     }
 
+    public boolean isCollidingTop() {
+        return isCollidingTop;
+    }
+
+    public boolean verifyCollisionBottom(Wall wall) {
+        if(wall.getPosition()[0] == x && wall.getPosition()[1] == y-1){
+            isCollidingBottom = true;
+        }
+        return isCollidingBottom;
+    }
+
+    public boolean isCollidingBottom() {
+        return isCollidingBottom;
+    }
+
+    public Map getMap() {
+        return map;
+    }
 }

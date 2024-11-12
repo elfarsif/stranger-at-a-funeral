@@ -1,5 +1,6 @@
 package cucumber.character;
 
+import io.github.elfarsif.Map;
 import io.github.elfarsif.character.Character;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,7 +14,8 @@ public class CharacterTextureStanding {
 
     @Given("I have a  new character")
     public void iHaveANewCharacter() {
-        character = new Character();
+        Map map = new Map();
+        character = new Character(map);
 
     }
 
