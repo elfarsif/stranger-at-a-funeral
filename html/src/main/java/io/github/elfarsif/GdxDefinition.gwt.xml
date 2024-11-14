@@ -15,7 +15,7 @@
 
   <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
   <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-  <inherits name="io.github.elfarsif.StrangerAtAFuneral" />
+  <inherits name="io.github.elfarsif.gdx.StrangerAtAFuneral" />
 
   <!-- You must change this if you rename packages later, or rename GwtLauncher. -->
   <entry-point class="io.github.elfarsif.gwt.GwtLauncher" />

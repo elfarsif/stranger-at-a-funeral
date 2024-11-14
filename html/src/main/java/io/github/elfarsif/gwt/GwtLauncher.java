@@ -3,7 +3,7 @@ package io.github.elfarsif.gwt;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import io.github.elfarsif.StrangerAtAFuneral;
+import io.github.elfarsif.gdx.StrangerAtAFuneral;
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {

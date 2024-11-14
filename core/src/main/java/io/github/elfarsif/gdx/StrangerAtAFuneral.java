@@ -1,11 +1,10 @@
-package io.github.elfarsif;
+package io.github.elfarsif.gdx;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.elfarsif.screens.GameScreen;
 
 public class StrangerAtAFuneral extends Game {
     public SpriteBatch batch;
