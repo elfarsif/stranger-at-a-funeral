@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import io.github.elfarsif.entity.Player;
 
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
     private final int originalTileSize = 16;
     private final int scale = 4;
-    private final int tileSize = originalTileSize * scale;
+    public int tileSize = originalTileSize * scale;
     private final int maxScreenCol = 16;
     private final int maxScreenRow = 12;
     private final int screenWidth = tileSize * maxScreenCol;
@@ -20,18 +21,21 @@ public class GamePanel implements ApplicationListener {
 
     private SpriteBatch spriteBatch;
     private Texture playerTexture;
-    private int playerX = 100;
-    private int playerY = 100;
-    private int playerSpeed = 3;
+    private int x = 100;
+    private int y = 100;
+    private int speed= 3;
 
     //SYSTEM
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler;
+    Player player;
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
         playerTexture = new Texture("bucket.png");
+        keyHandler = new KeyHandler();
         Gdx.input.setInputProcessor(keyHandler);
+        player = new Player(this, keyHandler);
     }
 
     @Override
@@ -39,22 +43,8 @@ public class GamePanel implements ApplicationListener {
 
     }
 
-    private void update() {
-        if (keyHandler.upPressed) {
-            playerY += playerSpeed;
-        }
-        if (keyHandler.downPressed) {
-            playerY -= playerSpeed;
-        }
-        if (keyHandler.leftPressed) {
-            playerX -= playerSpeed;
-        }
-        if (keyHandler.rightPressed) {
-            playerX += playerSpeed;
-        }
-        if (Gdx.input.isTouched()) { // If the user has clicked or tapped the screen
-            System.out.println("Touched at: " + Gdx.input.getX() + ", " + Gdx.input.getY());
-        }
+    public void update() {
+        player.update();
     }
 
     @Override
@@ -67,7 +57,7 @@ public class GamePanel implements ApplicationListener {
         ScreenUtils.clear(Color.BROWN);
 
         spriteBatch.begin();
-        spriteBatch.draw(playerTexture, playerX, playerY, tileSize, tileSize);
+        player.draw(spriteBatch);
         spriteBatch.end();
     }
 
