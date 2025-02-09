@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.entity.Player;
 
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
     private final int originalTileSize = 16;
@@ -21,9 +25,6 @@ public class GamePanel implements ApplicationListener {
 
     private SpriteBatch spriteBatch;
     private Texture playerTexture;
-    private int x = 100;
-    private int y = 100;
-    private int speed= 3;
 
     //SYSTEM
     KeyHandler keyHandler;
@@ -36,6 +37,9 @@ public class GamePanel implements ApplicationListener {
         keyHandler = new KeyHandler();
         Gdx.input.setInputProcessor(keyHandler);
         player = new Player(this, keyHandler);
+
+        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+
     }
 
     @Override
