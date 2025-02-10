@@ -11,7 +11,10 @@ import io.github.elfarsif.entity.Player;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import io.github.elfarsif.objects.SuperObject;
 import io.github.elfarsif.tile.TileManager;
+
+import javax.imageio.ImageIO;
 
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
@@ -38,6 +41,8 @@ public class GamePanel implements ApplicationListener {
     public Player player;
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
+    public SuperObject objects[] = new SuperObject[10];
+    public AssetSetter assetSetter = new AssetSetter(this);
 
 
     private static final int FPS = 60;
@@ -55,8 +60,14 @@ public class GamePanel implements ApplicationListener {
         tileManager = new TileManager(this);
         collisionChecker = new CollisionChecker(this);
 
-        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+        //this will just resize window which streches the game
+//        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+        setupGame();
 
+    }
+
+    public void setupGame(){
+        assetSetter.setObject();
     }
 
     @Override
@@ -86,6 +97,12 @@ public class GamePanel implements ApplicationListener {
 
         spriteBatch.begin();
         tileManager.draw(spriteBatch);
+        //paint objects
+        for(int i = 0; i < objects.length; i++){
+            if(objects[i] != null){
+                objects[i].draw(spriteBatch, this);
+            }
+        }
         player.draw(spriteBatch);
         spriteBatch.end();
     }
