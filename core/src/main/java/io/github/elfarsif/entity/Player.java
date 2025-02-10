@@ -1,20 +1,33 @@
 package io.github.elfarsif.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Gdx;
 import io.github.elfarsif.gdx.GamePanel;
 import io.github.elfarsif.gdx.KeyHandler;
+
+import java.awt.*;
 
 public class Player extends Entity {
     private Texture playerTexture;
     private KeyHandler keyHandler;
     GamePanel gp;
+    public final int screenX;
+    public final int screenY;
+
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gp = gamePanel;
         this.keyHandler = keyHandler;
+        screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
+        screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
+
+        solidArea = new Rectangle();
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = gamePanel.tileSize;
+        solidArea.height = gamePanel.tileSize;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -47,11 +60,12 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        x = 10;
-        y = 10;
+        worldX = gp.tileSize * 5;
+        worldY = gp.tileSize * 5;
         speed = 3;
         direction = "down";
     }
+
 
     public void update(){
         boolean isMoving = false;
@@ -62,20 +76,38 @@ public class Player extends Entity {
         if(isMoving){
             if(keyHandler.upPressed){
                 direction = "up";
-                y += speed;
             }
             if(keyHandler.downPressed){
                 direction = "down";
-                y -= speed;
             }
             if(keyHandler.leftPressed){
                 direction = "left";
-                x -= speed;
             }
             if(keyHandler.rightPressed){
                 direction = "right";
-                x += speed;
             }
+
+            //check tile collision
+            collisionOn = false;
+            gp.collisionChecker.checkTile(this);
+
+            if(!collisionOn){
+                switch (direction){
+                    case "up":
+                        worldY += speed;
+                        break;
+                    case "down":
+                        worldY -= speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+
 
             spriteCounter++;
             if(spriteCounter > 12){
@@ -89,7 +121,6 @@ public class Player extends Entity {
         }
 
     }
-
     public void draw(SpriteBatch batch) {
         Texture image = null;
 
@@ -127,7 +158,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        batch.draw(image, x, y, gp.tileSize, gp.tileSize);
+        batch.draw(image, screenX, screenY, gp.tileSize, gp.tileSize);
     }
 
     /**
