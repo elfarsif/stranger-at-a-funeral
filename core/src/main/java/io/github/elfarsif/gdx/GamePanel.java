@@ -8,13 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.entity.Player;
 
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import io.github.elfarsif.objects.SuperObject;
 import io.github.elfarsif.tile.TileManager;
-
-import javax.imageio.ImageIO;
 
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
@@ -31,8 +26,8 @@ public class GamePanel implements ApplicationListener {
     private Texture playerTexture;
 
     //WORLD SETTINGS
-    public final int maxWorldCol = 19;
-    public final int maxWorldRow = 19;
+    public final int maxWorldCol = 64;
+    public final int maxWorldRow = 48;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -41,6 +36,7 @@ public class GamePanel implements ApplicationListener {
     public Player player;
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
+    public SoundWrapper soundWrapper;
     public SuperObject objects[] = new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
 
@@ -59,6 +55,7 @@ public class GamePanel implements ApplicationListener {
         player = new Player(this, keyHandler);
         tileManager = new TileManager(this);
         collisionChecker = new CollisionChecker(this);
+        soundWrapper = new SoundWrapper();
 
         //this will just resize window which streches the game
 //        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
@@ -121,5 +118,19 @@ public class GamePanel implements ApplicationListener {
     public void dispose() {
         spriteBatch.dispose();
         playerTexture.dispose();
+    }
+
+    public void playMusic(int i){
+        soundWrapper.setFile(i);
+        soundWrapper.play();
+        soundWrapper.loop();
+    }
+
+    public void stopMusic(){
+        soundWrapper.stop();
+    }
+    public void playSoundEffect(int i){
+        soundWrapper.setFile(i);
+        soundWrapper.play();
     }
 }
