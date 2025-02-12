@@ -5,10 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
 public class KeyHandler extends InputAdapter {
+    public GamePanel gp;
     public boolean upPressed;
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
+
+    public KeyHandler(GamePanel gp){
+        this.gp = gp;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -23,6 +28,13 @@ public class KeyHandler extends InputAdapter {
         }
         if (keycode == Input.Keys.D) {
             rightPressed = true;
+        }
+        if(keycode == Input.Keys.P){
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
+            }else if(gp.gameState == gp.pauseState){
+                gp.gameState = gp.playState;
+            }
         }
         return true;
     }

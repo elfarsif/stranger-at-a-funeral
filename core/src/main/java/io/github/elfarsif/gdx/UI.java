@@ -8,19 +8,19 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class UI {
-    private GamePanel gP;
+    private GamePanel gp;
     private BitmapFont font;
     private Texture mushroomTexture;
     private boolean messageOn = false;
     private String message = "";
     private int messageCounter = 0;
     public boolean gameFinished = false;
+    SpriteBatch spriteBatch;
 
-    public UI(GamePanel gP) {
-        this.gP = gP;
+    public UI(GamePanel gp) {
+        this.gp = gp;
         this.font = new BitmapFont();
         this.font.getData().setScale(2f);
-        this.mushroomTexture = new Texture(Gdx.files.internal("objects/mushroom.png")); // Load your mushroom texture
     }
 
     public void showMessage(String message) {
@@ -28,30 +28,31 @@ public class UI {
         this.messageOn = true;
     }
 
-    public void draw(SpriteBatch batch) {
-        if (gameFinished) {
-            String text = "Game Finished";
-            GlyphLayout layout = new GlyphLayout(font, text);
-            float x = (gP.screenWidth - layout.width) / 2;
-            float y = gP.screenHeight / 2 - gP.tileSize * 2;
-            font.setColor(Color.WHITE);
-            font.draw(batch, text, x, y);
-        } else {
-            font.setColor(Color.WHITE);
-            batch.draw(mushroomTexture, gP.tileSize / 2f, gP.tileSize / 2f, gP.tileSize, gP.tileSize);
-            font.draw(batch, "x " + gP.player.hasMushroom, 80, 70);
+    public void draw(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
 
-            // MESSAGE
-            if (messageOn) {
-                font.getData().setScale(1.2f);
-                font.draw(batch, message, 80, 150);
-                messageCounter++;
-                if (messageCounter > 100) {
-                    messageOn = false;
-                    messageCounter = 0;
-                }
-                font.getData().setScale(2f); // Reset font scale
-            }
+        font.setColor(Color.WHITE);
+        if (gp.gameState == gp.playState) {
+            // Play state stuff
         }
+
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
+
+    }
+
+    private void drawPauseScreen() {
+        String text = "PAUSED";
+
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight / 2;
+
+        font.draw(spriteBatch, text, x, y);
+    }
+
+    public int getXforCenteredText(String text){
+        GlyphLayout layout = new GlyphLayout(font, text);
+        return (int) (gp.screenWidth / 2 - layout.width / 2);
     }
 }

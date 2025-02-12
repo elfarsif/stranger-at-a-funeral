@@ -41,6 +41,11 @@ public class GamePanel implements ApplicationListener {
     public SuperObject objects[] = new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
 
+    //GAME STATE
+    public int gameState;
+    public final int playState =1;
+    public final int pauseState = 2;
+
 
     private static final int FPS = 60;
     private float deltaAccumulator = 0f;
@@ -51,7 +56,7 @@ public class GamePanel implements ApplicationListener {
     public void create() {
         spriteBatch = new SpriteBatch();
         playerTexture = new Texture("bucket.png");
-        keyHandler = new KeyHandler();
+        keyHandler = new KeyHandler(this);
         Gdx.input.setInputProcessor(keyHandler);
         player = new Player(this, keyHandler);
         tileManager = new TileManager(this);
@@ -68,6 +73,8 @@ public class GamePanel implements ApplicationListener {
     public void setupGame(){
         assetSetter.setObject();
         playMusic(0);
+        stopMusic();
+        gameState = playState;
     }
 
     @Override
@@ -76,7 +83,12 @@ public class GamePanel implements ApplicationListener {
     }
 
     public void update() {
-        player.update();
+        if(gameState == playState){
+            player.update();
+        }
+        if(gameState == playState){
+            //TODO
+        }
     }
 
     @Override
