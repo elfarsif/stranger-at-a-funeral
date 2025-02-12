@@ -135,6 +135,7 @@ public class Player extends Entity {
                 case "mushroom":
                     hasMushroom++;
                     gp.objects[objectIndex] = null;
+                    gp.playSoundEffect(1);
                     break;
                 case "door":
                     if (hasMushroom>0){

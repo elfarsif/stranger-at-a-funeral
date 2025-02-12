@@ -65,6 +65,7 @@ public class GamePanel implements ApplicationListener {
 
     public void setupGame(){
         assetSetter.setObject();
+        playMusic(0);
     }
 
     @Override
