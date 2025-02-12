@@ -11,56 +11,37 @@ import java.awt.*;
 public class Player extends Entity {
     private Texture playerTexture;
     private KeyHandler keyHandler;
-    GamePanel gp;
     public final int screenX;
     public final int screenY;
     public int hasMushroom = 0;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-        this.gp = gamePanel;
+    public Player(GamePanel gp, KeyHandler keyHandler) {
+        super(gp);
+        this.gp = gp;
         this.keyHandler = keyHandler;
-        screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
-        screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
+        screenX = gp.screenWidth / 2 - gp.tileSize / 2;
+        screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
         solidArea = new Rectangle();
         solidArea.x = 0;
         solidArea.y = 0;
-        solidArea.width = gamePanel.tileSize;
-        solidArea.height = gamePanel.tileSize;
+        solidArea.width = gp.tileSize;
+        solidArea.height = gp.tileSize;
 
         setDefaultValues();
         getPlayerImage();
     }
 
     private void getPlayerImage() {
-        try {
-            down1 = new Texture("player/walking/down1.png");
-            down2 = new Texture("player/walking/down2.png");
-            down3 = new Texture("player/walking/down3.png");
-            down4 = new Texture("player/walking/down4.png");
-            down5 = new Texture("player/walking/down5.png");
-            down6 = new Texture("player/walking/down6.png");
-            up1 = new Texture("player/walking/up1.png");
-            up2 = new Texture("player/walking/up2.png");
-            up3 = new Texture("player/walking/up3.png");
-            up4 = new Texture("player/walking/up4.png");
-            up5 = new Texture("player/walking/up5.png");
-            up6 = new Texture("player/walking/up6.png");
-            left1 = new Texture("player/walking/left1.png");
-            left2 = new Texture("player/walking/left2.png");
-            left3 = new Texture("player/walking/left3.png");
-            left4 = new Texture("player/walking/left4.png");
-            left5 = new Texture("player/walking/left5.png");
-            left6 = new Texture("player/walking/left6.png");
-            right1 = new Texture("player/walking/right1.png");
-            right2 = new Texture("player/walking/right2.png");
-            right3 = new Texture("player/walking/right3.png");
-            right4 = new Texture("player/walking/right4.png");
-            right5 = new Texture("player/walking/right5.png");
-            right6 = new Texture("player/walking/right6.png");
-        } catch (Exception e) {
-            throw new RuntimeException("Error reading image :" + e);
-        }
+        down1 = setup("player/walking/down1.png");
+        down2 = setup("player/walking/down2.png");
+        up1 = setup("player/standing/character.png");
+        up2 = setup("player/standing/character.png");
+        left1 = setup("player/standing/character.png");
+        left2 = setup("player/standing/character.png");
+        right1 = setup("player/standing/character.png");
+        right2 = setup("player/standing/character.png");
+
     }
 
     public void setDefaultValues() {
@@ -98,6 +79,10 @@ public class Player extends Entity {
             int objectIndex = gp.collisionChecker.checkObject(this, true);
             pickUpObject(objectIndex);
 
+            //check npc collision
+            int npcIndex = gp.collisionChecker.checkEntity(this,gp.npc);
+            interactNPC(npcIndex);
+
             if (!collisionOn) {
                 switch (direction) {
                     case "up":
@@ -126,6 +111,12 @@ public class Player extends Entity {
             }
         }
 
+    }
+
+    private void interactNPC(int i) {
+        if(i != 999){
+            System.out.println("Interacting with NPC");
+        }
     }
 
     private void pickUpObject(int objectIndex) {
@@ -171,7 +162,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        batch.draw(image, screenX, screenY, gp.tileSize, gp.tileSize);
+        batch.draw(image, screenX, screenY, gp.tileSize*2, gp.tileSize*2);
     }
 
     /**

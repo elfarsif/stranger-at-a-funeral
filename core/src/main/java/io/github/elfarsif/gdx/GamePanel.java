@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 
 import io.github.elfarsif.objects.SuperObject;
@@ -39,6 +40,7 @@ public class GamePanel implements ApplicationListener {
     public SoundWrapper soundWrapper;
     public UI ui;
     public SuperObject objects[] = new SuperObject[10];
+    public Entity[] npc = new Entity[10];
     public AssetSetter assetSetter = new AssetSetter(this);
 
     //GAME STATE
@@ -72,6 +74,7 @@ public class GamePanel implements ApplicationListener {
 
     public void setupGame(){
         assetSetter.setObject();
+        assetSetter.setNPC();
         playMusic(0);
         stopMusic();
         gameState = playState;
@@ -85,6 +88,12 @@ public class GamePanel implements ApplicationListener {
     public void update() {
         if(gameState == playState){
             player.update();
+            //update all npc
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
         }
         if(gameState == playState){
             //TODO
@@ -116,6 +125,13 @@ public class GamePanel implements ApplicationListener {
         for(int i = 0; i < objects.length; i++){
             if(objects[i] != null){
                 objects[i].draw(spriteBatch, this);
+            }
+        }
+
+        //NPC
+        for(int i = 0; i < npc.length; i++){
+            if(npc[i] != null){
+                npc[i].draw(spriteBatch);
             }
         }
 
