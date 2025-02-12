@@ -37,6 +37,7 @@ public class GamePanel implements ApplicationListener {
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
     public SoundWrapper soundWrapper;
+    public UI ui;
     public SuperObject objects[] = new SuperObject[10];
     public AssetSetter assetSetter = new AssetSetter(this);
 
@@ -56,6 +57,7 @@ public class GamePanel implements ApplicationListener {
         tileManager = new TileManager(this);
         collisionChecker = new CollisionChecker(this);
         soundWrapper = new SoundWrapper();
+        ui = new UI(this);
 
         //this will just resize window which streches the game
 //        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
@@ -94,14 +96,23 @@ public class GamePanel implements ApplicationListener {
         ScreenUtils.clear(Color.BLACK);
 
         spriteBatch.begin();
+
+        //DRAW TILES
         tileManager.draw(spriteBatch);
-        //paint objects
+
+        //DRAW OBJECTS
         for(int i = 0; i < objects.length; i++){
             if(objects[i] != null){
                 objects[i].draw(spriteBatch, this);
             }
         }
+
+        //DRAW PLAYER
         player.draw(spriteBatch);
+
+        //DRAW UI
+        ui.draw(spriteBatch);
+
         spriteBatch.end();
     }
 
