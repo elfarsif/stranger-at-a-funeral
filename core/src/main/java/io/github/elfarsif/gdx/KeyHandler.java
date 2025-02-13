@@ -4,35 +4,53 @@ package io.github.elfarsif.gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import java.awt.event.KeyEvent;
+
 public class KeyHandler extends InputAdapter {
     public GamePanel gp;
     public boolean upPressed;
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
+    public boolean ePressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.W) {
-            upPressed = true;
-        }
-        if (keycode == Input.Keys.A) {
-            leftPressed = true;
-        }
-        if (keycode == Input.Keys.S) {
-            downPressed = true;
-        }
-        if (keycode == Input.Keys.D) {
-            rightPressed = true;
-        }
-        if(keycode == Input.Keys.P){
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
-            }else if(gp.gameState == gp.pauseState){
+    public boolean keyDown(int code) {
+        //PLAY STATE
+        if(gp.gameState == gp.playState){
+            if (code == Input.Keys.W) {
+                upPressed = true;
+            }
+            if (code == Input.Keys.A) {
+                leftPressed = true;
+            }
+            if (code == Input.Keys.S) {
+                downPressed = true;
+            }
+            if (code == Input.Keys.D) {
+                rightPressed = true;
+            }
+            if(code == Input.Keys.E){
+                ePressed = true;
+            }
+
+            if(code == Input.Keys.P){
+                if(gp.gameState == gp.playState){
+                    gp.gameState = gp.pauseState;
+                }else if(gp.gameState == gp.pauseState){
+                    gp.gameState = gp.playState;
+                }
+            }
+        }else if(gp.gameState == gp.dialogueState){
+            if(code == Input.Keys.SPACE){
+                gp.gameState = gp.playState;
+            }
+        }else if(gp.gameState == gp.pauseState){
+            if(code == Input.Keys.P){
                 gp.gameState = gp.playState;
             }
         }

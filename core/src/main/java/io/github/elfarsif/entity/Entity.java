@@ -26,6 +26,8 @@ public class Entity {
     public Boolean collisionOn = false;
 
     public int actionLookCounter = 0;
+    String[] dialogs = new String[10];
+    int dialogIndex=0;
 
     public Entity(GamePanel gp){
         this.gp = gp;
@@ -75,6 +77,15 @@ public class Entity {
         } catch (Exception e) {
             throw new RuntimeException("Error reading image :"+e);
         }
+    }
+
+    public void speak(){
+        if(dialogs[dialogIndex] == null){
+            dialogIndex = 0;
+            gp.gameState = gp.playState;
+        }
+        gp.ui.currentDialog = dialogs[dialogIndex];
+        dialogIndex++;
     }
 
     public void draw(SpriteBatch batch) {

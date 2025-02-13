@@ -33,7 +33,7 @@ public class GamePanel implements ApplicationListener {
     public final int worldHeight = tileSize * maxWorldRow;
 
     //SYSTEM
-    KeyHandler keyHandler;
+    public KeyHandler keyHandler;
     public Player player;
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
@@ -47,6 +47,7 @@ public class GamePanel implements ApplicationListener {
     public int gameState;
     public final int playState =1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
 
     private static final int FPS = 60;
@@ -73,11 +74,11 @@ public class GamePanel implements ApplicationListener {
     }
 
     public void setupGame(){
+        gameState = playState;
         assetSetter.setObject();
         assetSetter.setNPC();
         playMusic(0);
         stopMusic();
-        gameState = playState;
     }
 
     @Override
