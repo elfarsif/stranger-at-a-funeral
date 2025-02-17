@@ -48,6 +48,7 @@ public class GamePanel implements ApplicationListener {
     public final int playState =1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+    public final int titleState = 4;
 
 
     private static final int FPS = 60;
@@ -119,28 +120,34 @@ public class GamePanel implements ApplicationListener {
 
         spriteBatch.begin();
 
-        //DRAW TILES
-        tileManager.draw(spriteBatch);
+        if (gameState == titleState){
+            ui.draw(spriteBatch);
+        }else{
+            //DRAW TILES
+            tileManager.draw(spriteBatch);
 
-        //DRAW OBJECTS
-        for(int i = 0; i < objects.length; i++){
-            if(objects[i] != null){
-                objects[i].draw(spriteBatch, this);
+            //DRAW OBJECTS
+            for(int i = 0; i < objects.length; i++){
+                if(objects[i] != null){
+                    objects[i].draw(spriteBatch, this);
+                }
             }
+
+            //NPC
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].draw(spriteBatch);
+                }
+            }
+
+            //DRAW PLAYER
+            player.draw(spriteBatch);
+
+            //DRAW UI
+            ui.draw(spriteBatch);
         }
 
-        //NPC
-        for(int i = 0; i < npc.length; i++){
-            if(npc[i] != null){
-                npc[i].draw(spriteBatch);
-            }
-        }
 
-        //DRAW PLAYER
-        player.draw(spriteBatch);
-
-        //DRAW UI
-        ui.draw(spriteBatch);
 
         spriteBatch.end();
     }

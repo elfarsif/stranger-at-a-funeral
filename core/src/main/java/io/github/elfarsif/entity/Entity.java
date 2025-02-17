@@ -12,16 +12,16 @@ public class Entity {
     public GamePanel gp;
     public int worldX, worldY;
     public int speed;
-    public Texture down1, down2,down3,down4,down5,down6,
-            up1, up2, up3, up4, up5, up6,
-            left1, left2, left3, left4, left5, left6,
-            right1, right2, right3, right4, right5, right6;
+    public Texture down1, down2,down3,down4,down5,down6,down7,down8,
+            up1, up2, up3, up4, up5, up6,up7, up8,
+            left1, left2, left3, left4, left5, left6,left7, left8,
+            right1, right2, right3, right4, right5, right6, right7, right8;
     public String direction;
 
     int spriteCounter = 0;
     int spriteNumber =1;
 
-    public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public Rectangle solidArea ;
     public int solidAreaDefaultX, solidAreaDefaultY;
     public Boolean collisionOn = false;
 
@@ -31,6 +31,7 @@ public class Entity {
 
     public Entity(GamePanel gp){
         this.gp = gp;
+        solidArea = new Rectangle(0,0,48,48);
     }
 
     public void setAction(){}
@@ -46,10 +47,10 @@ public class Entity {
         if (!collisionOn) {
             switch (direction) {
                 case "up":
-                    worldY -= speed;
+                    worldY += speed;
                     break;
                 case "down":
-                    worldY += speed;
+                    worldY -= speed;
                     break;
                 case "left":
                     worldX -= speed;
