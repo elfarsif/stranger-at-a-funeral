@@ -16,6 +16,19 @@ public class SuperObject {
     public int solidAreaDefaultX=0;
     public int solidAreaDefaultY=0;
 
+    public SuperObject(){
+        setDefaultSolidArea();
+    }
+    private void setDefaultSolidArea() {
+        solidArea = new Rectangle();
+        solidArea.x = 12*3;
+        solidArea.y = 24*3;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 8*3;
+        solidArea.height = 8*3;
+    }
+
 
     public void draw(SpriteBatch g2d, GamePanel gamePanel){
         int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;

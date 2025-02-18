@@ -13,6 +13,7 @@ public class KeyHandler extends InputAdapter {
     public boolean leftPressed;
     public boolean rightPressed;
     public boolean ePressed;
+    public boolean tPressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -20,6 +21,10 @@ public class KeyHandler extends InputAdapter {
 
     @Override
     public boolean keyDown(int code) {
+        //DEBUG TIME
+        if(code == Input.Keys.T){
+            tPressed = !tPressed;
+        }
         //PLAY STATE
         if(gp.gameState == gp.playState){
             if (code == Input.Keys.W) {

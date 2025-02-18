@@ -31,7 +31,19 @@ public class Entity {
 
     public Entity(GamePanel gp){
         this.gp = gp;
-        solidArea = new Rectangle(0,0,48,48);
+        setDefaultSolidArea();
+
+    }
+
+    private void setDefaultSolidArea() {
+        solidArea = new Rectangle();
+        solidArea.x = 12*3;
+        solidArea.y = 24*3;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 8*3;
+        solidArea.height = 8*3;
+
     }
 
     public void setAction(){}

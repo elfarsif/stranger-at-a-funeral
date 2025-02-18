@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.entity.Entity;
@@ -42,6 +43,8 @@ public class GamePanel implements ApplicationListener {
     public SuperObject objects[] = new SuperObject[10];
     public Entity[] npc = new Entity[10];
     public AssetSetter assetSetter = new AssetSetter(this);
+    private BitmapFont font;
+
 
     //GAME STATE
     public int gameState;
@@ -67,6 +70,10 @@ public class GamePanel implements ApplicationListener {
         collisionChecker = new CollisionChecker(this);
         soundWrapper = new SoundWrapper();
         ui = new UI(this);
+        //FONT DEBUG
+        this.font = new BitmapFont();
+        this.font.getData().setScale(2f);
+        this.font.setColor(Color.WHITE);
 
         //this will just resize window which streches the game
 //        Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
@@ -119,6 +126,11 @@ public class GamePanel implements ApplicationListener {
         ScreenUtils.clear(Color.BLACK);
 
         spriteBatch.begin();
+        //DEBUG
+        long drawStart = 0;
+        if(keyHandler.tPressed){
+            drawStart = System.nanoTime();
+        }
 
         if (gameState == titleState){
             ui.draw(spriteBatch);
@@ -147,7 +159,13 @@ public class GamePanel implements ApplicationListener {
             ui.draw(spriteBatch);
         }
 
-
+        //DEBUG
+        if(keyHandler.tPressed){
+            long drawEnd = System.nanoTime();
+            long drawTime = drawEnd - drawStart;
+            font.draw(spriteBatch, "Draw Time: " + drawTime, 10, 30);
+            System.out.println("Draw Time: " + drawTime);
+        }
 
         spriteBatch.end();
     }
