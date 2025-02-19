@@ -4,7 +4,6 @@ package io.github.elfarsif.gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
-import java.awt.event.KeyEvent;
 
 public class KeyHandler extends InputAdapter {
     public GamePanel gp;
@@ -24,6 +23,36 @@ public class KeyHandler extends InputAdapter {
         //DEBUG TIME
         if(code == Input.Keys.T){
             tPressed = !tPressed;
+        }
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+            if (code == Input.Keys.W) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0){
+                    gp.ui.commandNum = 2;
+                }
+            }
+            if (code == Input.Keys.S) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2){
+                    gp.ui.commandNum = 0;
+                }
+
+            }
+            if(code == Input.Keys.ENTER){
+                switch (gp.ui.commandNum){
+                    case 0:
+                        gp.gameState = gp.playState;
+                        gp.playMusic(0);
+                        break;
+                    case 1:
+                        System.out.println("Load Game not implemented");
+                        break;
+                    case 2:
+                        System.exit(0);
+                        break;
+                }
+            }
         }
         //PLAY STATE
         if(gp.gameState == gp.playState){

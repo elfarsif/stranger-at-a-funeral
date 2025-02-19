@@ -21,12 +21,23 @@ public class UI {
     SpriteBatch spriteBatch;
     public String currentDialog;
     private ShapeRenderer shapeRenderer;
+    private Texture titleScreenImage;
+    public int commandNum = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
         this.font = new BitmapFont();
         this.font.getData().setScale(2f);
         this.shapeRenderer = shapeRenderer;
+        loadBackgroundImage();
+    }
+
+    private void loadBackgroundImage() {
+        try{
+            titleScreenImage = new Texture(Gdx.files.internal("player/standing/character.png"));
+        }catch (Exception e){
+            throw new RuntimeException("Error loading image Door:"+e);
+        }
     }
 
     public void showMessage(String message) {
@@ -59,11 +70,46 @@ public class UI {
 
     private void drawTitleScreen() {
         font.getData().setScale(2f);
-        String text = "Title Screen";
-//        GlyphLayout layout = new GlyphLayout(font, text);
+        String text = "Spiritstead";
         int x = getXforCenteredText(text);
-        int y = gp.screenHeight/2;
+        int y = gp.screenHeight - gp.tileSize*2;
+
+        //SHADOW
+        font.setColor(Color.GRAY);
+        font.draw(spriteBatch, text, x + 3, y - 3);
+        font.setColor(Color.WHITE);
         font.draw(spriteBatch, text, x, y);
+
+        //Image
+        x = gp.screenWidth / 2 - gp.tileSize;
+        y -= gp.tileSize*3;
+        spriteBatch.draw(titleScreenImage, x, y, gp.tileSize*2, gp.tileSize*2);
+
+        //MENU
+        font.getData().setScale(1.5f);
+        text = "New Game";
+        x = getXforCenteredText(text);
+        y -= gp.tileSize;
+        font.draw(spriteBatch, text, x, y);
+        if(commandNum == 0){
+            font.draw(spriteBatch, ">", x - gp.tileSize, y);
+        }
+
+        text = "Load Game";
+        x = getXforCenteredText(text);
+        y -= gp.tileSize;
+        font.draw(spriteBatch, text, x, y);
+        if(commandNum == 1){
+            font.draw(spriteBatch, ">", x - gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = getXforCenteredText(text);
+        y -= gp.tileSize;
+        font.draw(spriteBatch, text, x, y);
+        if(commandNum == 2){
+            font.draw(spriteBatch, ">", x - gp.tileSize, y);
+        }
     }
 
     private void drawDialogScreen() {
