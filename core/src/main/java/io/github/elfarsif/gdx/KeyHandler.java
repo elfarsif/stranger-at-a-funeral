@@ -42,11 +42,11 @@ public class KeyHandler extends InputAdapter {
             if(code == Input.Keys.ENTER){
                 switch (gp.ui.commandNum){
                     case 0:
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
+                        System.out.println("New Game not implemented");
                         break;
                     case 1:
-                        System.out.println("Load Game not implemented");
+                        gp.gameState = gp.playState;
+                        gp.playMusic(0);
                         break;
                     case 2:
                         System.exit(0);
