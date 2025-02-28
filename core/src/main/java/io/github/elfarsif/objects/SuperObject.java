@@ -1,6 +1,7 @@
 package io.github.elfarsif.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class SuperObject {
 
-    Texture image;
+    Sprite image;
     public String name;
     public boolean collision = false;
     public int worldX,worldY;
@@ -40,7 +41,7 @@ public class SuperObject {
             worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
             worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY){
 
-            g2d.draw(image, screenX, screenY, gamePanel.tileSize*2, gamePanel.tileSize*2);
+            g2d.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
         }
 
     }

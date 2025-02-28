@@ -46,7 +46,6 @@ public class KeyHandler extends InputAdapter {
                         break;
                     case 1:
                         gp.gameState = gp.playState;
-                        gp.playMusic(0);
                         break;
                     case 2:
                         System.exit(0);

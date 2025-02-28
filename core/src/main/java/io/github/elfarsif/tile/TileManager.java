@@ -26,123 +26,48 @@ public class TileManager {
     }
 
     private void getTileImage() {
+        setup(0, "tiles/grass-plain.png", false);
+        setup(1, "tiles/dirt.png", true);
+        setup(2, "tiles/water-plain.png", true);
+        setup(3, "tiles/top-border.png", true);
+        setup(4, "tiles/left-top-border.png", true);
+        setup(5, "tiles/left-border.png", true);
+        setup(6, "tiles/border-convex-bottom-left.png", true);
+        setup(7, "tiles/right-border.png", true);
+        setup(8, "tiles/border-convex-bottom-right.png", true);
+        setup(9, "tiles/border-convex-bottom-left-water.png", true);
+        setup(10, "tiles/border-convex-bottom-right-water.png", true);
+        setup(11, "tiles/border-right-water-1.png", true);
+        setup(12, "tiles/border-left-water-1.png", true);
+        setup(13, "tiles/border-convex-bottom-left-water-1.png", true);
+        setup(14, "tiles/border-concave-right-bottom-water-1.png", true);
+        setup(15, "tiles/border-bottom-water-1.png", true);
+        setup(16, "tiles/border-top-left-water-intersection.png", true);
+        setup(17, "tiles/border-concave-bottom-left-water-1.png", true);
+        setup(18, "tiles/border-convex-top-left-water-1.png", true);
+        setup(19, "tiles/border-top-water-1.png", true);
+        setup(20, "tiles/border-convex-top-right-water-1.png", true);
+        setup(21, "tiles/border-concave-bottom-left-water-intersection.png", true);
+        setup(22, "tiles/border-concave-top-right.png", true);
+        setup(23, "tiles/border-right.png", true);
+        setup(24, "tiles/border-concave-bottom-right.png", true);
+        setup(25, "tiles/border-bottom.png", true);
+        setup(26, "tiles/border-concave-left-bottom.png", true);
+
+        //House tiles
+        for (int i = 27; i <= 46; i++) {
+            setup(i, "tiles/house/house-" + (i - 27) / 4 + "-" + (i - 27) % 4 + ".png", true);
+        }
+
+    }
+
+    private void setup(int index, String imagePath, boolean collision) {
         try {
-            tile[0] = new Tile();
-            tile[0].image = new Texture("tiles/grass-plain.png");
-
-            tile[1] = new Tile();
-            tile[1].image = new Texture("tiles/dirt.png");
-            tile[1].collision = true;
-
-            tile[2] = new Tile();
-            tile[2].image = new Texture("tiles/water-plain.png");
-            tile[2].collision = true;
-
-            tile[3] = new Tile();
-            tile[3].image = new Texture("tiles/top-border.png");
-            tile[3].collision = true;
-
-            tile[4] = new Tile();
-            tile[4].image = new Texture("tiles/left-top-border.png");
-            tile[4].collision = true;
-
-            tile[5] = new Tile();
-            tile[5].image = new Texture("tiles/left-border.png");
-            tile[5].collision = true;
-
-            tile[6] = new Tile();
-            tile[6].image = new Texture("tiles/border-convex-bottom-left.png");
-            tile[6].collision = true;
-
-            tile[7] = new Tile();
-            tile[7].image = new Texture("tiles/right-border.png");
-            tile[7].collision = true;
-
-            tile[8] = new Tile();
-            tile[8].image = new Texture("tiles/border-convex-bottom-right.png");
-            tile[8].collision = true;
-
-            tile[9] = new Tile();
-            tile[9].image = new Texture("tiles/border-convex-bottom-left-water.png");
-            tile[9].collision = true;
-
-            tile[10] = new Tile();
-            tile[10].image = new Texture("tiles/border-convex-bottom-right-water.png");
-            tile[10].collision = true;
-
-            tile[11] = new Tile();
-            tile[11].image = new Texture("tiles/border-right-water-1.png");
-            tile[11].collision = true;
-
-            tile[12] = new Tile();
-            tile[12].image = new Texture("tiles/border-left-water-1.png");
-            tile[12].collision = true;
-
-            tile[13] = new Tile();
-            tile[13].image = new Texture("tiles/border-convex-bottom-left-water-1.png");
-            tile[13].collision = true;
-
-            tile[14] = new Tile();
-            tile[14].image = new Texture("tiles/border-concave-right-bottom-water-1.png");
-            tile[14].collision = true;
-
-            tile[15] = new Tile();
-            tile[15].image = new Texture("tiles/border-bottom-water-1.png");
-            tile[15].collision = true;
-
-            tile[16] = new Tile();
-            tile[16].image = new Texture("tiles/border-top-left-water-intersection.png");
-            tile[16].collision = true;
-
-            tile[17] = new Tile();
-            tile[17].image = new Texture("tiles/border-concave-bottom-left-water-1.png");
-            tile[17].collision = true;
-
-            tile[18] = new Tile();
-            tile[18].image = new Texture("tiles/border-convex-top-left-water-1.png");
-            tile[18].collision = true;
-
-            tile[19] = new Tile();
-            tile[19].image = new Texture("tiles/border-top-water-1.png");
-            tile[19].collision = true;
-
-            tile[20] = new Tile();
-            tile[20].image = new Texture("tiles/border-convex-top-right-water-1.png");
-            tile[20].collision = true;
-
-            tile[21] = new Tile();
-            tile[21].image = new Texture("tiles/border-concave-bottom-left-water-intersection.png");
-            tile[21].collision = true;
-
-            tile[22] = new Tile();
-            tile[22].image = new Texture("tiles/border-concave-top-right.png");
-            tile[22].collision = true;
-
-            tile[23] = new Tile();
-            tile[23].image = new Texture("tiles/border-right.png");
-            tile[23].collision = true;
-
-            tile[24] = new Tile();
-            tile[24].image = new Texture("tiles/border-concave-bottom-right.png");
-            tile[24].collision = true;
-
-            tile[25] = new Tile();
-            tile[25].image = new Texture("tiles/border-bottom.png");
-            tile[25].collision = true;
-
-            tile[26] = new Tile();
-            tile[26].image = new Texture("tiles/border-concave-left-bottom.png");
-            tile[26].collision = true;
-
-            //House tiles
-            for (int i = 27; i <= 46; i++) {
-                tile[i] = new Tile();
-                tile[i].image = new Texture("tiles/house/house-" + (i - 27) / 4 + "-" + (i - 27) % 4 + ".png");
-                tile[i].collision = true;
-            }
-
+            tile[index] = new Tile();
+            tile[index].image = new Texture(imagePath);
+            tile[index].collision = collision;
         } catch (Exception e) {
-            throw new RuntimeException("Tile image not found "+e);
+            throw new RuntimeException("Error loading image Tile:"+e);
         }
     }
 

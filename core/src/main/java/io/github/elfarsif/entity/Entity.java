@@ -1,6 +1,7 @@
 package io.github.elfarsif.entity;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 
@@ -12,7 +13,7 @@ public class Entity {
     public GamePanel gp;
     public int worldX, worldY;
     public int speed;
-    public Texture down1, down2,down3,down4,down5,down6,down7,down8,
+    public Sprite down1, down2,down3,down4,down5,down6,down7,down8,
             up1, up2, up3, up4, up5, up6,up7, up8,
             left1, left2, left3, left4, left5, left6,left7, left8,
             right1, right2, right3, right4, right5, right6, right7, right8;
@@ -84,12 +85,15 @@ public class Entity {
             spriteCounter = 0;
         }
     }
-    public Texture setup(String path){
+    public Sprite setup(String path){
+        Sprite image = null;
         try {
-            return new Texture(path);
+            image = new Sprite(new Texture(path));
+            image.setSize(gp.tileSize*2, gp.tileSize*2);
         } catch (Exception e) {
             throw new RuntimeException("Error reading image :"+e);
         }
+        return image;
     }
 
     public void speak(){
@@ -102,7 +106,7 @@ public class Entity {
     }
 
     public void draw(SpriteBatch batch) {
-        Texture image = null;
+        Sprite image = null;
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;

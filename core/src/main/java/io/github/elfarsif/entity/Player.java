@@ -2,6 +2,7 @@ package io.github.elfarsif.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 import io.github.elfarsif.gdx.KeyHandler;
@@ -187,7 +188,7 @@ public class Player extends Entity {
     }
 
     public void draw(SpriteBatch batch) {
-        Texture image = null;
+        Sprite image = null;
 
         switch (direction) {
             case "down":
@@ -398,7 +399,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        batch.draw(image, screenX, screenY, gp.tileSize * 2, gp.tileSize * 2);
+        batch.draw(image,screenX,screenY, image.getWidth(), image.getHeight());
     }
 
     /**
