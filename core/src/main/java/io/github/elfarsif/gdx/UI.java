@@ -2,6 +2,7 @@ package io.github.elfarsif.gdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -28,7 +29,7 @@ public class UI {
         this.gp = gp;
         this.font = new BitmapFont();
         this.font.getData().setScale(2f);
-        this.shapeRenderer = shapeRenderer;
+        this.shapeRenderer = new ShapeRenderer();
         loadBackgroundImage();
     }
 
@@ -120,22 +121,28 @@ public class UI {
         int height = gp.tileSize*5;
 
         drawSubWindow(x,y,width,height);
+        font = new BitmapFont();
         font.getData().setScale(1.5f); // Adjust font size as needed
         font.setColor(Color.WHITE);
-//        GlyphLayout layout = new GlyphLayout(font, currentDialog);
         font.draw(spriteBatch, currentDialog, x + gp.tileSize, y + height - gp.tileSize);
     }
 
     public void drawSubWindow(int x, int y, int width, int height){
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(new Color(0, 0, 0, 0.8f)); // Semi-transparent black
-        shapeRenderer.rect(x, y, width, height);
-        shapeRenderer.end();
+        Texture rectangleTexture;
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.rect(x + 3, y + 3, width - 6, height - 6);
-        shapeRenderer.end();
+        // Draw filled rectangle (semi-transparent black)
+        pixmap.setColor(new Color(0, 0, 0, 0.8f));
+        pixmap.fillRectangle(0, 0, width, height);
+
+        // Draw border (white)
+        pixmap.setColor(Color.WHITE);
+        pixmap.drawRectangle(3, 3, width - 6, height - 6);
+
+        // Convert Pixmap to Texture
+        rectangleTexture = new Texture(pixmap);
+        pixmap.dispose();
+        gp.spriteBatch.draw(rectangleTexture, x, y);
     }
 
     private void drawPauseScreen() {

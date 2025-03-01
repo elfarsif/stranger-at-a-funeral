@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 
+
 import io.github.elfarsif.objects.SuperObject;
 import io.github.elfarsif.tile.TileManager;
 
@@ -24,7 +25,7 @@ public class GamePanel implements ApplicationListener {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    private SpriteBatch spriteBatch;
+    public SpriteBatch spriteBatch;
     private Texture playerTexture;
 
     //WORLD SETTINGS
@@ -44,7 +45,7 @@ public class GamePanel implements ApplicationListener {
     public Entity[] npc = new Entity[10];
     public AssetSetter assetSetter = new AssetSetter(this);
     private BitmapFont font;
-
+    public EventHandler eventHandler = new EventHandler(this);
 
     //GAME STATE
     public int gameState;
@@ -115,17 +116,21 @@ public class GamePanel implements ApplicationListener {
         deltaAccumulator += deltaTime;
 
         while (deltaAccumulator >= updateInterval) {
+
+            spriteBatch.begin();
             update();
+            draw();
+            spriteBatch.end();
             deltaAccumulator -= updateInterval;
         }
 
-        draw();
+
     }
 
     private void draw() {
+
         ScreenUtils.clear(Color.BLACK);
 
-        spriteBatch.begin();
         //DEBUG
         long drawStart = 0;
         if(keyHandler.tPressed){
@@ -167,7 +172,6 @@ public class GamePanel implements ApplicationListener {
             System.out.println("Draw Time: " + drawTime);
         }
 
-        spriteBatch.end();
     }
 
     @Override
