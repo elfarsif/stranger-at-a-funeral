@@ -10,9 +10,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 
-
-import io.github.elfarsif.objects.SuperObject;
 import io.github.elfarsif.tile.TileManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
@@ -36,16 +38,19 @@ public class GamePanel implements ApplicationListener {
 
     //SYSTEM
     public KeyHandler keyHandler;
-    public Player player;
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
     public SoundWrapper soundWrapper;
     public UI ui;
-    public SuperObject objects[] = new SuperObject[10];
-    public Entity[] npc = new Entity[10];
     public AssetSetter assetSetter = new AssetSetter(this);
     private BitmapFont font;
     public EventHandler eventHandler = new EventHandler(this);
+
+    //ENTITIES AND OBJECTS
+    public Player player;
+    public Entity[] objects = new Entity[10];
+    public Entity[] npc = new Entity[10];
+    ArrayList<Entity> entities = new ArrayList<Entity>();
 
     //GAME STATE
     public int gameState;
@@ -143,22 +148,38 @@ public class GamePanel implements ApplicationListener {
             //DRAW TILES
             tileManager.draw(spriteBatch);
 
-            //DRAW OBJECTS
-            for(int i = 0; i < objects.length; i++){
-                if(objects[i] != null){
-                    objects[i].draw(spriteBatch, this);
+            //ADD ENTITIES TO LIST
+            entities.add(player);
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    entities.add(npc[i]);
                 }
             }
 
             //NPC
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i] != null){
-                    npc[i].draw(spriteBatch);
+            for(int i = 0; i < objects.length; i++){
+                if(objects[i] != null){
+                    entities.add(objects[i]);
                 }
             }
 
-            //DRAW PLAYER
-            player.draw(spriteBatch);
+            //SORT by world Y so lower entities are drawn first so that higher entities dont overlap on top
+            Collections.sort(entities, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e2.worldY, e1.worldY);
+                    return result;
+                }
+            });
+
+
+            //DRAW ENTITIES
+            for(Entity e : entities){
+                e.draw(spriteBatch);
+            }
+
+            //EMPTY LIST
+            entities.clear();
 
             //DRAW UI
             ui.draw(spriteBatch);

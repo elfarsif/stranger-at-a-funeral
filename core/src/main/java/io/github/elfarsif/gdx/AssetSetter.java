@@ -1,7 +1,6 @@
 package io.github.elfarsif.gdx;
 
 import io.github.elfarsif.entity.Oscael;
-import io.github.elfarsif.objects.Door;
 import io.github.elfarsif.objects.PineTree;
 
 public class AssetSetter {
