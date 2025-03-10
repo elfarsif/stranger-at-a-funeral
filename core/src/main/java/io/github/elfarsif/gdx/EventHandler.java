@@ -32,7 +32,7 @@ public class EventHandler {
     }
 
     public void checkEvent(){
-        if(hit(9,6,"any")){
+        if(hit(9,6,"up")){
             findTreasure(9,6);
         }
 
@@ -43,7 +43,8 @@ public class EventHandler {
         gp.gameState = 3;
         gp.ui.currentDialog = "You found a treasure chest!";
         gp.ui.draw(gp.spriteBatch);
-        eventRect[col][row].eventDone = true;
+        eventRect[col][row].eventDone = false;
+        gp.player.currentLife --;
     }
 
     public boolean hit(int col, int row, String reqDirection){

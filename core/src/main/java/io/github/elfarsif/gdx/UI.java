@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import io.github.elfarsif.entity.Entity;
+import io.github.elfarsif.objects.HealthBar;
 
 import java.awt.*;
 
@@ -24,6 +27,7 @@ public class UI {
     private ShapeRenderer shapeRenderer;
     private Texture titleScreenImage;
     public int commandNum = 0;
+    Sprite health1, health2, health3;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -31,6 +35,12 @@ public class UI {
         this.font.getData().setScale(2f);
         this.shapeRenderer = new ShapeRenderer();
         loadBackgroundImage();
+
+        //CREATE HEALTH OBJECTS
+        Entity healthBar = new HealthBar(gp);
+        health1 = healthBar.down1;
+        health2 = healthBar.down2;
+        health3 = healthBar.down3;
     }
 
     private void loadBackgroundImage() {
@@ -53,6 +63,7 @@ public class UI {
         //Play State
         if (gp.gameState == gp.playState){
             //play state studd
+            drawHealthBar();
         }
 
         //Pause State
@@ -62,10 +73,32 @@ public class UI {
         //Dialog State
         if (gp.gameState == gp.dialogueState){
             drawDialogScreen();
+            drawHealthBar();
         }
         //TITLE STATE
         if(gp.gameState == gp.titleState){
             drawTitleScreen();
+        }
+    }
+
+    private void drawHealthBar() {
+        int x = gp.tileSize/2;
+        int y = gp.tileSize;
+
+        if(gp.player.currentLife == 3){
+            spriteBatch.draw(health3, x, y, gp.tileSize, gp.tileSize*4);
+        }
+
+        if(gp.player.currentLife == 2){
+            spriteBatch.draw(health2, x, y, gp.tileSize, gp.tileSize*4);
+        }
+
+        if(gp.player.currentLife == 1){
+            spriteBatch.draw(health1, x, y, gp.tileSize, gp.tileSize*4);
+        }
+
+        if(gp.player.currentLife <= 0){
+            spriteBatch.draw(health1, x, y, gp.tileSize, gp.tileSize*4);
         }
     }
 
