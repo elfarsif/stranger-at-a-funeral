@@ -1,5 +1,14 @@
 # StrangerAtAFuneral
 
+## Bugs
+
+- image.getHeight()/getWidth() function in entity class used to resize sprite in draw methods seems to cause the shaking bug sometimes, using gp.tileSize helps
+- 
+
+
+
+
+
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
 This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.

@@ -126,6 +126,10 @@ public class Player extends Entity {
             int npcIndex = gp.collisionChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //check monster collision
+            int monsterIndex = gp.collisionChecker.checkEntity(this, gp.monsters);
+            contactMonster(monsterIndex);
+
             //check event
             gp.eventHandler.checkEvent();
 
@@ -163,9 +167,28 @@ public class Player extends Entity {
             }
             updateSpriteAnimationImage();
 
+            if (invincible){
+                invincibleCounter++;
+                //60FPS ie 1 second
+                if (invincibleCounter > 60){
+                    invincible = false;
+                    invincibleCounter = 0;
+                }
+            }
+
         }
 
     }
+
+    private void contactMonster(int monsterIndex) {
+        if (monsterIndex!=999){
+            if (!invincible){
+                currentLife--;
+                invincible = true;
+            }
+        }
+    }
+
     private void updateSpriteAnimationImage() {
         spriteCounter++;
         int spriteAnimationRate = 9;
@@ -176,6 +199,7 @@ public class Player extends Entity {
             }
             spriteCounter = 0;
         }
+
     }
 
     private void interactNPC(int i) {
@@ -407,6 +431,12 @@ public class Player extends Entity {
                 break;
         }
         batch.draw(image,screenX,screenY, image.getWidth(), image.getHeight());
+
+        if (invincible){
+            batch.setColor(1,1,1,0.5f);
+        }
+        batch.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
+        batch.setColor(1,1,1,1);
     }
 
     /**

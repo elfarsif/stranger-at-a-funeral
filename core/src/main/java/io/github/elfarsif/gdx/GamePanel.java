@@ -50,6 +50,7 @@ public class GamePanel implements ApplicationListener {
     public Player player;
     public Entity[] objects = new Entity[10];
     public Entity[] npc = new Entity[10];
+    public Entity[] monsters = new Entity[10];
     ArrayList<Entity> entities = new ArrayList<Entity>();
 
     //GAME STATE
@@ -91,6 +92,7 @@ public class GamePanel implements ApplicationListener {
         gameState = titleState;
         assetSetter.setObject();
         assetSetter.setNPC();
+        assetSetter.setMonster();
         playMusic(0);
         stopMusic();
     }
@@ -109,8 +111,14 @@ public class GamePanel implements ApplicationListener {
                     npc[i].update();
                 }
             }
+            //update monsters
+            for(int i = 0; i < monsters.length; i++){
+                if(monsters[i] != null){
+                    monsters[i].update();
+                }
+            }
         }
-        if(gameState == playState){
+        if(gameState == pauseState){
             //TODO
         }
     }
@@ -160,6 +168,13 @@ public class GamePanel implements ApplicationListener {
             for(int i = 0; i < objects.length; i++){
                 if(objects[i] != null){
                     entities.add(objects[i]);
+                }
+            }
+
+            //MONSTERS
+            for(int i = 0; i < monsters.length; i++){
+                if(monsters[i] != null){
+                    entities.add(monsters[i]);
                 }
             }
 
