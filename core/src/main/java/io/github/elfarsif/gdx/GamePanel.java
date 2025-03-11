@@ -138,7 +138,7 @@ public class GamePanel implements ApplicationListener {
 
         //DEBUG
         long drawStart = 0;
-        if(keyHandler.tPressed){
+        if(keyHandler.showDebug){
             drawStart = System.nanoTime();
         }
 
@@ -186,11 +186,21 @@ public class GamePanel implements ApplicationListener {
         }
 
         //DEBUG
-        if(keyHandler.tPressed){
+        if(keyHandler.showDebug){
             long drawEnd = System.nanoTime();
             long drawTime = drawEnd - drawStart;
+            int x = 10;
+            int y = 400;
+            int lineHeight = 20;
+            font.draw(spriteBatch, "Player X: " + player.worldX, x, y);
+            y += lineHeight;
+            font.draw(spriteBatch, "Player Y: " + player.worldY, x, y);
+            y += lineHeight;
+            font.draw(spriteBatch, "Player Col: " + (player.worldX+player.solidArea.x)/tileSize, x, y);
+            y += lineHeight;
+            font.draw(spriteBatch, "Player Row: " + (player.worldY+player.solidArea.y)/tileSize, x, y);
+            y += lineHeight;
             font.draw(spriteBatch, "Draw Time: " + drawTime, 10, 30);
-            System.out.println("Draw Time: " + drawTime);
         }
 
     }

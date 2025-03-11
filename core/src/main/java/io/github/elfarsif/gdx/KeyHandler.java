@@ -12,7 +12,7 @@ public class KeyHandler extends InputAdapter {
     public boolean leftPressed;
     public boolean rightPressed;
     public boolean ePressed;
-    public boolean tPressed;
+    public boolean showDebug;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -22,7 +22,7 @@ public class KeyHandler extends InputAdapter {
     public boolean keyDown(int code) {
         //DEBUG TIME
         if(code == Input.Keys.T){
-            tPressed = !tPressed;
+            showDebug = !showDebug;
         }
         //TITLE STATE
         if(gp.gameState == gp.titleState){
