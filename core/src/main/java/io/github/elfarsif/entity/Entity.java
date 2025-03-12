@@ -17,13 +17,18 @@ public class Entity {
             up1, up2, up3, up4, up5, up6,up7, up8,
             left1, left2, left3, left4, left5, left6,left7, left8,
             right1, right2, right3, right4, right5, right6, right7, right8;
+    public Sprite attackUp1, attackUp2, attackUp3, attackUp4,
+        attackDown1, attackDown2, attackDown3, attackDown4,
+        attackLeft1, attackLeft2, attackLeft3, attackLeft4,
+        attackRight1, attackRight2, attackRight3, attackRight4;
     public String direction = "down";
+    public Rectangle attackArea = new Rectangle(0,0,0,0);
 
 
     public boolean invincible = false;
     public int invincibleCounter = 0;
     public int type;//0 player, 1 npc, 2 monster
-
+    public boolean attacking = false;
 
     int spriteCounter = 0;
     int spriteNumber =1;
@@ -109,6 +114,15 @@ public class Entity {
             }
             spriteCounter = 0;
         }
+
+        if (invincible) {
+            invincibleCounter++;
+            //60FPS ie 1 second
+            if (invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
     public Sprite setup(String path){
         Sprite image = null;
@@ -177,8 +191,15 @@ public class Entity {
                     break;
             }
 
-            // times 2 because the image is 4 tiles big
-            batch.draw(image, screenX, screenY, gp.tileSize, gp.tileSize);
+            if (invincible){
+                batch.setColor(1,1,1,0.5f);
+            }
+
+//            float width = image.getWidth();
+//            float height = image.getHeight();
+            batch.draw(image, screenX, screenY, gp.tileSize*2, gp.tileSize*2);
+
+            batch.setColor(1,1,1,1);
         }
 
     }

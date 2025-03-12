@@ -13,7 +13,7 @@ public class GreenSlime extends Entity {
         super(gp);
         this.name = "green-slime";
         this.speed =1;
-        this.maxLife = 1;
+        this.maxLife = 3;
         type = 2;
         this.currentLife = this.maxLife;
 

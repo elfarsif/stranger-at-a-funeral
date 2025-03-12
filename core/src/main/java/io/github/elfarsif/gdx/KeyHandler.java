@@ -11,7 +11,7 @@ public class KeyHandler extends InputAdapter {
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
-    public boolean ePressed;
+    public boolean spacePressed;
     public boolean showDebug;
 
     public KeyHandler(GamePanel gp){
@@ -67,8 +67,8 @@ public class KeyHandler extends InputAdapter {
             if (code == Input.Keys.D) {
                 rightPressed = true;
             }
-            if(code == Input.Keys.E){
-                ePressed = true;
+            if(code == Input.Keys.SPACE){
+                spacePressed = true;
             }
 
             if(code == Input.Keys.P){

@@ -1,6 +1,5 @@
 package io.github.elfarsif.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,8 +28,31 @@ public class Player extends Entity {
         solidArea.width = 8*3;
         solidArea.height = 8*3;
 
+        attackArea.width = gp.tileSize;
+        attackArea.height = gp.tileSize;
+
         setDefaultValues();
         getPlayerImage();
+        getPlayerAttackImage();
+    }
+
+    private void getPlayerAttackImage() {
+        attackDown1 = setup("player/attack/down1.png");
+        attackDown2 = setup("player/attack/down2.png");
+        attackDown3 = setup("player/attack/down3.png");
+        attackDown4 = setup("player/attack/down4.png");
+        attackUp1 = setup("player/attack/up1.png");
+        attackUp2 = setup("player/attack/up2.png");
+        attackUp3 = setup("player/attack/up3.png");
+        attackUp4 = setup("player/attack/up4.png");
+        attackLeft1 = setup("player/attack/left1.png");
+        attackLeft2 = setup("player/attack/left2.png");
+        attackLeft3 = setup("player/attack/left3.png");
+        attackLeft4 = setup("player/attack/left4.png");
+        attackRight1 = setup("player/attack/right1.png");
+        attackRight2 = setup("player/attack/right2.png");
+        attackRight3 = setup("player/attack/right3.png");
+        attackRight4 = setup("player/attack/right4.png");
     }
 
     private void getPlayerImage() {
@@ -83,7 +105,12 @@ public class Player extends Entity {
 
     public void update() {
         boolean isMoving = false;
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
+        if (attacking) {
+            attacking();
+
+
+        } else if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed
+            || keyHandler.spacePressed) {
             isMoving = true;
         }
 
@@ -133,7 +160,7 @@ public class Player extends Entity {
             //check event
             gp.eventHandler.checkEvent();
 
-            if (!collisionOn) {
+            if (!collisionOn && !keyHandler.spacePressed) {
                 switch (direction) {
                     case "up":
                         worldY += speed;
@@ -165,6 +192,9 @@ public class Player extends Entity {
                         break;
                 }
             }
+
+            gp.keyHandler.spacePressed = false;
+
             updateSpriteAnimationImage();
 
             if (invincible){
@@ -176,6 +206,78 @@ public class Player extends Entity {
                 }
             }
 
+        }
+
+    }
+
+    private void attacking() {
+        spriteCounter++;
+        //ATTACKING ANIMATION
+        if (spriteCounter <= 5) {
+            spriteNumber = 1;
+        }
+        if (spriteCounter > 5 && spriteCounter <= 15) {
+            spriteNumber = 2;
+        }
+        if (spriteCounter > 15 && spriteCounter <= 25) {
+            spriteNumber = 3;
+
+            //SAVE CURRENT POSITION
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            //ADJUST WORLD POSITION FOR ATTACK AREAK
+            switch (direction) {
+                case "up":
+                    worldY += attackArea.height;
+                    break;
+                case "down":
+                    worldY -= attackArea.height;
+                    break;
+                case "left":
+                    worldX -= attackArea.width;
+                    break;
+                case "right":
+                    worldX += attackArea.width;
+                    break;
+            }
+            // ATTACK AREA BECOMES SOLID AREA
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+
+            int monsterIndex = gp.collisionChecker.checkEntity(this, gp.monsters);
+            System.out.println(monsterIndex);
+            damageMonster(monsterIndex);
+
+            //REVERT TO ORIGINAL POSITION
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+
+        }
+        if (spriteCounter > 25 && spriteCounter <= 35) {
+            spriteNumber = 4;
+        }
+        if (spriteCounter > 35) {
+            spriteNumber = 1;
+            spriteCounter = 0;
+            attacking = false;
+        }
+    }
+
+    private void damageMonster(int monsterIndex) {
+        if (monsterIndex != 999) {
+            if (!gp.monsters[monsterIndex].invincible){
+                gp.monsters[monsterIndex].currentLife--;
+                gp.monsters[monsterIndex].invincible = true;
+
+                if(gp.monsters[monsterIndex].currentLife <= 0){
+                    gp.monsters[monsterIndex]=null;
+                }
+            }
         }
 
     }
@@ -203,13 +305,15 @@ public class Player extends Entity {
     }
 
     private void interactNPC(int i) {
-        if (i != 999) {
-            if (gp.keyHandler.ePressed) {
-                gp.gameState = gp.dialogueState;
-                gp.npc[i].speak();
+        if (gp.keyHandler.spacePressed) {
+            if (i != 999) {
+                    gp.gameState = gp.dialogueState;
+                    gp.npc[i].speak();
+            }else {
+                attacking = true;
             }
         }
-        gp.keyHandler.ePressed = false;
+        gp.keyHandler.spacePressed = false;
     }
 
     private void pickUpObject(int objectIndex) {
@@ -223,220 +327,348 @@ public class Player extends Entity {
 
         switch (direction) {
             case "down":
-                if (spriteNumber == 1) {
-                    image = down1;
-                }
-                if (spriteNumber == 2) {
-                    image = down2;
-                }
-                if(spriteNumber == 3){
-                    image = down3;
-                }
-                if(spriteNumber == 4){
-                    image = down4;
-                }
-                if(spriteNumber == 5){
-                    image = down5;
-                }
-                if(spriteNumber == 6){
-                    image = down6;
-                }
-                if(spriteNumber == 7){
-                    image = down7;
-                }
-                if(spriteNumber == 8){
-                    image = down8;
+                if (attacking){
+                    if (spriteNumber == 1) {
+                        image = attackDown1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackDown2;
+                    }
+                    if(spriteNumber == 3){
+                        image = attackDown3;
+                    }
+                    if(spriteNumber == 4){
+                        image = attackDown4;
+                    }
+                }else{
+                    if (spriteNumber == 1) {
+                        image = down1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = down2;
+                    }
+                    if(spriteNumber == 3){
+                        image = down3;
+                    }
+                    if(spriteNumber == 4){
+                        image = down4;
+                    }
+                    if(spriteNumber == 5){
+                        image = down5;
+                    }
+                    if(spriteNumber == 6){
+                        image = down6;
+                    }
+                    if(spriteNumber == 7){
+                        image = down7;
+                    }
+                    if(spriteNumber == 8){
+                        image = down8;
+                    }
                 }
                 break;
             case "up":
-                if (spriteNumber == 1) {
-                    image = up1;
+                if (attacking){
+                    if (spriteNumber == 1) {
+                        image = attackUp1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackUp2;
+                    }
+                    if(spriteNumber == 3){
+                        image = attackUp3;
+                    }
+                    if(spriteNumber == 4){
+                        image = attackUp4;
+                    }
+                }else{
+                    if (spriteNumber == 1) {
+                        image = up1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = up2;
+                    }
+                    if(spriteNumber == 3){
+                        image = up3;
+                    }
+                    if(spriteNumber == 4){
+                        image = up4;
+                    }
+                    if(spriteNumber == 5){
+                        image = up5;
+                    }
+                    if(spriteNumber == 6){
+                        image = up6;
+                    }
+                    if(spriteNumber == 7){
+                        image = up7;
+                    }
+                    if(spriteNumber == 8){
+                        image = up8;
+                    }
                 }
-                if (spriteNumber == 2) {
-                    image = up2;
-                }
-                if(spriteNumber == 3){
-                    image = up3;
-                }
-                if(spriteNumber == 4){
-                    image = up4;
-                }
-                if(spriteNumber == 5){
-                    image = up5;
-                }
-                if(spriteNumber == 6){
-                    image = up6;
-                }
-                if(spriteNumber == 7){
-                    image = up7;
-                }
-                if(spriteNumber == 8){
-                    image = up8;
-                }
+
                 break;
             case "left":
-                if (spriteNumber == 1) {
-                    image = left1;
-                }
-                if (spriteNumber == 2) {
-                    image = left2;
-                }
-                if(spriteNumber == 3){
-                    image = left3;
-                }
-                if(spriteNumber == 4){
-                    image = left4;
-                }
-                if(spriteNumber == 5){
-                    image = left5;
-                }
-                if(spriteNumber == 6) {
-                    image = left6;
-                }
-                if(spriteNumber == 7){
-                    image = left7;
-                }
-                if(spriteNumber == 8){
-                    image = left8;
+                if (attacking){
+                    if (spriteNumber == 1) {
+                        image = attackLeft1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackLeft2;
+                    }
+                    if(spriteNumber == 3){
+                        image = attackLeft3;
+                    }
+                    if(spriteNumber == 4){
+                        image = attackLeft4;
+                    }
+                }else{
+                    if (spriteNumber == 1) {
+                        image = left1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = left2;
+                    }
+                    if(spriteNumber == 3){
+                        image = left3;
+                    }
+                    if(spriteNumber == 4){
+                        image = left4;
+                    }
+                    if(spriteNumber == 5){
+                        image = left5;
+                    }
+                    if(spriteNumber == 6){
+                        image = left6;
+                    }
+                    if(spriteNumber == 7){
+                        image = left7;
+                    }
+                    if(spriteNumber == 8){
+                        image = left8;
+                    }
                 }
                 break;
             case "up-left":
-                if (spriteNumber == 1) {
-                    image = left1;
-                }
-                if (spriteNumber == 2) {
-                    image = left2;
-                }
-                if(spriteNumber == 3){
-                    image = left3;
-                }
-                if(spriteNumber == 4){
-                    image = left4;
-                }
-                if(spriteNumber == 5){
-                    image = left5;
-                }
-                if(spriteNumber == 6) {
-                    image = left6;
-                }
-                if(spriteNumber == 7){
-                    image = left7;
-                }
-                if(spriteNumber == 8){
-                    image = left8;
+                if (attacking) {
+                    if (spriteNumber == 1) {
+                        image = attackLeft1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackLeft2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = attackLeft3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = attackLeft4;
+                    }
+                }else {
+                    if (spriteNumber == 1) {
+                        image = left1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = left2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = left3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = left4;
+                    }
+                    if (spriteNumber == 5) {
+                        image = left5;
+                    }
+                    if (spriteNumber == 6) {
+                        image = left6;
+                    }
+                    if (spriteNumber == 7) {
+                        image = left7;
+                    }
+                    if (spriteNumber == 8) {
+                        image = left8;
+                    }
                 }
                 break;
             case "down-left":
-                if (spriteNumber == 1) {
-                    image = left1;
-                }
-                if (spriteNumber == 2) {
-                    image = left2;
-                }
-                if(spriteNumber == 3){
-                    image = left3;
-                }
-                if(spriteNumber == 4){
-                    image = left4;
-                }
-                if(spriteNumber == 5){
-                    image = left5;
-                }
-                if(spriteNumber == 6) {
-                    image = left6;
-                }
-                if(spriteNumber == 7){
-                    image = left7;
-                }
-                if(spriteNumber == 8){
-                    image = left8;
+                if (attacking) {
+                    if (spriteNumber == 1) {
+                        image = attackLeft1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackLeft2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = attackLeft3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = attackLeft4;
+                    }
+                } else {
+                    if (spriteNumber == 1) {
+                        image = left1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = left2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = left3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = left4;
+                    }
+                    if (spriteNumber == 5) {
+                        image = left5;
+                    }
+                    if (spriteNumber == 6) {
+                        image = left6;
+                    }
+                    if (spriteNumber == 7) {
+                        image = left7;
+                    }
+                    if (spriteNumber == 8) {
+                        image = left8;
+                    }
                 }
                 break;
             case "right":
-                if (spriteNumber == 1) {
-                    image = right1;
-                }
-                if (spriteNumber == 2) {
-                    image = right2;
-                }if(spriteNumber == 3){
-                image = right3;
-            }
-                if(spriteNumber == 4){
-                    image = right4;
-                }
-                if(spriteNumber == 5){
-                    image = right5;
-                }
-                if(spriteNumber == 6){
-                    image = right6;
-                }
-                if(spriteNumber == 7){
-                    image = right7;
-                }
-                if(spriteNumber == 8){
-                    image = right8;
+                if (attacking) {
+                    if (spriteNumber == 1) {
+                        image = attackRight1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackRight2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = attackRight3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = attackRight4;
+                    }
+                } else {
+                    if (spriteNumber == 1) {
+                        image = right1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = right2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = right3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = right4;
+                    }
+                    if (spriteNumber == 5) {
+                        image = right5;
+                    }
+                    if (spriteNumber == 6) {
+                        image = right6;
+                    }
+                    if (spriteNumber == 7) {
+                        image = right7;
+                    }
+                    if (spriteNumber == 8) {
+                        image = right8;
+                    }
                 }
                 break;
             case "up-right":
-                if (spriteNumber == 1) {
-                    image = right1;
-                }
-                if (spriteNumber == 2) {
-                    image = right2;
-                }
-                if(spriteNumber == 3){
-                    image = right3;
-                }
-                if(spriteNumber == 4){
-                    image = right4;
-                }
-                if(spriteNumber == 5){
-                    image = right5;
-                }
-                if(spriteNumber == 6){
-                    image = right6;
-                }
-                if(spriteNumber == 7){
-                    image = right7;
-                }
-                if(spriteNumber == 8){
-                    image = right8;
+                if (attacking) {
+                    if (spriteNumber == 1) {
+                        image = attackRight1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackRight2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = attackRight3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = attackRight4;
+                    }
+                } else {
+                    if (spriteNumber == 1) {
+                        image = right1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = right2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = right3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = right4;
+                    }
+                    if (spriteNumber == 5) {
+                        image = right5;
+                    }
+                    if (spriteNumber == 6) {
+                        image = right6;
+                    }
+                    if (spriteNumber == 7) {
+                        image = right7;
+                    }
+                    if (spriteNumber == 8) {
+                        image = right8;
+                    }
                 }
                 break;
             case "down-right":
-                if (spriteNumber == 1) {
-                    image = right1;
-                }
-                if (spriteNumber == 2) {
-                    image = right2;
-                }
-                if(spriteNumber == 3){
-                    image = right3;
-                }
-                if(spriteNumber == 4){
-                    image = right4;
-                }
-                if(spriteNumber == 5){
-                    image = right5;
-                }
-                if(spriteNumber == 6){
-                    image = right6;
-                }
-                if(spriteNumber == 7){
-                    image = right7;
-                }
-                if(spriteNumber == 8){
-                    image = right8;
+                if (attacking) {
+                    if (spriteNumber == 1) {
+                        image = attackRight1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = attackRight2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = attackRight3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = attackRight4;
+                    }
+                } else {
+                    if (spriteNumber == 1) {
+                        image = right1;
+                    }
+                    if (spriteNumber == 2) {
+                        image = right2;
+                    }
+                    if (spriteNumber == 3) {
+                        image = right3;
+                    }
+                    if (spriteNumber == 4) {
+                        image = right4;
+                    }
+                    if (spriteNumber == 5) {
+                        image = right5;
+                    }
+                    if (spriteNumber == 6) {
+                        image = right6;
+                    }
+                    if (spriteNumber == 7) {
+                        image = right7;
+                    }
+                    if (spriteNumber == 8) {
+                        image = right8;
+                    }
                 }
                 break;
         }
-        batch.draw(image,screenX,screenY, image.getWidth(), image.getHeight());
 
-        if (invincible){
-            batch.setColor(1,1,1,0.5f);
+
+        if (image !=null){
+
+            batch.draw(image,screenX,screenY, image.getWidth(), image.getHeight());
+
+            if (invincible){
+                batch.setColor(1,1,1,0.5f);
+            }
+            batch.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
+            batch.setColor(1,1,1,1);
         }
-        batch.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
-        batch.setColor(1,1,1,1);
+
     }
 
     /**
