@@ -45,6 +45,7 @@ public class Entity {
     public Sprite image;
     public String name;
     public boolean collision = false;
+    public String description="";
 
     //CHARACTER STATUS
     public int maxLife;

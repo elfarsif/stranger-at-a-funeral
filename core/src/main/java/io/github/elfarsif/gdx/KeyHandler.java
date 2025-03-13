@@ -71,6 +71,20 @@ public class KeyHandler extends InputAdapter {
                 spacePressed = true;
             }
 
+            if(code == Input.Keys.J){
+                if(gp.ui.slotCol!=0){
+                    gp.ui.slotCol--;
+                    gp.playSoundEffect(2);
+                }
+
+            }
+            if (code == Input.Keys.K){
+                if(gp.ui.slotCol!=8){
+                    gp.ui.slotCol++;
+                    gp.playSoundEffect(2);
+                }
+            }
+
             if(code == Input.Keys.P){
                 if(gp.gameState == gp.playState){
                     gp.gameState = gp.pauseState;

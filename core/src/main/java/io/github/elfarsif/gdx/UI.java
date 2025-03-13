@@ -26,8 +26,11 @@ public class UI {
     public String currentDialog;
     private ShapeRenderer shapeRenderer;
     private Texture titleScreenImage;
+    private Texture inventoryStrip;
     public int commandNum = 0;
     Sprite health1, health2, health3;
+    public int slotCol = 0;
+    public int slotRow = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -35,6 +38,7 @@ public class UI {
         this.font.getData().setScale(2f);
         this.shapeRenderer = new ShapeRenderer();
         loadBackgroundImage();
+        loadUIImages();
 
         //CREATE HEALTH OBJECTS
         Entity healthBar = new HealthBar(gp);
@@ -43,11 +47,19 @@ public class UI {
         health3 = healthBar.down3;
     }
 
+    private void loadUIImages(){
+        try{
+            inventoryStrip = new Texture(Gdx.files.internal("ui/inventory-strip.png"));
+        }catch (Exception e){
+            throw new RuntimeException("Error loading image inventory strip:"+e);
+        }
+    }
+
     private void loadBackgroundImage() {
         try{
             titleScreenImage = new Texture(Gdx.files.internal("player/standing/character.png"));
         }catch (Exception e){
-            throw new RuntimeException("Error loading image Door:"+e);
+            throw new RuntimeException("Error loading image title screen image:"+e);
         }
     }
 
@@ -64,11 +76,13 @@ public class UI {
         if (gp.gameState == gp.playState){
             //play state studd
             drawHealthBar();
+            drawInventory();
         }
 
         //Pause State
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
+            drawInventory();
         }
         //Dialog State
         if (gp.gameState == gp.dialogueState){
@@ -79,6 +93,45 @@ public class UI {
         if(gp.gameState == gp.titleState){
             drawTitleScreen();
         }
+    }
+
+    private void drawInventory() {
+
+        int frameX = gp.screenWidth/2-gp.tileSize*6;
+        int frameY = gp.tileSize/2;
+        spriteBatch.draw(inventoryStrip,frameX,frameY,gp.tileSize*13,gp.tileSize*2);
+
+        //SLOT
+        final int slotXStart = frameX + gp.tileSize/2;
+        final int slotYStart = frameY + gp.tileSize/2;
+        int slotX = slotXStart;
+        int slotY = slotYStart;
+
+        //DRAW PLAYER INVENTORY
+        for(int i = 0; i < gp.player.inventory.size(); i++){
+            spriteBatch.draw(gp.player.inventory.get(i).down1,slotX,slotY,gp.tileSize,gp.tileSize);
+            slotX += gp.tileSize + gp.tileSize/2-8;
+
+        }
+
+        //CURSOR
+        int cursorX = slotXStart + slotCol*(gp.tileSize+gp.tileSize/2-8);
+        int cursorY = slotYStart + slotRow*gp.tileSize;
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        //DRAW CURSOR
+     /*   g2d.setColor(Color.WHITE);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(cursorX,cursorY,cursorWidth,cursorHeight,10,10);*/
+
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.rect(cursorX, cursorY, cursorWidth, cursorHeight);
+        shapeRenderer.end();
+
+
     }
 
     private void drawHealthBar() {

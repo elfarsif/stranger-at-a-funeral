@@ -5,15 +5,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 import io.github.elfarsif.gdx.KeyHandler;
+import io.github.elfarsif.objects.Mushroom;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Player extends Entity {
     private Texture playerTexture;
     private KeyHandler keyHandler;
     public final int screenX;
     public final int screenY;
-    public int hasMushroom = 0;
+    public ArrayList<Entity> inventory = new ArrayList<Entity>();
+    public final int maxInventorySize = 10;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
         super(gp);
@@ -34,6 +37,13 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
+    }
+    public void setItems(){
+        inventory.add(new Mushroom(gp));
+        inventory.add(new Mushroom(gp));
+        inventory.add(new Mushroom(gp));
+        inventory.add(new Mushroom(gp));
     }
 
     private void getPlayerAttackImage() {

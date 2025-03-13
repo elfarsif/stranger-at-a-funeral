@@ -11,8 +11,9 @@ public class SoundWrapper {
 
 
     public SoundWrapper(){
-        sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/lofi.wav"));
+        sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/acoustic-lofi.wav"));
         sounds[1] = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/chopping-wood.wav"));
+        sounds[2] = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/inventory-cursor.wav"));
     }
 
     public void setFile(int i){
