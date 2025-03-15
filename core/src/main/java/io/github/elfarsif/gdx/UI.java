@@ -13,14 +13,13 @@ import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.objects.HealthBar;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class UI {
     private GamePanel gp;
     private BitmapFont font;
     private Texture mushroomTexture;
     private boolean messageOn = false;
-    private String message = "";
-    private int messageCounter = 0;
     public boolean gameFinished = false;
     SpriteBatch spriteBatch;
     public String currentDialog;
@@ -31,6 +30,8 @@ public class UI {
     Sprite health1, health2, health3;
     public int slotCol = 0;
     public int slotRow = 0;
+    ArrayList<String> messages = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -55,6 +56,11 @@ public class UI {
         }
     }
 
+    public void addMessage(String text){
+        messages.add(text);
+        messageCounter.add(0);
+    }
+
     private void loadBackgroundImage() {
         try{
             titleScreenImage = new Texture(Gdx.files.internal("player/standing/character.png"));
@@ -63,9 +69,27 @@ public class UI {
         }
     }
 
-    public void showMessage(String message) {
-        this.message = message;
-        this.messageOn = true;
+    private void drawMessage() {
+        int messageX = gp.tileSize;
+        int messageY = gp.tileSize*5;
+
+
+        for(int i = 0; i < messages.size(); i++){
+            if(messages.get(i) != null){
+                font.setColor(Color.WHITE);
+                font.draw(spriteBatch, messages.get(i), messageX, messageY);
+
+                int counter = messageCounter.get(i)+i;
+                messageCounter.set(i,counter);
+                messageY +=50;
+
+                if(counter > 120){
+                    messages.remove(i);
+                    messageCounter.remove(i);
+                }
+            }
+        }
+
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -75,6 +99,7 @@ public class UI {
         //Play State
         if (gp.gameState == gp.playState){
             //play state studd
+            drawMessage();
             drawHealthBar();
             drawInventory();
         }
@@ -82,7 +107,6 @@ public class UI {
         //Pause State
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
-            drawInventory();
         }
         //Dialog State
         if (gp.gameState == gp.dialogueState){
@@ -99,6 +123,7 @@ public class UI {
 
         int frameX = gp.screenWidth/2-gp.tileSize*6;
         int frameY = gp.tileSize/2;
+
         spriteBatch.draw(inventoryStrip,frameX,frameY,gp.tileSize*13,gp.tileSize*2);
 
         //SLOT
@@ -232,16 +257,74 @@ public class UI {
     }
 
     private void drawPauseScreen() {
-        String text = "PAUSED";
+        //Frame
+        final int frameX = gp.tileSize*2;
+        final int frameY = gp.tileSize*2;
+        final int frameWidth = gp.tileSize*10;
+        final int frameHeight = gp.tileSize*5;
+        drawSubWindow(frameX,frameY,frameWidth,frameHeight);
 
-        int x = getXforCenteredText(text);
-        int y = gp.screenHeight / 2;
+        //Text
+        font.setColor(Color.WHITE);
+//        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 22));
 
-        font.draw(spriteBatch, text, x, y);
+        int textX = frameX + gp.tileSize/2;
+        int textY = frameY + gp.tileSize/2;
+        final int lineHeight = gp.tileSize;//font height
+
+        //Names
+        font.draw(spriteBatch, "Level", textX, textY);
+        textY += lineHeight;
+        font.draw(spriteBatch, "Attack", textX, textY);
+        textY += lineHeight;
+        font.draw(spriteBatch, "XP", textX, textY);
+        textY += lineHeight;
+        font.draw(spriteBatch, "Weapon", textX, textY);
+        textY += lineHeight;
+        font.draw(spriteBatch, "Defense", textX, textY);
+
+        //VALUES
+        int tailX = frameX + frameWidth - 30;
+        textY = frameY + gp.tileSize/2;
+        String value;
+
+        value = String.valueOf(gp.player.level);
+        textX = getXforAlignToRightText(font,value,tailX);
+        font.draw(spriteBatch, value, textX, textY);
+        textY += lineHeight;
+
+        value = String.valueOf(gp.player.attack);
+        textX = getXforAlignToRightText(font,value,tailX);
+        font.draw(spriteBatch, value, textX, textY);
+        textY += lineHeight;
+
+        value = String.valueOf(gp.player.exp);
+        textX = getXforAlignToRightText(font,value,tailX);
+        font.draw(spriteBatch, value, textX, textY);
+        textY += lineHeight;
+
+        value = gp.player.currentWeapon.name;
+        textX = getXforAlignToRightText(font,value,tailX);
+        font.draw(spriteBatch, value, textX, textY);
+        textY += lineHeight;
+
+        value = String.valueOf(gp.player.defense);
+        textX = getXforAlignToRightText(font,value,tailX);
+        font.draw(spriteBatch, value, textX, textY);
+        textY += lineHeight;
+
     }
 
     public int getXforCenteredText(String text){
         GlyphLayout layout = new GlyphLayout(font, text);
         return (int) (gp.screenWidth / 2 - layout.width / 2);
     }
+
+    public int getXforAlignToRightText(BitmapFont font, String text, int tailX) {
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(font, text);
+        int length = (int) layout.width;
+        return tailX - length;
+    }
+
 }

@@ -7,13 +7,15 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundWrapper {
 
     Sound currentSound;
-    Sound sounds[] = new Sound[3];
+    Sound sounds[] = new Sound[10];
 
 
     public SoundWrapper(){
         sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/acoustic-lofi.wav"));
         sounds[1] = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/chopping-wood.wav"));
         sounds[2] = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/inventory-cursor.wav"));
+        sounds[3] = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/sword-sound.wav"));
+
     }
 
     public void setFile(int i){

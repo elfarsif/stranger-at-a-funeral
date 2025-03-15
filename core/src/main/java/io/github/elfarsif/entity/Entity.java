@@ -1,18 +1,21 @@
 package io.github.elfarsif.entity;
 
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
+import com.badlogic.gdx.graphics.Color;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+/**
+ * Represents a general entity in the game, including the player, NPCs, and monsters, objects, tools.
+ * Handles common attributes and behaviors such as movement, collision, drawing on the screen, and interactions with other entities.
+ */
 public class Entity {
     public GamePanel gp;
-    public int worldX, worldY;
-    public int speed;
     public Sprite down1, down2,down3,down4,down5,down6,down7,down8,
             up1, up2, up3, up4, up5, up6,up7, up8,
             left1, left2, left3, left4, left5, left6,left7, left8,
@@ -21,35 +24,57 @@ public class Entity {
         attackDown1, attackDown2, attackDown3, attackDown4,
         attackLeft1, attackLeft2, attackLeft3, attackLeft4,
         attackRight1, attackRight2, attackRight3, attackRight4;
-    public String direction = "down";
     public Rectangle attackArea = new Rectangle(0,0,0,0);
-
-
-    public boolean invincible = false;
-    public int invincibleCounter = 0;
-    public int type;//0 player, 1 npc, 2 monster
-    public boolean attacking = false;
-
-    int spriteCounter = 0;
-    int spriteNumber =1;
-
     public Rectangle solidArea ;
     public int solidAreaDefaultX, solidAreaDefaultY;
-    public Boolean collisionOn = false;
-
-    public int actionLookCounter = 0;
     String[] dialogs = new String[10];
-    int dialogIndex=0;
-
-    //For objects
-    public Sprite image;
-    public String name;
     public boolean collision = false;
     public String description="";
 
-    //CHARACTER STATUS
+    //STATE
+    public int worldX, worldY;
+    public String direction = "down";
+    public boolean invincible = false;
+    public boolean attacking = false;
+    int spriteNumber =1;
+    int dialogIndex=0;
+    public boolean alive = true;
+    public boolean dying = false;
+    boolean hpBarOn = false;
+    public Boolean collisionOn = false;
+
+    //COUNTERS
+    int spriteCounter = 0;
+    public int invincibleCounter = 0;
+    public int actionLookCounter = 0;
+    int dyingCounter = 0;
+    int hpBarCounter = 0;
+
+
+
+
+
+    //CHARACTER ATTRIBUTES
+    public int type;//0 player, 1 npc, 2 monster
+    public String name;
     public int maxLife;
     public int currentLife;
+    public int speed;
+    public int strength;
+    public int level;
+    public int attack;
+    public int defense;
+    public int exp;
+    public int nextLevelExp;
+    public int coin;
+    public Entity currentWeapon;
+    public Entity currentShield;
+
+
+    //ITEM ATTRIBUTES
+    public int attackValue;
+    public int defenseValue;
+
 
 
     public Entity(GamePanel gp){
@@ -57,7 +82,9 @@ public class Entity {
         setDefaultSolidArea();
 
     }
-
+    /**
+     * Configures the default solid area for collision detection.
+     */
     private void setDefaultSolidArea() {
         solidArea = new Rectangle();
         solidArea.x = 12*3;
@@ -71,7 +98,6 @@ public class Entity {
 
     public void setAction(){}
 
-
     public void update() {
         setAction();
         collisionOn = false;
@@ -82,8 +108,12 @@ public class Entity {
         boolean contactPlayer = gp.collisionChecker.checkPlayer(this);
 
         if(this.type ==2 && contactPlayer){
-            if (gp.player.invincible == false){
-                gp.player.currentLife --;
+            if (!gp.player.invincible) {
+                int damage = attack - gp.player.defense;
+                if(damage < 0){
+                    damage = 0;
+                }
+                gp.player.currentLife -= damage;
                 gp.player.invincible = true;
             }
         }
@@ -125,6 +155,7 @@ public class Entity {
             }
         }
     }
+
     public Sprite setup(String path){
         Sprite image = null;
         try {
@@ -192,8 +223,49 @@ public class Entity {
                     break;
             }
 
+            //MONSTER HEALTH BAR
+            if (type == 2 && hpBarOn) {
+
+
+
+                Texture whiteTexture;
+                Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+                pixmap.setColor(com.badlogic.gdx.graphics.Color.WHITE);
+                pixmap.fill();
+                whiteTexture = new Texture(pixmap);
+                pixmap.dispose();
+
+                double oneScale = (double) gp.tileSize / (double) maxLife;
+                double hpBarValue = oneScale * currentLife;
+
+                // Outline
+                batch.setColor(Color.DARK_GRAY);
+                batch.draw(whiteTexture, screenX - 1, screenY - 11, gp.tileSize + 2, 7);
+
+                // Health bar
+                batch.setColor(new Color(1, 0, 0.12f, 1)); // Red color normalized
+                batch.draw(whiteTexture, (float) screenX, (float) (screenY - 10), (float) hpBarValue, 5);
+
+                // Reset color to avoid affecting other draws
+                batch.setColor(Color.WHITE);
+
+                hpBarCounter++;
+
+                if (hpBarCounter>600){
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
+            }
+
+
             if (invincible){
-                batch.setColor(1,1,1,0.5f);
+                hpBarOn = true;
+                hpBarCounter = 0;
+                changeAlphaForDyingAnimationa(batch,0.5f);
+            }
+
+            if (dying){
+                dyingAnimation(batch);
             }
 
 //            float width = image.getWidth();
@@ -205,4 +277,46 @@ public class Entity {
 
     }
 
+    private void dyingAnimation(SpriteBatch batch) {
+        dyingCounter++;
+
+        int dyingFrames = 5;
+
+        if (dyingCounter<=dyingFrames){
+            changeAlphaForDyingAnimationa(batch,0f);
+        }
+        if (dyingCounter>dyingFrames && dyingCounter<=dyingFrames*2){
+            changeAlphaForDyingAnimationa(batch,1f);
+        }
+        if (dyingCounter>dyingFrames*2 && dyingCounter<=dyingFrames*3){
+            changeAlphaForDyingAnimationa(batch,0f);
+        }
+        if (dyingCounter>dyingFrames*3 && dyingCounter<=dyingFrames*4){
+            changeAlphaForDyingAnimationa(batch,1f);
+        }
+        if (dyingCounter>dyingFrames*4 && dyingCounter<=dyingFrames*5){
+            changeAlphaForDyingAnimationa(batch,0f);
+        }
+        if (dyingCounter>dyingFrames*5 && dyingCounter<=dyingFrames*6){
+            changeAlphaForDyingAnimationa(batch,1f);
+        }
+        if (dyingCounter>dyingFrames*6 && dyingCounter<=dyingFrames*7){
+            changeAlphaForDyingAnimationa(batch,0f);
+        }
+        if (dyingCounter>dyingFrames*7){
+            dying = false;
+            alive = false;
+        }
+
+
+    }
+
+
+    private void changeAlphaForDyingAnimationa(SpriteBatch batch,float alpha){
+        batch.setColor(1,1,1,alpha);
+    }
+
+    public void damageReaction() {
+
+    }
 }

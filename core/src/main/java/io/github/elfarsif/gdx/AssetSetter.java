@@ -3,6 +3,7 @@ package io.github.elfarsif.gdx;
 import io.github.elfarsif.entity.Oscael;
 import io.github.elfarsif.monster.GreenSlime;
 import io.github.elfarsif.objects.PineTree;
+import io.github.elfarsif.objects.Sword;
 
 public class AssetSetter {
 
@@ -17,6 +18,10 @@ public class AssetSetter {
         gp.objects[0].collision = true;
         gp.objects[0].worldX = 10 * gp.tileSize;
         gp.objects[0].worldY = 6 * gp.tileSize;
+
+        gp.objects[2] = new Sword(gp);
+        gp.objects[2].worldX = 30 * gp.tileSize;
+        gp.objects[2].worldY = 12 * gp.tileSize;
 
     }
 
