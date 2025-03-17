@@ -5,16 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.gdx.GamePanel;
 
-public class Sword extends Entity {
-    public Sword(GamePanel gp) {
+public class SwordCopper extends Entity {
+    public SwordCopper(GamePanel gp) {
         super(gp);
-        name = "normal sword";
-        down1 = setup("tools/sword.png");
-        type = type_sword;
-        attackValue = 1;
-        attackArea.width = gp.tileSize/2;
-        attackArea.height = gp.tileSize/2;
+        name = "copper sword";
+        type = type_sword_copper;
+        down1 = setup("tools/sword_copper.png");
+        attackValue = 2;
+        attackArea.width = gp.tileSize;
+        attackArea.height = gp.tileSize;
     }
+
     @Override
     public Sprite setup(String filePath) {
         Sprite image = null;
@@ -26,5 +27,4 @@ public class Sword extends Entity {
         }
         return image;
     }
-
 }

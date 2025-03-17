@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  * Represents a general entity in the game, including the player, NPCs, and monsters, objects, tools.
  * Handles common attributes and behaviors such as movement, collision, drawing on the screen, and interactions with other entities.
  */
-public class Entity {
+public abstract class Entity {
     public GamePanel gp;
     public Sprite down1, down2,down3,down4,down5,down6,down7,down8,
             up1, up2, up3, up4, up5, up6,up7, up8,
@@ -50,12 +50,7 @@ public class Entity {
     int dyingCounter = 0;
     int hpBarCounter = 0;
 
-
-
-
-
     //CHARACTER ATTRIBUTES
-    public int type;//0 player, 1 npc, 2 monster
     public String name;
     public int maxLife;
     public int currentLife;
@@ -70,12 +65,18 @@ public class Entity {
     public Entity currentWeapon;
     public Entity currentShield;
 
+    //TYPE
+    public int type;//0 player, 1 npc, 2 monster
+    public final int type_monster = 2;
+    public final int type_sword=3;
+    public final int type_sword_copper=4;
+    public final int type_shield=5;
+    public final int type_consumable=6;
+
 
     //ITEM ATTRIBUTES
     public int attackValue;
     public int defenseValue;
-
-
 
     public Entity(GamePanel gp){
         this.gp = gp;
@@ -107,7 +108,7 @@ public class Entity {
         gp.collisionChecker.checkEntity(this,gp.monsters);
         boolean contactPlayer = gp.collisionChecker.checkPlayer(this);
 
-        if(this.type ==2 && contactPlayer){
+        if (this.type == type_monster && contactPlayer) {
             if (!gp.player.invincible) {
                 int damage = attack - gp.player.defense;
                 if(damage < 0){
@@ -155,6 +156,8 @@ public class Entity {
             }
         }
     }
+
+    public void applyConsumable(Entity entity){}
 
     public Sprite setup(String path){
         Sprite image = null;

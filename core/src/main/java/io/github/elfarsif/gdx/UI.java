@@ -99,9 +99,9 @@ public class UI {
         //Play State
         if (gp.gameState == gp.playState){
             //play state studd
-            drawMessage();
-            drawHealthBar();
             drawInventory();
+            drawHealthBar();
+            drawMessage();
         }
 
         //Pause State
@@ -120,6 +120,7 @@ public class UI {
     }
 
     private void drawInventory() {
+        font.getData().setScale(1.5f);
 
         int frameX = gp.screenWidth/2-gp.tileSize*6;
         int frameY = gp.tileSize/2;
@@ -145,18 +146,30 @@ public class UI {
         int cursorWidth = gp.tileSize;
         int cursorHeight = gp.tileSize;
 
+
         //DRAW CURSOR
-     /*   g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(cursorX,cursorY,cursorWidth,cursorHeight,10,10);*/
+        Pixmap pixmap = new Pixmap(cursorWidth, cursorHeight, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.drawRectangle(0, 0, cursorWidth, cursorHeight); // Draw rectangle
+
+        // Convert Pixmap to Texture
+        Texture cursorTexture = new Texture(pixmap);
+        pixmap.dispose();
+
+        spriteBatch.draw(cursorTexture, cursorX, cursorY);
+
+        int itemIndex = getItemIndexOnSlot();
+        if (itemIndex < gp.player.inventory.size()){
+            font.setColor(Color.WHITE);
+            font.draw(spriteBatch, gp.player.inventory.get(itemIndex).name,cursorX,cursorY+gp.tileSize+20);
+        }
 
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.rect(cursorX, cursorY, cursorWidth, cursorHeight);
-        shapeRenderer.end();
+    }
 
-
+    public int getItemIndexOnSlot(){
+        int index = slotCol;
+        return index;
     }
 
     private void drawHealthBar() {

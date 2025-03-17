@@ -8,5 +8,6 @@ public class Shield extends Entity {
         super(gp);
         name = "normal shield";
         defenseValue = 0;
+        type = type_shield;
     }
 }

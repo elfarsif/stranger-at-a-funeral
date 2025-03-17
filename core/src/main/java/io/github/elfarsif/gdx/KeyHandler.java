@@ -74,6 +74,7 @@ public class KeyHandler extends InputAdapter {
             if(gp.ui.slotCol!=0){
                 gp.ui.slotCol--;
                 gp.playSoundEffect(2);
+                gp.player.selectItem();
             }
 
         }
@@ -81,7 +82,12 @@ public class KeyHandler extends InputAdapter {
             if(gp.ui.slotCol!=8){
                 gp.ui.slotCol++;
                 gp.playSoundEffect(2);
+                gp.player.selectItem();
             }
+        }
+
+        if(code == Input.Keys.ENTER){
+            gp.player.selectItem();
         }
 
         if(code == Input.Keys.P){
