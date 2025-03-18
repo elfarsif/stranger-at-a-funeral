@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 import io.github.elfarsif.gdx.KeyHandler;
+import io.github.elfarsif.objects.Fireball;
 import io.github.elfarsif.objects.Mushroom;
 import io.github.elfarsif.objects.Shield;
 import io.github.elfarsif.objects.Sword;
@@ -140,6 +141,8 @@ public class Player extends Entity {
         coin = 0;
         currentWeapon = new Sword(gp);
         currentShield = new Shield(gp);
+        projectile = new Fireball(gp);
+
         attack = getAttackValue();
         defense = getDefenseValue();
     }
@@ -249,17 +252,23 @@ public class Player extends Entity {
 
             updateSpriteAnimationImage();
 
-            if (invincible){
-                invincibleCounter++;
-                //60FPS ie 1 second
-                if (invincibleCounter > 60){
-                    invincible = false;
-                    invincibleCounter = 0;
-                }
-            }
-
         }
 
+        if (gp.keyHandler.shootKeyPressed && projectile.alive == false){
+            //SET PROJECTILE POSITION
+            projectile.set(worldX, worldY, direction, true, this);
+
+            gp.projectiles.add(projectile);
+        }
+
+        if (invincible){
+            invincibleCounter++;
+            //60FPS ie 1 second
+            if (invincibleCounter > 60){
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     private void attacking() {
@@ -301,7 +310,7 @@ public class Player extends Entity {
 
             int monsterIndex = gp.collisionChecker.checkEntity(this, gp.monsters);
             System.out.println(monsterIndex);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
 
             //REVERT TO ORIGINAL POSITION
             worldX = currentWorldX;
@@ -320,12 +329,12 @@ public class Player extends Entity {
         }
     }
 
-    private void damageMonster(int monsterIndex) {
+    public void damageMonster(int monsterIndex, int attack) {
         if (monsterIndex != 999) {
             if (!gp.monsters[monsterIndex].invincible){
 
                 //CALCULATE DAMAGE TO MONSTER
-                int damage = attack - gp.monsters[monsterIndex].defense;
+                int damage = this.attack - gp.monsters[monsterIndex].defense;
                 if(damage < 0){
                     damage = 0;
                 }
@@ -365,7 +374,7 @@ public class Player extends Entity {
 
     private void contactMonster(int monsterIndex) {
         if (monsterIndex != 999) {
-            if (!invincible) {
+            if (!invincible && gp.monsters[monsterIndex].dying == false) {
                 //CALCULATE MONSTER DAMAGE TO PLAYER
                 int damage = gp.monsters[monsterIndex].attack - defense;
                 if(damage < 0){

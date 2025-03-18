@@ -23,7 +23,6 @@ public class UI {
     public boolean gameFinished = false;
     SpriteBatch spriteBatch;
     public String currentDialog;
-    private ShapeRenderer shapeRenderer;
     private Texture titleScreenImage;
     private Texture inventoryStrip;
     public int commandNum = 0;
@@ -37,7 +36,6 @@ public class UI {
         this.gp = gp;
         this.font = new BitmapFont();
         this.font.getData().setScale(2f);
-        this.shapeRenderer = new ShapeRenderer();
         loadBackgroundImage();
         loadUIImages();
 

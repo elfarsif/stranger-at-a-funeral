@@ -13,6 +13,7 @@ public class KeyHandler extends InputAdapter {
     public boolean rightPressed;
     public boolean spacePressed;
     public boolean showDebug;
+    public boolean shootKeyPressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -85,7 +86,9 @@ public class KeyHandler extends InputAdapter {
                 gp.player.selectItem();
             }
         }
-
+        if (code == Input.Keys.F){
+            shootKeyPressed = true;
+        }
         if(code == Input.Keys.ENTER){
             gp.player.selectItem();
         }
@@ -141,6 +144,9 @@ public class KeyHandler extends InputAdapter {
         }
         if (keycode == Input.Keys.D) {
             rightPressed = false;
+        }
+        if (keycode == Input.Keys.F) {
+            shootKeyPressed = false;
         }
         return true;
     }

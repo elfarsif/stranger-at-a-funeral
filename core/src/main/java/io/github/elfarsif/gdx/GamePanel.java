@@ -52,6 +52,7 @@ public class GamePanel implements ApplicationListener {
     public Entity[] npc = new Entity[10];
     public Entity[] monsters = new Entity[10];
     ArrayList<Entity> entities = new ArrayList<Entity>();
+    public ArrayList<Entity> projectiles = new ArrayList<Entity>();
 
     //GAME STATE
     public int gameState;
@@ -122,6 +123,17 @@ public class GamePanel implements ApplicationListener {
                     }
                 }
             }
+            //update projectiles
+            for(int i = 0; i < projectiles.size(); i++){
+                if(projectiles.get(i) != null){
+                    if (projectiles.get(i).alive){
+                        projectiles.get(i).update();
+                    }
+                    if (!projectiles.get(i).alive){
+                        projectiles.remove(i);
+                    }
+                }
+            }
         }
         if(gameState == pauseState){
             //TODO
@@ -180,6 +192,13 @@ public class GamePanel implements ApplicationListener {
             for(int i = 0; i < monsters.length; i++){
                 if(monsters[i] != null){
                     entities.add(monsters[i]);
+                }
+            }
+
+            //paint projectiles
+            for(int i = 0; i < projectiles.size(); i++){
+                if(projectiles.get(i) != null){
+                    entities.add(projectiles.get(i));
                 }
             }
 

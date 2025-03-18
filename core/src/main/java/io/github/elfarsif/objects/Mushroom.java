@@ -34,7 +34,7 @@ public class Mushroom extends Entity {
         Sprite image = null;
         try {
             image = new Sprite(new Texture(filePath));
-            image.setSize(gp.tileSize * 2, gp.tileSize * 2);
+            image.setSize(gp.tileSize, gp.tileSize);
         } catch (Exception e) {
             throw new RuntimeException("Error reading image for mushroom:" + e);
         }

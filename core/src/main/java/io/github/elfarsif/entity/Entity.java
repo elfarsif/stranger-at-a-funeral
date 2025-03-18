@@ -55,6 +55,8 @@ public abstract class Entity {
     public int maxLife;
     public int currentLife;
     public int speed;
+    public int maxMana;
+    public int currentMana;
     public int strength;
     public int level;
     public int attack;
@@ -64,6 +66,7 @@ public abstract class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
 
     //TYPE
     public int type;//0 player, 1 npc, 2 monster
@@ -73,10 +76,10 @@ public abstract class Entity {
     public final int type_shield=5;
     public final int type_consumable=6;
 
-
     //ITEM ATTRIBUTES
     public int attackValue;
     public int defenseValue;
+    public int projectileUseCost;
 
     public Entity(GamePanel gp){
         this.gp = gp;
@@ -307,7 +310,6 @@ public abstract class Entity {
             changeAlphaForDyingAnimationa(batch,0f);
         }
         if (dyingCounter>dyingFrames*7){
-            dying = false;
             alive = false;
         }
 
