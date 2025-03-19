@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.gdx.GamePanel;
+import io.github.elfarsif.objects.Banana;
+import io.github.elfarsif.objects.Mushroom;
 
 import java.util.Random;
 
@@ -85,6 +87,18 @@ public class GreenSlime extends Entity {
             }
 
             actionLookCounter = 0;
+        }
+
+    }
+
+    @Override
+    public void checkDrop(){
+        int i = new Random().nextInt(100)+1;
+
+        if (i<50){
+            dropItem(new Banana(gp));
+        }else {
+            dropItem(new Banana(gp));
         }
 
     }

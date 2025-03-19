@@ -77,6 +77,7 @@ public abstract class Entity {
     public final int type_consumable=6;
 
     //ITEM ATTRIBUTES
+    public int value;
     public int attackValue;
     public int defenseValue;
     public int projectileUseCost;
@@ -112,14 +113,7 @@ public abstract class Entity {
         boolean contactPlayer = gp.collisionChecker.checkPlayer(this);
 
         if (this.type == type_monster && contactPlayer) {
-            if (!gp.player.invincible) {
-                int damage = attack - gp.player.defense;
-                if(damage < 0){
-                    damage = 0;
-                }
-                gp.player.currentLife -= damage;
-                gp.player.invincible = true;
-            }
+           damagePlayer(attack);
         }
 
         if (!collisionOn) {
@@ -160,6 +154,17 @@ public abstract class Entity {
         }
     }
 
+    public void damagePlayer(int attack){
+        if (!gp.player.invincible) {
+            int damage = attack - gp.player.defense;
+            if(damage < 0){
+                damage = 0;
+            }
+            gp.player.currentLife -= damage;
+            gp.player.invincible = true;
+        }
+    }
+
     public void applyConsumable(Entity entity){}
 
     public Sprite setup(String path){
@@ -180,6 +185,21 @@ public abstract class Entity {
         }
         gp.ui.currentDialog = dialogs[dialogIndex];
         dialogIndex++;
+    }
+
+    public void checkDrop(){
+
+    }
+
+    public void dropItem(Entity droppedItem){
+        for (int i = 0 ; i<gp.objects.length;i++){
+            if (gp.objects[i] == null){
+                gp.objects[i] = droppedItem;
+                gp.objects[i].worldX = worldX;
+                gp.objects[i].worldY = worldY;
+                break;
+            }
+        }
     }
 
     public void draw(SpriteBatch batch) {
