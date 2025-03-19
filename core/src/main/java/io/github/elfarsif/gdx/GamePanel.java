@@ -11,6 +11,7 @@ import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 
 import io.github.elfarsif.tile.TileManager;
+import io.github.elfarsif.tile_interactive.InteractiveTile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +54,7 @@ public class GamePanel implements ApplicationListener {
     public Entity[] monsters = new Entity[10];
     ArrayList<Entity> entities = new ArrayList<Entity>();
     public ArrayList<Entity> projectiles = new ArrayList<Entity>();
+    public InteractiveTile[] iTiles = new InteractiveTile[10];
 
     //GAME STATE
     public int gameState;
@@ -94,6 +96,7 @@ public class GamePanel implements ApplicationListener {
         assetSetter.setObject();
         assetSetter.setNPC();
         assetSetter.setMonster();
+        assetSetter.setInteractiveTiles();
         playMusic(0);
         stopMusic();
     }
@@ -135,6 +138,12 @@ public class GamePanel implements ApplicationListener {
                     }
                 }
             }
+            //update interactive tiles
+            for (int i = 0; i < iTiles.length; i++){
+                if(iTiles[i] != null){
+                    iTiles[i].update();
+                }
+            }
         }
         if(gameState == pauseState){
             //TODO
@@ -174,15 +183,29 @@ public class GamePanel implements ApplicationListener {
             //DRAW TILES
             tileManager.draw(spriteBatch);
 
+            for (int i = 0 ; i < iTiles.length; i++){
+                if(iTiles[i] != null){
+                    iTiles[i].draw(spriteBatch);
+                }
+            }
+
             //ADD ENTITIES TO LIST
             entities.add(player);
+            //ADD INTERACTIVE TILES
+            for (int i = 0; i < iTiles.length; i++){
+                if(iTiles[i] != null){
+                    entities.add(iTiles[i]);
+                }
+            }
+
+            //NPC
             for(int i = 0; i < npc.length; i++){
                 if(npc[i] != null){
                     entities.add(npc[i]);
                 }
             }
 
-            //NPC
+            //OBJECTS
             for(int i = 0; i < objects.length; i++){
                 if(objects[i] != null){
                     entities.add(objects[i]);

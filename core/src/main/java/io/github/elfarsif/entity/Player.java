@@ -212,6 +212,9 @@ public class Player extends Entity {
             int monsterIndex = gp.collisionChecker.checkEntity(this, gp.monsters);
             contactMonster(monsterIndex);
 
+            //check interactive tile collision
+            int iTileIndex = gp.collisionChecker.checkEntity(this, gp.iTiles);
+
             //check event
             gp.eventHandler.checkEvent();
 
@@ -271,6 +274,24 @@ public class Player extends Entity {
         }
     }
 
+    public void hitInteractiveTile(int i) {
+        int counter = 0;
+        if (i != 999
+            && gp.iTiles[i].destructible
+            && gp.iTiles[i].isCorrectTool(this)
+            && !gp.iTiles[i].invincible) {
+
+            gp.ui.addMessage("You destroyed ");
+            gp.iTiles[i].currentLife--;
+            gp.iTiles[i].invincible = true;
+
+            if (gp.iTiles[i].currentLife == 0){
+                gp.iTiles[i] = gp.iTiles[i].getDestroyedTile();
+            }
+
+        }
+    }
+
     private void attacking() {
         spriteCounter++;
         //ATTACKING ANIMATION
@@ -309,8 +330,10 @@ public class Player extends Entity {
             solidArea.height = attackArea.height;
 
             int monsterIndex = gp.collisionChecker.checkEntity(this, gp.monsters);
-            System.out.println(monsterIndex);
             damageMonster(monsterIndex, attack);
+
+            int iTileIndex = gp.collisionChecker.checkEntity(this, gp.iTiles);
+            hitInteractiveTile(iTileIndex);
 
             //REVERT TO ORIGINAL POSITION
             worldX = currentWorldX;
