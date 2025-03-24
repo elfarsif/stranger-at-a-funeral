@@ -22,8 +22,9 @@ public class GamePanel implements ApplicationListener {
     private final int originalTileSize = 16;
     private final int scale = 3;
     public int tileSize = originalTileSize * scale;
-    private final int maxScreenCol = 20;
-    private final int maxScreenRow = 10;
+    private final int maxScreenCol = 30;
+    private final int maxScreenRow = 16;
+
     //Screen size is in the laucher class manually change for now to match these
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
@@ -41,11 +42,14 @@ public class GamePanel implements ApplicationListener {
     public KeyHandler keyHandler;
     public TileManager tileManager;
     public CollisionChecker collisionChecker;
-    public SoundWrapper soundWrapper;
+    public SoundWrapper music;
+    public SoundWrapper soundEffect;
     public UI ui;
     public AssetSetter assetSetter = new AssetSetter(this);
     private BitmapFont font;
     public EventHandler eventHandler = new EventHandler(this);
+    public boolean fullScreenOn = false;
+    Config config;
 
     //ENTITIES AND OBJECTS
     public Player player;
@@ -62,6 +66,7 @@ public class GamePanel implements ApplicationListener {
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int titleState = 4;
+    public final int optionsState = 5;
 
 
     private static final int FPS = 60;
@@ -71,6 +76,7 @@ public class GamePanel implements ApplicationListener {
 
     @Override
     public void create() {
+        config = new Config(this);
         spriteBatch = new SpriteBatch();
         playerTexture = new Texture("bucket.png");
         keyHandler = new KeyHandler(this);
@@ -78,8 +84,12 @@ public class GamePanel implements ApplicationListener {
         player = new Player(this, keyHandler);
         tileManager = new TileManager(this);
         collisionChecker = new CollisionChecker(this);
-        soundWrapper = new SoundWrapper();
+        music = new SoundWrapper();
+        soundEffect = new SoundWrapper();
         ui = new UI(this);
+
+
+        config.loadConfig();
         //FONT DEBUG
         this.font = new BitmapFont();
         this.font.getData().setScale(2f);
@@ -92,13 +102,16 @@ public class GamePanel implements ApplicationListener {
     }
 
     public void setupGame(){
-        gameState = titleState;
+        gameState = playState;
         assetSetter.setObject();
         assetSetter.setNPC();
         assetSetter.setMonster();
         assetSetter.setInteractiveTiles();
         playMusic(0);
-        stopMusic();
+
+        if(fullScreenOn){
+//            setFullScreen();
+        }
     }
 
     @Override
@@ -285,16 +298,16 @@ public class GamePanel implements ApplicationListener {
     }
 
     public void playMusic(int i){
-        soundWrapper.setFile(i);
-        soundWrapper.play();
-        soundWrapper.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
 
     public void stopMusic(){
-        soundWrapper.stop();
+        music.stop();
     }
     public void playSoundEffect(int i){
-        soundWrapper.setFile(i);
-        soundWrapper.play();
+        soundEffect.setFile(i);
+        soundEffect.play();
     }
 }

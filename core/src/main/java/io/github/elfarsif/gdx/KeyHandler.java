@@ -14,6 +14,7 @@ public class KeyHandler extends InputAdapter {
     public boolean spacePressed;
     public boolean showDebug;
     public boolean shootKeyPressed;
+    public boolean enterPressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -38,8 +39,74 @@ public class KeyHandler extends InputAdapter {
         //PAUSE STATE
         }else if(gp.gameState == gp.pauseState){
             pauseState(code);
+        //OPTIONS STATE
+        } else if(gp.gameState == gp.optionsState){
+            optionsState(code);
         }
+
         return true;
+    }
+
+    private void optionsState(int code) {
+        if (code == Input.Keys.ESCAPE) {
+            gp.gameState = gp.playState;
+        }
+        if (code == Input.Keys.ENTER) {
+            enterPressed = true;
+        }
+
+        int maxCommandNum = 0;
+        switch (gp.ui.subState) {
+            case 0:
+                maxCommandNum = 5;
+                break;
+            case 2:
+                maxCommandNum = 1;
+                break;
+        }
+        if (code == Input.Keys.W) {
+            gp.ui.commandNum--;
+            gp.playSoundEffect(1);
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = maxCommandNum;
+            }
+        }
+        if (code == Input.Keys.S) {
+            gp.ui.commandNum++;
+            gp.playSoundEffect(1);
+            if (gp.ui.commandNum > maxCommandNum) {
+                gp.ui.commandNum = 0;
+            }
+        }
+
+        if (code == Input.Keys.A) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
+                    gp.music.volumeScale--;
+                    //TO CHANGE VOLUME WHILE MUSIC IS PLAYING
+                    gp.music.checkVolume();
+                    gp.playSoundEffect(1);
+                }
+                if (gp.ui.commandNum == 2 && gp.soundEffect.volumeScale > 0) {
+                    gp.soundEffect.volumeScale--;
+                    gp.playSoundEffect(1);
+                }
+            }
+        }
+
+        if (code == Input.Keys.D) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
+                    gp.music.volumeScale++;
+                    gp.music.checkVolume();
+                    gp.playSoundEffect(1);
+                }
+                if (gp.ui.commandNum == 2 && gp.soundEffect.volumeScale < 5) {
+                    gp.soundEffect.volumeScale++;
+                    gp.playSoundEffect(1);
+                }
+            }
+        }
     }
 
     private void pauseState(int code) {
@@ -99,6 +166,9 @@ public class KeyHandler extends InputAdapter {
             }else if(gp.gameState == gp.pauseState){
                 gp.gameState = gp.playState;
             }
+        }
+        if (code == Input.Keys.ESCAPE){
+            gp.gameState = gp.optionsState;
         }
     }
 
