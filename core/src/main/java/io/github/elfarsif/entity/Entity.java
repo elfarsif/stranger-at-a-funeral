@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 import com.badlogic.gdx.graphics.Color;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -77,6 +78,8 @@ public abstract class Entity {
     public final int type_consumable=6;
 
     //ITEM ATTRIBUTES
+    public ArrayList<Entity> inventory = new ArrayList<Entity>();
+    public final int maxInventorySize = 10;
     public int value;
     public int attackValue;
     public int defenseValue;
@@ -181,7 +184,6 @@ public abstract class Entity {
     public void speak(){
         if(dialogs[dialogIndex] == null){
             dialogIndex = 0;
-            gp.gameState = gp.playState;
         }
         gp.ui.currentDialog = dialogs[dialogIndex];
         dialogIndex++;
@@ -192,11 +194,11 @@ public abstract class Entity {
     }
 
     public void dropItem(Entity droppedItem){
-        for (int i = 0 ; i<gp.objects.length;i++){
-            if (gp.objects[i] == null){
-                gp.objects[i] = droppedItem;
-                gp.objects[i].worldX = worldX;
-                gp.objects[i].worldY = worldY;
+        for (int i = 0 ; i<gp.objects[1].length;i++){
+            if (gp.objects[gp.currentMap][i] == null){
+                gp.objects[gp.currentMap][i] = droppedItem;
+                gp.objects[gp.currentMap][i].worldX = worldX;
+                gp.objects[gp.currentMap][i].worldY = worldY;
                 break;
             }
         }

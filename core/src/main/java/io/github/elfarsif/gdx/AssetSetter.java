@@ -1,6 +1,7 @@
 package io.github.elfarsif.gdx;
 
 import io.github.elfarsif.entity.Oscael;
+import io.github.elfarsif.entity.StoreClerk;
 import io.github.elfarsif.monster.GreenSlime;
 import io.github.elfarsif.tile_interactive.PineTree;
 import io.github.elfarsif.objects.SwordCopper;
@@ -14,33 +15,46 @@ public class AssetSetter {
     }
 
     public void setObject(){
-
-        gp.objects[2] = new SwordCopper(gp);
-        gp.objects[2].worldX = 30 * gp.tileSize;
-        gp.objects[2].worldY = 12 * gp.tileSize;
+        int mapNum =0;
+        gp.objects[mapNum][0] = new SwordCopper(gp);
+        gp.objects[mapNum][0].worldX = 30 * gp.tileSize;
+        gp.objects[mapNum][0].worldY = 12 * gp.tileSize;
 
     }
 
     public void setNPC(){
-        gp.npc[0] = new Oscael(gp);
-        gp.npc[0].worldX = 10 * gp.tileSize;
-        gp.npc[0].worldY = 4 * gp.tileSize;
+        int mapNum =0;
+        gp.npc[mapNum][0] = new Oscael(gp);
+        gp.npc[mapNum][0].worldX = 10 * gp.tileSize;
+        gp.npc[mapNum][0].worldY = 4* gp.tileSize;
+
+        mapNum = 1;
+        gp.npc[mapNum][0] = new StoreClerk(gp);
+        gp.npc[mapNum][0].worldX = 36 * gp.tileSize;
+        gp.npc[mapNum][0].worldY = 40* gp.tileSize;
     }
 
     public void setMonster(){
-        gp.monsters[0] = new GreenSlime(gp);
-        gp.monsters[0].worldX = 30 * gp.tileSize;
-        gp.monsters[0].worldY = 20 * gp.tileSize;
+        int mapNum =0;
+        gp.monsters[mapNum][0] = new GreenSlime(gp);
+        gp.monsters[mapNum][0].worldX = 30 * gp.tileSize;
+        gp.monsters[mapNum][0].worldY = 20 * gp.tileSize;
 
-        gp.monsters[1] = new GreenSlime(gp);
-        gp.monsters[1].worldX = 32 * gp.tileSize;
-        gp.monsters[1].worldY = 22 * gp.tileSize;
+        gp.monsters[mapNum][1] = new GreenSlime(gp);
+        gp.monsters[mapNum][1].worldX = 32 * gp.tileSize;
+        gp.monsters[mapNum][1].worldY = 22 * gp.tileSize;
     }
 
     public void setInteractiveTiles() {
-        gp.iTiles[0] = new PineTree(gp);
-        gp.iTiles[0].collision = true;
-        gp.iTiles[0].worldX = 10 * gp.tileSize;
-        gp.iTiles[0].worldY = 6 * gp.tileSize;
+               int mapNum =0;
+        gp.iTiles[mapNum][0] = new PineTree(gp);
+        gp.iTiles[mapNum][0].collision = true;
+        gp.iTiles[mapNum][0].worldX = 10 * gp.tileSize;
+        gp.iTiles[mapNum][0].worldY = 6 * gp.tileSize;
+
+        gp.iTiles[mapNum][0] = new PineTree(gp);
+        gp.iTiles[mapNum][0].collision = true;
+        gp.iTiles[mapNum][0].worldX = 40 * gp.tileSize;
+        gp.iTiles[mapNum][0].worldY = 38 * gp.tileSize;
     }
 }

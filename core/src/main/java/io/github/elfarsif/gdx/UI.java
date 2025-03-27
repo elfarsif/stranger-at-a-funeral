@@ -32,6 +32,10 @@ public class UI {
     int subState = 0;
     ArrayList<String> messages = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
+    int counter = 0;
+    public Entity npc;
+
+    private Texture blackTexture;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -39,6 +43,7 @@ public class UI {
         this.font.getData().setScale(2f);
         loadBackgroundImage();
         loadUIImages();
+        initializeTransitionTexture();
 
         //CREATE HEALTH OBJECTS
         Entity healthBar = new HealthBar(gp);
@@ -119,6 +124,80 @@ public class UI {
         //OPTIONS STATE
         if(gp.gameState == gp.optionsState){
             drawOptionsScreen();
+        }
+        //TRANSITION MAP STATE
+        if(gp.gameState == gp.transitionMapState){
+            drawTransitionMapAnimation();
+        }
+
+        //TRADE STATE
+        if(gp.gameState == gp.tradeState){
+            drawTradeScreen();
+        }
+    }
+
+    private void drawTradeScreen() {
+        switch (subState){
+            case 0:
+                tradeSelect();
+                break;
+            case 1:
+                tradeBuy();
+                break;
+            case 2:
+                tradeSell();
+                break;
+        }
+        gp.keyHandler.enterPressed = false;
+    }
+
+    private void tradeSell() {
+
+    }
+
+    private void tradeBuy() {
+
+    }
+
+    private void tradeSelect() {
+        drawDialogScreen();
+
+        //DRAW WINDOW
+        int x = gp.tileSize*15;
+        int y = gp.tileSize*4;
+        int width = gp.tileSize*10;
+        int height = gp.tileSize*10;
+        drawSubWindow(x,y,width,height);
+    }
+
+    private void initializeTransitionTexture() {
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLACK);
+        pixmap.fill();
+        blackTexture = new Texture(pixmap);
+        pixmap.dispose(); // Texture is now holding the data
+    }
+
+
+    private void drawTransitionMapAnimation() {
+        counter++;
+
+        float alpha = Math.min(counter * 0.05f, 1f); // Counter from 0 to 50 → alpha from 0 to 1
+
+        // Set blending and draw with alpha
+        Color originalColor = spriteBatch.getColor();
+        spriteBatch.setColor(0, 0, 0, alpha);
+        spriteBatch.draw(blackTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.setColor(originalColor);
+
+        if (counter ==50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eventHandler.tempMap;
+            gp.player.worldX = gp.eventHandler.tempCol * gp.tileSize;
+            gp.player.worldY = gp.eventHandler.tempRow * gp.tileSize;
+            gp.eventHandler.previousEventX = gp.player.worldX;
+            gp.eventHandler.previousEventY = gp.player.worldY;
         }
     }
 

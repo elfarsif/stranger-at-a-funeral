@@ -37,6 +37,8 @@ public class GamePanel implements ApplicationListener {
     public final int maxWorldRow = 48;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
+    public final int maxMap=10;
+    public int currentMap = 0;
 
     //SYSTEM
     public KeyHandler keyHandler;
@@ -53,12 +55,12 @@ public class GamePanel implements ApplicationListener {
 
     //ENTITIES AND OBJECTS
     public Player player;
-    public Entity[] objects = new Entity[10];
-    public Entity[] npc = new Entity[10];
-    public Entity[] monsters = new Entity[10];
+    public Entity[][] objects = new Entity[maxMap][10];
+    public Entity[][] npc = new Entity[maxMap][10];
+    public Entity[][] monsters = new Entity[maxMap][10];
+    public InteractiveTile[][] iTiles = new InteractiveTile[maxMap][10];
     ArrayList<Entity> entities = new ArrayList<Entity>();
     public ArrayList<Entity> projectiles = new ArrayList<Entity>();
-    public InteractiveTile[] iTiles = new InteractiveTile[10];
 
     //GAME STATE
     public int gameState;
@@ -67,6 +69,8 @@ public class GamePanel implements ApplicationListener {
     public final int dialogueState = 3;
     public final int titleState = 4;
     public final int optionsState = 5;
+    public final int transitionMapState = 6;
+    public final int tradeState = 7;
 
 
     private static final int FPS = 60;
@@ -108,6 +112,7 @@ public class GamePanel implements ApplicationListener {
         assetSetter.setMonster();
         assetSetter.setInteractiveTiles();
         playMusic(0);
+        stopMusic();
 
         if(fullScreenOn){
 //            setFullScreen();
@@ -123,20 +128,20 @@ public class GamePanel implements ApplicationListener {
         if(gameState == playState){
             player.update();
             //update all npc
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i] != null){
-                    npc[i].update();
+            for(int i = 0; i < npc[1].length; i++){
+                if(npc[currentMap][i] != null){
+                    npc[currentMap][i].update();
                 }
             }
             //update monsters
-            for(int i = 0; i < monsters.length; i++){
-                if(monsters[i] != null){
-                    if (monsters[i].alive && !monsters[i].dying){
-                        monsters[i].update();
+            for(int i = 0; i < monsters[1].length; i++){
+                if(monsters[currentMap][i] != null){
+                    if (monsters[currentMap][i].alive && !monsters[currentMap][i].dying){
+                        monsters[currentMap][i].update();
                     }
-                    if (!monsters[i].alive){
-                        monsters[i].checkDrop();
-                        monsters[i] = null;
+                    if (!monsters[currentMap][i].alive){
+                        monsters[currentMap][i].checkDrop();
+                        monsters[currentMap][i] = null;
                     }
                 }
             }
@@ -152,14 +157,14 @@ public class GamePanel implements ApplicationListener {
                 }
             }
             //update interactive tiles
-            for (int i = 0; i < iTiles.length; i++){
-                if(iTiles[i] != null){
-                    iTiles[i].update();
+            for (int i = 0; i < iTiles[1].length; i++){
+                if(iTiles[currentMap][i] != null){
+                    iTiles[currentMap][i].update();
                 }
             }
         }
         if(gameState == pauseState){
-            //TODO
+            //nothing
         }
     }
 
@@ -196,39 +201,39 @@ public class GamePanel implements ApplicationListener {
             //DRAW TILES
             tileManager.draw(spriteBatch);
 
-            for (int i = 0 ; i < iTiles.length; i++){
-                if(iTiles[i] != null){
-                    iTiles[i].draw(spriteBatch);
+            for (int i = 0 ; i < iTiles[1].length; i++){
+                if(iTiles[currentMap][i] != null){
+                    iTiles[currentMap][i].draw(spriteBatch);
                 }
             }
 
             //ADD ENTITIES TO LIST
             entities.add(player);
             //ADD INTERACTIVE TILES
-            for (int i = 0; i < iTiles.length; i++){
-                if(iTiles[i] != null){
-                    entities.add(iTiles[i]);
+            for (int i = 0; i < iTiles[1].length; i++){
+                if(iTiles[currentMap][i] != null){
+                    entities.add(iTiles[currentMap][i]);
                 }
             }
 
             //NPC
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i] != null){
-                    entities.add(npc[i]);
+            for(int i = 0; i < npc[1].length; i++){
+                if(npc[currentMap][i] != null){
+                    entities.add(npc[currentMap][i]);
                 }
             }
 
             //OBJECTS
-            for(int i = 0; i < objects.length; i++){
-                if(objects[i] != null){
-                    entities.add(objects[i]);
+            for(int i = 0; i < objects[1].length; i++){
+                if(objects[currentMap][i] != null){
+                    entities.add(objects[currentMap][i]);
                 }
             }
 
             //MONSTERS
-            for(int i = 0; i < monsters.length; i++){
-                if(monsters[i] != null){
-                    entities.add(monsters[i]);
+            for(int i = 0; i < monsters[1].length; i++){
+                if(monsters[currentMap][i] != null){
+                    entities.add(monsters[currentMap][i]);
                 }
             }
 
