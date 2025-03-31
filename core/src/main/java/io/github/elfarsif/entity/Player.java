@@ -28,10 +28,10 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
         solidArea = new Rectangle();
-        solidArea.x = 12*3;
-        solidArea.y = 24*3;
-        solidArea.width = 8*3;
-        solidArea.height = 8*3;
+        solidArea.x = 12 * gp.scale;
+        solidArea.y = 24 * gp.scale;
+        solidArea.width = 8 * gp.scale;
+        solidArea.height = 8 * gp.scale;
 
         attackArea.width = gp.tileSize;
         attackArea.height = gp.tileSize;
@@ -816,6 +816,8 @@ public class Player extends Entity {
             batch.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
             batch.setColor(1,1,1,1);
         }
+
+        this.drawCollisionArea(batch,screenX,screenY);
 
     }
 

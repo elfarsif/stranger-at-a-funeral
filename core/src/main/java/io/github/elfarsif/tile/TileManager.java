@@ -1,8 +1,10 @@
 package io.github.elfarsif.tile;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
+import com.badlogic.gdx.graphics.Pixmap;
 
 import javax.imageio.ImageIO;
 import java.io.BufferedReader;
@@ -14,6 +16,8 @@ public class TileManager {
     GamePanel gamePanel;
     public Tile[] tile;
     public int mapTileNum[][][];
+    boolean drawPath = true;
+
 
     public TileManager(GamePanel gamePanel){
         this.gamePanel = gamePanel;
@@ -99,6 +103,16 @@ public class TileManager {
         }
     }
 
+    public Texture createFilledTileTexture(int tileSize, Color color) {
+        Pixmap pixmap = new Pixmap(tileSize, tileSize, Pixmap.Format.RGBA8888);
+        pixmap.setColor(color);
+        pixmap.fillRectangle(0, 0, tileSize, tileSize);
+
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+        return texture;
+    }
+
     public void draw(SpriteBatch g2d){
         int worldCol = 0;
         int worldRow = 0;
@@ -126,6 +140,21 @@ public class TileManager {
             if(worldCol == gamePanel.maxWorldCol){
                 worldCol = 0;
                 worldRow++;
+            }
+        }
+
+        if (drawPath){
+            g2d.setColor(Color.RED);
+
+            for (int i = 0; i< gamePanel.pathFinder.pathList.size();i++){
+                int worldX = gamePanel.pathFinder.pathList.get(i).col * gamePanel.tileSize;
+                int worldY = gamePanel.pathFinder.pathList.get(i).row * gamePanel.tileSize;
+                int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
+                int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
+
+                Texture texture = createFilledTileTexture(gamePanel.tileSize, Color.RED);
+                g2d.draw(texture, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+
             }
         }
     }

@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import io.github.elfarsif.ai.PathFinder;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
+import com.badlogic.gdx.graphics.Pixmap;
 
 import io.github.elfarsif.tile.TileManager;
 import io.github.elfarsif.tile_interactive.InteractiveTile;
@@ -20,7 +22,7 @@ import java.util.Comparator;
 public class GamePanel implements ApplicationListener {
     // SCREEN SETTINGS
     private final int originalTileSize = 16;
-    private final int scale = 3;
+    public final int scale = 3;
     public int tileSize = originalTileSize * scale;
     private final int maxScreenCol = 30;
     private final int maxScreenRow = 16;
@@ -52,6 +54,7 @@ public class GamePanel implements ApplicationListener {
     public EventHandler eventHandler = new EventHandler(this);
     public boolean fullScreenOn = false;
     Config config;
+    public PathFinder pathFinder;
 
     //ENTITIES AND OBJECTS
     public Player player;
@@ -91,6 +94,7 @@ public class GamePanel implements ApplicationListener {
         music = new SoundWrapper();
         soundEffect = new SoundWrapper();
         ui = new UI(this);
+        pathFinder = new PathFinder(this);
 
 
         config.loadConfig();

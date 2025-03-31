@@ -43,6 +43,7 @@ public abstract class Entity {
     public boolean dying = false;
     boolean hpBarOn = false;
     public Boolean collisionOn = false;
+    public boolean onPath = false;
 
     //COUNTERS
     int spriteCounter = 0;
@@ -85,6 +86,9 @@ public abstract class Entity {
     public int defenseValue;
     public int projectileUseCost;
 
+    //Pixmaps
+    Pixmap collisionArea;
+
     public Entity(GamePanel gp){
         this.gp = gp;
         setDefaultSolidArea();
@@ -95,12 +99,16 @@ public abstract class Entity {
      */
     private void setDefaultSolidArea() {
         solidArea = new Rectangle();
-        solidArea.x = 12*3;
-        solidArea.y = 24*3;
+        solidArea.x = 12 * gp.scale;
+        solidArea.y = 24 * gp.scale;
+        //        solidArea.x = 1;
+        //        solidArea.y = 1;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 8*3;
-        solidArea.height = 8*3;
+        //        solidArea.width = gp.tileSize-3;
+        //        solidArea.height = gp.tileSize-3;
+        solidArea.width = 8 * gp.scale;
+        solidArea.height = 8 * gp.scale;
 
     }
 
@@ -108,16 +116,7 @@ public abstract class Entity {
 
     public void update() {
         setAction();
-        collisionOn = false;
-        gp.collisionChecker.checkTile(this);
-        gp.collisionChecker.checkObject(this, false);
-        gp.collisionChecker.checkEntity(this,gp.npc);
-        gp.collisionChecker.checkEntity(this,gp.monsters);
-        boolean contactPlayer = gp.collisionChecker.checkPlayer(this);
-
-        if (this.type == type_monster && contactPlayer) {
-           damagePlayer(attack);
-        }
+        checkCollision();
 
         if (!collisionOn) {
             switch (direction) {
@@ -155,6 +154,105 @@ public abstract class Entity {
                 invincibleCounter = 0;
             }
         }
+    }
+
+    public void checkCollision() {
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);
+        gp.collisionChecker.checkObject(this, false);
+        gp.collisionChecker.checkEntity(this,gp.npc);
+        gp.collisionChecker.checkEntity(this,gp.monsters);
+        boolean contactPlayer = gp.collisionChecker.checkPlayer(this);
+
+        if (this.type == type_monster && contactPlayer) {
+           damagePlayer(attack);
+        }
+    }
+
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (worldX +solidArea.x) / gp.tileSize;
+        int startRow = (worldY +solidArea.y) / gp.tileSize;
+
+        gp.pathFinder.setNodes(startCol, startRow, goalCol, goalRow,this);
+
+
+        if(gp.pathFinder.search()){
+            int nextX = gp.pathFinder.pathList.get(0).col*gp.tileSize;
+            int nextY = gp.pathFinder.pathList.get(0).row*gp.tileSize;
+
+            //Entitt solid position
+            int entityLeftX = worldX + solidArea.x;
+            int entityRightX = worldX + solidArea.x + solidArea.width;
+            int entityTopY = worldY + solidArea.y;
+            int entityBottomY = worldY + solidArea.y + solidArea.height;
+
+
+            if (entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + gp.tileSize){
+                direction = "down";
+            }
+            else if (entityTopY < nextY && entityLeftX >= nextX && entityRightX < nextX+gp.tileSize){
+                direction = "up";
+            }
+            else if (entityTopY >= nextY && entityBottomY < nextY + gp.tileSize){
+                //left or right
+                if (entityLeftX > nextX){
+                    direction = "left";
+                }
+                if (entityRightX < nextX){
+                    direction = "right";
+                }
+            }
+            //cant move because of collision
+            else if (entityTopY > nextY && entityLeftX > nextX){
+                System.out.println("up or left");
+                //up or left
+                direction = "up";
+                checkCollision();
+                if (collisionOn){
+                    direction = "left";
+                }
+            }
+            else if (entityTopY > nextY && entityLeftX < nextX){
+                //up or right
+                direction = "up";
+                checkCollision();
+                if (collisionOn){
+                    direction = "right";
+                }
+            }
+            else if (entityTopY < nextY && entityLeftX > nextX){
+                //down or left
+                direction = "down";
+                checkCollision();
+                if (collisionOn){
+                    direction = "left";
+                }
+            }
+            else if (entityTopY < nextY && entityLeftX < nextX){
+                //down or right
+                direction = "down";
+                checkCollision();
+                if (collisionOn){
+                    direction = "right";
+                }
+            }
+
+            //if reaches the goal, stop the search
+            int nextCol = gp.pathFinder.pathList.get(0).col;
+            int nextRow = gp.pathFinder.pathList.get(0).row;
+            if (nextCol == goalCol && nextRow == goalRow){
+                System.out.println("goal reached");
+                onPath = false;
+            }
+            else {
+                onPath = true;
+            }
+
+
+
+        }
+
+
     }
 
     public void damagePlayer(int attack){
@@ -300,9 +398,28 @@ public abstract class Entity {
 //            float height = image.getHeight();
             batch.draw(image, screenX, screenY, gp.tileSize*2, gp.tileSize*2);
 
+            drawCollisionArea(batch,screenX,screenY);
+
             batch.setColor(1,1,1,1);
         }
 
+    }
+
+    /**
+     * Draws the collision area of the entity
+     * Call method in the draw method of the entity
+     */
+    public void drawCollisionArea(SpriteBatch batch,int screenX,int screenY) {
+        Pixmap pixmap = new Pixmap(solidArea.width, solidArea.height, Pixmap.Format.RGBA8888);
+
+        // Set color to white and draw a rectangle outline
+        pixmap.setColor(Color.WHITE);
+        pixmap.drawRectangle(0, 0, solidArea.width, solidArea.height);
+
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+
+        batch.draw(texture, screenX + solidArea.x, screenY + solidArea.y);
     }
 
     private void dyingAnimation(SpriteBatch batch) {
@@ -337,7 +454,6 @@ public abstract class Entity {
 
 
     }
-
 
     private void changeAlphaForDyingAnimationa(SpriteBatch batch,float alpha){
         batch.setColor(1,1,1,alpha);
