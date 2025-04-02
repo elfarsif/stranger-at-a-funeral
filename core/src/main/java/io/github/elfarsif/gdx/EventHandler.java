@@ -56,14 +56,22 @@ public class EventHandler {
                 findTresure(0,29,6);
             }
             else if(hit(0,32,38,"up")){
-                System.out.println("handle event");
                 switchToMap(1,31,38);
             }
             else if(hit(1,32,38,"up")){
                 switchToMap(0,31,35);
             }
+            else if(hit(0,32,37,"up")){
+                this.oscaelMeetingCutscene();
+            }
+
         }
 
+    }
+
+    public void oscaelMeetingCutscene(){
+        gp.gameState = gp.cutsceneState;
+        gp.cutsceneManager.sceneNum = gp.cutsceneManager.oscaelIntro;
     }
 
     private void switchToMap(int map, int col, int row) {

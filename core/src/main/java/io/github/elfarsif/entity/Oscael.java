@@ -19,8 +19,6 @@ public class Oscael extends Entity {
         dialogs[1] = "I am Oscael.";
         dialogs[2] = "I am the guardian of this forest.";
         dialogs[3] = "I am here to help you.";
-        dialogs[4] = "You can ask me anything.";
-        dialogs[5] = "Just press 'E' to talk to me.";
     }
 
     public void getPlayerImage() {

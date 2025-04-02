@@ -435,15 +435,21 @@ public class Player extends Entity {
 
     private void pickUpObject(int objectIndex) {
         if (objectIndex != 999) {
-            String text;
-            if (inventory.size() != maxInventorySize) {
-                inventory.add(gp.objects[gp.currentMap][objectIndex]);
-                text = "You picked up " + gp.objects[gp.currentMap][objectIndex].name;
-            }else {
-                text = "inventory is full";
+            if(gp.objects[gp.currentMap][objectIndex].type == type_obstacle){
+                if (keyHandler.spacePressed == true){
+                    gp.objects[gp.currentMap][objectIndex].interact();
+                }
+            }else{
+                String text;
+                if (inventory.size() != maxInventorySize) {
+                    inventory.add(gp.objects[gp.currentMap][objectIndex]);
+                    text = "You picked up " + gp.objects[gp.currentMap][objectIndex].name;
+                }else {
+                    text = "inventory is full";
+                }
+                gp.ui.addMessage(text);
+                gp.objects[gp.currentMap][objectIndex] = null;
             }
-            gp.ui.addMessage(text);
-            gp.objects[gp.currentMap][objectIndex] = null;
         }
     }
 

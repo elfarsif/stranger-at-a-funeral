@@ -44,6 +44,8 @@ public abstract class Entity {
     boolean hpBarOn = false;
     public Boolean collisionOn = false;
     public boolean onPath = false;
+    //false allows you to move camera by moving player worldX,worldY without seeing a player, give the effect of camera moving
+    public boolean drawing = true;
 
     //COUNTERS
     int spriteCounter = 0;
@@ -77,6 +79,7 @@ public abstract class Entity {
     public final int type_sword_copper=4;
     public final int type_shield=5;
     public final int type_consumable=6;
+    public final int type_obstacle = 7;
 
     //ITEM ATTRIBUTES
     public ArrayList<Entity> inventory = new ArrayList<Entity>();
@@ -110,6 +113,9 @@ public abstract class Entity {
         solidArea.width = 8 * gp.scale;
         solidArea.height = 8 * gp.scale;
 
+    }
+
+    public void interact() {
     }
 
     public void setAction(){}
@@ -204,7 +210,6 @@ public abstract class Entity {
             }
             //cant move because of collision
             else if (entityTopY > nextY && entityLeftX > nextX){
-                System.out.println("up or left");
                 //up or left
                 direction = "up";
                 checkCollision();

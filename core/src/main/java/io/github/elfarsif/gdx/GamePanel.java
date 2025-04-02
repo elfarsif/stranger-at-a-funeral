@@ -55,6 +55,7 @@ public class GamePanel implements ApplicationListener {
     public boolean fullScreenOn = false;
     Config config;
     public PathFinder pathFinder;
+    public CutsceneManager cutsceneManager;
 
     //ENTITIES AND OBJECTS
     public Player player;
@@ -74,6 +75,7 @@ public class GamePanel implements ApplicationListener {
     public final int optionsState = 5;
     public final int transitionMapState = 6;
     public final int tradeState = 7;
+    public final int cutsceneState = 8;
 
 
     private static final int FPS = 60;
@@ -83,6 +85,7 @@ public class GamePanel implements ApplicationListener {
 
     @Override
     public void create() {
+        cutsceneManager = new CutsceneManager(this);
         config = new Config(this);
         spriteBatch = new SpriteBatch();
         playerTexture = new Texture("bucket.png");
@@ -265,6 +268,9 @@ public class GamePanel implements ApplicationListener {
 
             //EMPTY LIST
             entities.clear();
+
+            //DRAW CUSTSCENE
+            cutsceneManager.draw(spriteBatch);
 
             //DRAW UI
             ui.draw(spriteBatch);

@@ -189,7 +189,8 @@ public class KeyHandler extends InputAdapter {
         if(code == Input.Keys.ENTER){
             switch (gp.ui.commandNum){
                 case 0:
-                    System.out.println("New Game not implemented");
+                    gp.gameState = gp.cutsceneState;
+                    gp.cutsceneManager.sceneNum = gp.cutsceneManager.gameStart;
                     break;
                 case 1:
                     gp.gameState = gp.playState;
