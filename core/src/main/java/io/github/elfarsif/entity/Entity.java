@@ -80,6 +80,7 @@ public abstract class Entity {
     public final int type_shield=5;
     public final int type_consumable=6;
     public final int type_obstacle = 7;
+    public final int type_axe = 8;
 
     //ITEM ATTRIBUTES
     public ArrayList<Entity> inventory = new ArrayList<Entity>();

@@ -12,6 +12,7 @@ import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 import com.badlogic.gdx.graphics.Pixmap;
 
+import io.github.elfarsif.tile.Map;
 import io.github.elfarsif.tile.TileManager;
 import io.github.elfarsif.tile_interactive.InteractiveTile;
 
@@ -41,6 +42,7 @@ public class GamePanel implements ApplicationListener {
     public final int worldHeight = tileSize * maxWorldRow;
     public final int maxMap=10;
     public int currentMap = 0;
+    public Map parentsHome = new Map(10,10);
 
     //SYSTEM
     public KeyHandler keyHandler;

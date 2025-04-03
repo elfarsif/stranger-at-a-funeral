@@ -3,6 +3,7 @@ package io.github.elfarsif.gdx;
 import io.github.elfarsif.entity.Oscael;
 import io.github.elfarsif.entity.StoreClerk;
 import io.github.elfarsif.monster.GreenSlime;
+import io.github.elfarsif.objects.Axe;
 import io.github.elfarsif.tile_interactive.PineTree;
 import io.github.elfarsif.objects.SwordCopper;
 
@@ -23,6 +24,10 @@ public class AssetSetter {
         gp.objects[mapNum][1] = new SwordCopper(gp);
         gp.objects[mapNum][1].worldX = 12 * gp.tileSize;
         gp.objects[mapNum][1].worldY = 40 * gp.tileSize;
+
+        gp.objects[mapNum][3] = new Axe(gp);
+        gp.objects[mapNum][3].worldX = 32 * gp.tileSize;
+        gp.objects[mapNum][3].worldY = 12 * gp.tileSize;
 
     }
 
