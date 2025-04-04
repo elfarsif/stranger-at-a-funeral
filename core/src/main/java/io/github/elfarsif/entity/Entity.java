@@ -8,9 +8,8 @@ import io.github.elfarsif.gdx.GamePanel;
 import com.badlogic.gdx.graphics.Color;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 /**
  * Represents a general entity in the game, including the player, NPCs, and monsters, objects, tools.
  * Handles common attributes and behaviors such as movement, collision, drawing on the screen, and interactions with other entities.
@@ -28,7 +27,7 @@ public abstract class Entity {
     public Rectangle attackArea = new Rectangle(0,0,0,0);
     public Rectangle solidArea ;
     public int solidAreaDefaultX, solidAreaDefaultY;
-    String[] dialogs = new String[10];
+    public String[][] dialogues = new String[10][10];
     public boolean collision = false;
     public String description="";
 
@@ -38,7 +37,8 @@ public abstract class Entity {
     public boolean invincible = false;
     public boolean attacking = false;
     int spriteNumber =1;
-    int dialogIndex=0;
+    public int dialogueIndex = 0;
+    public int dialogueSetNumber =0;
     public boolean alive = true;
     public boolean dying = false;
     boolean hpBarOn = false;
@@ -286,11 +286,11 @@ public abstract class Entity {
     }
 
     public void speak(){
-        if(dialogs[dialogIndex] == null){
+        /*if(dialogues[dialogIndex] == null){
             dialogIndex = 0;
         }
-        gp.ui.currentDialog = dialogs[dialogIndex];
-        dialogIndex++;
+        gp.ui.currentDialog = dialogues[dialogIndex];
+        dialogIndex++;*/
     }
 
     public void checkDrop(){
@@ -467,5 +467,14 @@ public abstract class Entity {
 
     public void damageReaction() {
 
+    }
+
+    public void facePlayer(){
+
+    }
+    public void startDialogue(Entity entity, int setNumber){
+        gp.gameState = gp.dialogueState;
+        gp.ui.npc = entity;
+        dialogueSetNumber = setNumber;
     }
 }

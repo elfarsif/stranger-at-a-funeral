@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.objects.HealthBar;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class UI {
@@ -22,7 +20,7 @@ public class UI {
     private boolean messageOn = false;
     public boolean gameFinished = false;
     SpriteBatch spriteBatch;
-    public String currentDialog;
+    public String currentDialogue;
     private Texture titleScreenImage;
     private Texture inventoryStrip;
     public int commandNum = 0;
@@ -232,8 +230,8 @@ public class UI {
         int textX = frameX + gp.tileSize;
         int textY = frameY + gp.tileSize*3;
 
-        currentDialog = "Are you sure you want to exit the game?";
-        font.draw(spriteBatch, currentDialog, textX, textY);
+        currentDialogue = "Are you sure you want to exit the game?";
+        font.draw(spriteBatch, currentDialogue, textX, textY);
 
         //YES
         String text = "YES";
@@ -568,7 +566,23 @@ public class UI {
         font = new BitmapFont();
         font.getData().setScale(1.5f); // Adjust font size as needed
         font.setColor(Color.WHITE);
-        font.draw(spriteBatch, currentDialog, x + gp.tileSize, y + height - gp.tileSize);
+
+        //DIALOGUE PAGINATION
+        if (npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex]!=null){
+            currentDialogue = npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex];
+            if (gp.keyHandler.spacePressed){
+                if (gp.gameState == gp.dialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyHandler.spacePressed = false;
+                }
+            }
+        }else{
+            npc.dialogueIndex = 0;
+            if (gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState;
+            }
+        }
+        font.draw(spriteBatch, currentDialogue, x + gp.tileSize, y + height - gp.tileSize);
     }
 
     public void drawSubWindow(int x, int y, int width, int height){

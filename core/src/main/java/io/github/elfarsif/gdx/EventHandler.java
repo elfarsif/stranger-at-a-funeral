@@ -62,7 +62,7 @@ public class EventHandler {
                 switchToMap(0,31,35);
             }
             else if(hit(0,32,37,"up")){
-                this.oscaelMeetingCutscene();
+//                this.oscaelMeetingCutscene();
             }
 
         }
@@ -88,7 +88,7 @@ public class EventHandler {
     private void findTresure(int map, int col, int row) {
         System.out.println("handle event");
         gp.gameState = 3;
-        gp.ui.currentDialog = "You found a treasure chest!";
+        gp.ui.currentDialogue = "You found a treasure chest!";
         gp.ui.draw(gp.spriteBatch);
         eventRect[map][col][row].eventDone = false;
         gp.player.currentLife --;

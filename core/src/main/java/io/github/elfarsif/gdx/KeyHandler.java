@@ -26,6 +26,13 @@ public class KeyHandler extends InputAdapter {
         if(code == Input.Keys.T){
             showDebug = !showDebug;
         }
+        //REFRESH MAP
+        //this does work with intellij (havent tested with libgdx) because it does handle change in ressources it just reloads the old ressource while running
+        if(code == Input.Keys.R){
+            gp.tileManager.loadMap("maps/worldMap.txt",0);
+            System.out.println("Map Refreshed");
+        }
+
         //TITLE STATE
         if(gp.gameState == gp.titleState){
             titleState(code);
@@ -117,7 +124,8 @@ public class KeyHandler extends InputAdapter {
 
     private void dialogueState(int code) {
         if(code == Input.Keys.SPACE){
-            gp.gameState = gp.playState;
+            System.out.println("Space Pressed");
+            spacePressed = true;
         }
     }
 

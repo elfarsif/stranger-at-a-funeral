@@ -19,7 +19,7 @@ public class StoreClerk extends Entity {
     }
 
     public void setDialogs(){
-        dialogs[0] = "Hello there! Welcome to the store";
+        dialogues[0][0] = "Hello there! Welcome to the store";
     }
 
     public void getPlayerImage() {
