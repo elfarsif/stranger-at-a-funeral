@@ -86,6 +86,7 @@ public abstract class Entity {
     public final int type_obstacle = 7;
     public final int type_axe = 8;
     public final int type_hoe=9;
+    public final int type_watering_can=10;
 
     //ITEM ATTRIBUTES
     public ArrayList<Entity> inventory = new ArrayList<Entity>();

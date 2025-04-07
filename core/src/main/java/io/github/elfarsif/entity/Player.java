@@ -103,22 +103,22 @@ public class Player extends Entity {
 
         }
         if (currentWeapon.type == type_hoe){
-            attackDown1 = setup("/player/attack/hoe/down1.png");
-            attackDown2 = setup("/player/attack/hoe/down2.png");
-            attackDown3 = setup("/player/attack/hoe/down3.png");
-            attackDown4 = setup("/player/attack/hoe/down4.png");
-            attackUp1 = setup("/player/attack/hoe/up1.png");
-            attackUp2 = setup("/player/attack/hoe/up2.png");
-            attackUp3 = setup("/player/attack/hoe/up3.png");
-            attackUp4 = setup("/player/attack/hoe/up4.png");
-            attackLeft1 = setup("/player/attack/hoe/left1.png");
-            attackLeft2 = setup("/player/attack/hoe/left2.png");
-            attackLeft3 = setup("/player/attack/hoe/left3.png");
-            attackLeft4 = setup("/player/attack/hoe/left4.png");
-            attackRight1 = setup("/player/attack/hoe/right1.png");
-            attackRight2 = setup("/player/attack/hoe/right2.png");
-            attackRight3 = setup("/player/attack/hoe/right3.png");
-            attackRight4 = setup("/player/attack/hoe/right4.png");
+            attackDown1 = setup("player/attack/hoe/down1.png");
+            attackDown2 = setup("player/attack/hoe/down2.png");
+            attackDown3 = setup("player/attack/hoe/down3.png");
+            attackDown4 = setup("player/attack/hoe/down4.png");
+            attackUp1 = setup("player/attack/hoe/up1.png");
+            attackUp2 = setup("player/attack/hoe/up2.png");
+            attackUp3 = setup("player/attack/hoe/up3.png");
+            attackUp4 = setup("player/attack/hoe/up4.png");
+            attackLeft1 = setup("player/attack/hoe/left1.png");
+            attackLeft2 = setup("player/attack/hoe/left2.png");
+            attackLeft3 = setup("player/attack/hoe/left3.png");
+            attackLeft4 = setup("player/attack/hoe/left4.png");
+            attackRight1 = setup("player/attack/hoe/right1.png");
+            attackRight2 = setup("player/attack/hoe/right2.png");
+            attackRight3 = setup("player/attack/hoe/right3.png");
+            attackRight4 = setup("player/attack/hoe/right4.png");
         }
     }
 
@@ -558,6 +558,7 @@ public class Player extends Entity {
                 || selectedItem.type == type_sword_copper
                 || selectedItem.type== type_axe
                 || selectedItem.type == type_hoe
+                || selectedItem.type == type_watering_can
             ){
                 currentWeapon = selectedItem;
                 attack = getAttackValue();

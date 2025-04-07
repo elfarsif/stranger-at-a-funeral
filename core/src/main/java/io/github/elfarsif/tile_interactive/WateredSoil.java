@@ -5,36 +5,34 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.gdx.GamePanel;
 
-public class HoeableGrass extends InteractiveTile {
+public class WateredSoil extends InteractiveTile {
     GamePanel gp;
-
-    public HoeableGrass(GamePanel gp) {
+    public WateredSoil(GamePanel gp, int worldX, int worldY) {
         super(gp);
         this.gp = gp;
-        name = "hoeable-grass";
-        down1 = setup("tiles/left-border.png");
-        down2 = setup("tiles/left-border.png");
-        destructible = true;
+        down1 = setup("tiles/farming/watered-soil.png");
+        down2 = setup("tiles/farming/watered-soil.png");
+        this.worldX = worldX*gp.tileSize;
+        this.worldY = worldY*gp.tileSize;
         currentLife = 1;
         walkOverable = true;
-
-
-
-
+        destructible = false;
     }
+
 
     public boolean isCorrectTool(Entity entity){
         boolean correctTool = false;
-        if(entity.currentWeapon.type== type_hoe){
+        if(entity.currentWeapon.type== type_watering_can){
             correctTool = true;
         }
         return correctTool;
     }
 
     public InteractiveTile getDestroyedTile(){
-        InteractiveTile soil = new Soil(gp, worldX/gp.tileSize, worldY/gp.tileSize);
-        return soil;
+        return null;
     }
+
+
 
     @Override
     public Sprite setup(String filePath) {

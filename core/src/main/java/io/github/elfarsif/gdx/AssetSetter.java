@@ -3,11 +3,9 @@ package io.github.elfarsif.gdx;
 import io.github.elfarsif.entity.Oscael;
 import io.github.elfarsif.entity.StoreClerk;
 import io.github.elfarsif.monster.GreenSlime;
-import io.github.elfarsif.objects.Axe;
-import io.github.elfarsif.objects.Mushroom;
+import io.github.elfarsif.objects.*;
 import io.github.elfarsif.tile_interactive.HoeableGrass;
 import io.github.elfarsif.tile_interactive.PineTree;
-import io.github.elfarsif.objects.SwordCopper;
 
 public class AssetSetter {
 
@@ -34,6 +32,14 @@ public class AssetSetter {
         gp.objects[mapNum][4] = new Mushroom(gp);
         gp.objects[mapNum][4].worldX = 32 * gp.tileSize;
         gp.objects[mapNum][4].worldY = 14 * gp.tileSize;
+
+        gp.objects[mapNum][7] = new WateringCan(gp);
+        gp.objects[mapNum][7].worldX = 36 * gp.tileSize;
+        gp.objects[mapNum][7].worldY =  12 * gp.tileSize;
+
+        gp.objects[mapNum][8] = new Hoe(gp);
+        gp.objects[mapNum][8].worldX = 36 * gp.tileSize;
+        gp.objects[mapNum][8].worldY =  14 * gp.tileSize;
 
 
     }

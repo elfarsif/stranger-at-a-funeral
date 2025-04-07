@@ -9,6 +9,9 @@
 - The pathfinder algorithm needs to be adjusted for libgdx, since the (0,0) is in the bottom left instead of the top left
 - there a random path that colors other entities red also, but since its a debug path its not a big deal
 
+- [ ] life goes below zero so it looks like consumables arent working sometimes
+- [ ] dialogues are not initialized properly so if u dont speak to npc before a monster dialogue is trigger null pointer exception
+- 
 ## Optomitizations
 
 - Dont draw the cursor on every render in the inventory UI method
