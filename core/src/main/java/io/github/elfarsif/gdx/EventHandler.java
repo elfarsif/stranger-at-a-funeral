@@ -123,7 +123,9 @@ public class EventHandler {
         return hit;
     }
 
-
+    private void removeGrass(int map, int col, int row) {
+        gp.ui.addMessage("You removed the grass");
+    }
 
 
 

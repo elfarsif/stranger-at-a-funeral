@@ -221,6 +221,9 @@ public class GamePanel implements ApplicationListener {
             //ADD INTERACTIVE TILES
             for (int i = 0; i < iTiles[1].length; i++){
                 if(iTiles[currentMap][i] != null){
+                    //this way hoeable grass is not added to entities so it will always be underneath the player
+                    if (iTiles[currentMap][i].name !=null && !iTiles[currentMap][i].name.equals("hoeable-grass"))
+
                     entities.add(iTiles[currentMap][i]);
                 }
             }

@@ -4,6 +4,8 @@ import io.github.elfarsif.entity.Oscael;
 import io.github.elfarsif.entity.StoreClerk;
 import io.github.elfarsif.monster.GreenSlime;
 import io.github.elfarsif.objects.Axe;
+import io.github.elfarsif.objects.Mushroom;
+import io.github.elfarsif.tile_interactive.HoeableGrass;
 import io.github.elfarsif.tile_interactive.PineTree;
 import io.github.elfarsif.objects.SwordCopper;
 
@@ -22,12 +24,17 @@ public class AssetSetter {
         gp.objects[mapNum][0].worldY = 12 * gp.tileSize;
 
         gp.objects[mapNum][1] = new SwordCopper(gp);
-        gp.objects[mapNum][1].worldX = 12 * gp.tileSize;
-        gp.objects[mapNum][1].worldY = 40 * gp.tileSize;
+        gp.objects[mapNum][1].worldX = 35 * gp.tileSize;
+        gp.objects[mapNum][1].worldY = 12 * gp.tileSize;
 
         gp.objects[mapNum][3] = new Axe(gp);
-        gp.objects[mapNum][3].worldX = 32 * gp.tileSize;
+        gp.objects[mapNum][3].worldX = 33 * gp.tileSize;
         gp.objects[mapNum][3].worldY = 12 * gp.tileSize;
+
+        gp.objects[mapNum][4] = new Mushroom(gp);
+        gp.objects[mapNum][4].worldX = 32 * gp.tileSize;
+        gp.objects[mapNum][4].worldY = 14 * gp.tileSize;
+
 
     }
 
@@ -55,7 +62,8 @@ public class AssetSetter {
     }
 
     public void setInteractiveTiles() {
-               int mapNum =0;
+        int mapNum =0;
+
         gp.iTiles[mapNum][0] = new PineTree(gp);
         gp.iTiles[mapNum][0].collision = true;
         gp.iTiles[mapNum][0].worldX = 10 * gp.tileSize;
@@ -65,5 +73,13 @@ public class AssetSetter {
         gp.iTiles[mapNum][0].collision = true;
         gp.iTiles[mapNum][0].worldX = 40 * gp.tileSize;
         gp.iTiles[mapNum][0].worldY = 38 * gp.tileSize;
+
+        gp.iTiles[mapNum][3] = new HoeableGrass(gp);
+        gp.iTiles[mapNum][3].worldX = 44 * gp.tileSize;
+        gp.iTiles[mapNum][3].worldY = 36 * gp.tileSize;
+
+        gp.iTiles[mapNum][4] = new HoeableGrass(gp);
+        gp.iTiles[mapNum][4].worldX = 45 * gp.tileSize;
+        gp.iTiles[mapNum][4].worldY = 36 * gp.tileSize;
     }
 }
