@@ -12,6 +12,7 @@ import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
 import com.badlogic.gdx.graphics.Pixmap;
 
+import io.github.elfarsif.environment.EnvironmentManager;
 import io.github.elfarsif.tile.Map;
 import io.github.elfarsif.tile.TileManager;
 import io.github.elfarsif.tile_interactive.InteractiveTile;
@@ -58,6 +59,7 @@ public class GamePanel implements ApplicationListener {
     Config config;
     public PathFinder pathFinder;
     public CutsceneManager cutsceneManager;
+    public EnvironmentManager environmentManager;
 
     //ENTITIES AND OBJECTS
     public Player player;
@@ -100,6 +102,7 @@ public class GamePanel implements ApplicationListener {
         soundEffect = new SoundWrapper();
         ui = new UI(this);
         pathFinder = new PathFinder(this);
+        environmentManager = new EnvironmentManager(this);
 
 
         config.loadConfig();
@@ -120,6 +123,7 @@ public class GamePanel implements ApplicationListener {
         assetSetter.setNPC();
         assetSetter.setMonster();
         assetSetter.setInteractiveTiles();
+        environmentManager.setup();
         playMusic(0);
         stopMusic();
 
@@ -276,6 +280,9 @@ public class GamePanel implements ApplicationListener {
 
             //DRAW CUSTSCENE
             cutsceneManager.draw(spriteBatch);
+
+            //DRAW ENVIRONMENT
+            environmentManager.draw(spriteBatch);
 
             //DRAW UI
             ui.draw(spriteBatch);
