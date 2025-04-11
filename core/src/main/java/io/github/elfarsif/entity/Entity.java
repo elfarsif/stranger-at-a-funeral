@@ -114,10 +114,7 @@ public abstract class Entity {
      */
     private void setDefaultSolidArea() {
         solidArea = new Rectangle();
-    /*    solidArea.x = 12 * gp.scale;
-        solidArea.y = 24 * gp.scale;
-        solidArea.width = 8 * gp.scale;
-        solidArea.height = 8 * gp.scale;*/
+
 
         solidArea.x = 0;
         solidArea.y = 0;
@@ -200,7 +197,7 @@ public abstract class Entity {
             int nextX = gp.pathFinder.pathList.get(0).col*gp.tileSize;
             int nextY = gp.pathFinder.pathList.get(0).row*gp.tileSize;
 
-            //Entitt solid position
+            //Entity solid position
             int entityLeftX = worldX + solidArea.x;
             int entityRightX = worldX + solidArea.x + solidArea.width;
             int entityTopY = worldY + solidArea.y;
@@ -435,6 +432,7 @@ public abstract class Entity {
         pixmap.setColor(Color.WHITE);
         pixmap.drawRectangle(0, 0, solidArea.width, solidArea.height);
 
+        //TODO: make texture global variable or dispose after
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
 

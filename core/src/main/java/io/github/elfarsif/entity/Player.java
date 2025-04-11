@@ -1,5 +1,7 @@
 package io.github.elfarsif.entity;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,9 +30,13 @@ public class Player extends Entity {
 
         solidArea = new Rectangle();
         solidArea.x = 12 * gp.scale;
-        solidArea.y = 24 * gp.scale;
+        solidArea.y = 0 * gp.scale;
         solidArea.width = 8 * gp.scale;
         solidArea.height = 8 * gp.scale;
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
 
         attackArea.width = gp.tileSize;
         attackArea.height = gp.tileSize;
@@ -945,8 +951,22 @@ public class Player extends Entity {
             batch.setColor(1,1,1,1);
         }
 
-        this.drawCollisionArea(batch,screenX,screenY);
+        drawCollisionArea(batch,screenX,screenY);
 
+    }
+
+    public void drawCollisionArea(SpriteBatch batch,int screenX,int screenY) {
+        Pixmap pixmap = new Pixmap(solidArea.width, solidArea.height, Pixmap.Format.RGBA8888);
+
+        // Set color to white and draw a rectangle outline
+        pixmap.setColor(Color.WHITE);
+        pixmap.drawRectangle(0, 0, solidArea.width, solidArea.height);
+
+        //TODO: make texture global variable or dispose after
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+
+        batch.draw(texture, screenX+solidArea.x, screenY+solidArea.y);
     }
 
     /**

@@ -19,6 +19,6 @@ public class EnvironmentManager {
     }
 
     public  void draw(SpriteBatch batch){
-        lighting.draw(batch);
+//        lighting.draw(batch);
     }
 }

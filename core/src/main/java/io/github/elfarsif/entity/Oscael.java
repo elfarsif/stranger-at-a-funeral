@@ -2,6 +2,7 @@ package io.github.elfarsif.entity;
 
 import io.github.elfarsif.gdx.GamePanel;
 
+import java.awt.*;
 import java.util.Random;
 /**
  * This class represents the oscael character in the game.
@@ -13,8 +14,16 @@ public class Oscael extends Entity {
         speed = 1;
 //        onPath = true;
         dialogueSetNumber = -1;
+
+        solidArea = new Rectangle();
+        solidArea.x = 12 * gp.scale;
+        solidArea.y = 0 * gp.scale;
         solidArea.width = 8 * gp.scale;
         solidArea.height = 8 * gp.scale;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
+
 
         initializePlayerImage();
         initializePlayerImage();
