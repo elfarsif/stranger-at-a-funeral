@@ -602,7 +602,17 @@ public class Player extends Entity {
         }
     }
 
-
+    @Override
+    public Sprite setup(String path){
+        Sprite image = null;
+        try {
+            image = new Sprite(new Texture(path));
+            image.setSize(gp.tileSize*2, gp.tileSize*2);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading image :"+e);
+        }
+        return image;
+    }
 
     public void draw(SpriteBatch batch) {
         Sprite image = null;

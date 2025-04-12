@@ -1,5 +1,7 @@
 package io.github.elfarsif.entity;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.elfarsif.gdx.GamePanel;
 
 import java.awt.*;
@@ -25,7 +27,6 @@ public class Oscael extends Entity {
 
 
 
-        initializePlayerImage();
         initializePlayerImage();
         setDialogs();
     }
@@ -53,6 +54,19 @@ public class Oscael extends Entity {
         right1 = this.setup("npc/character.png");
         right2 = this.setup("npc/character.png");
     }
+
+    @Override
+    public Sprite setup(String path){
+        Sprite image = null;
+        try {
+            image = new Sprite(new Texture(path));
+            image.setSize(gp.tileSize*2, gp.tileSize*2);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading image :"+e);
+        }
+        return image;
+    }
+
     /**
      * This method sets the action/movement of Oscael.
      */

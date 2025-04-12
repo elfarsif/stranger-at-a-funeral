@@ -288,7 +288,7 @@ public abstract class Entity {
         Sprite image = null;
         try {
             image = new Sprite(new Texture(path));
-            image.setSize(gp.tileSize*2, gp.tileSize*2);
+            image.setSize(gp.tileSize, gp.tileSize);
         } catch (Exception e) {
             throw new RuntimeException("Error reading image :"+e);
         }
@@ -412,7 +412,7 @@ public abstract class Entity {
 
 //            float width = image.getWidth();
 //            float height = image.getHeight();
-            batch.draw(image, screenX, screenY, gp.tileSize*2, gp.tileSize*2);
+            batch.draw(image, screenX, screenY, image.getWidth(), image.getHeight());
 
             drawCollisionArea(batch,screenX,screenY);
 
