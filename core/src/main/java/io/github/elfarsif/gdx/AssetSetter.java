@@ -41,6 +41,10 @@ public class AssetSetter {
         gp.objects[mapNum][8].worldX = 36 * gp.tileSize;
         gp.objects[mapNum][8].worldY =  14 * gp.tileSize;
 
+        gp.objects[mapNum][9] = new CarrotSeed(gp);
+        gp.objects[mapNum][9].worldX = 38 * gp.tileSize;
+        gp.objects[mapNum][9].worldY =  41 * gp.tileSize;
+
 
     }
 

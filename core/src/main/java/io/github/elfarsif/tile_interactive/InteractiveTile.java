@@ -21,6 +21,7 @@ public class InteractiveTile extends Entity {
                 e.printStackTrace();
             }
             destructible = true;
+            System.out.println("Destructible: " + destructible);
         }).start();
     }
 

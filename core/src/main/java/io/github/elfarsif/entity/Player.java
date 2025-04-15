@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.gdx.GamePanel;
 import io.github.elfarsif.gdx.KeyHandler;
-import io.github.elfarsif.objects.Fireball;
-import io.github.elfarsif.objects.Mushroom;
-import io.github.elfarsif.objects.Shield;
-import io.github.elfarsif.objects.Sword;
+import io.github.elfarsif.objects.*;
 
 import java.awt.*;
 
@@ -50,6 +47,9 @@ public class Player extends Entity {
         inventory.add(new Mushroom(gp));
         inventory.add(new Sword(gp));
         inventory.add(new Mushroom(gp));
+        inventory.add(new Hoe(gp));
+        inventory.add(new CarrotSeed(gp));
+        inventory.add(new WateringCan(gp));
     }
 
     private void getPlayerAttackImage() {
@@ -583,8 +583,10 @@ public class Player extends Entity {
                 || selectedItem.type== type_axe
                 || selectedItem.type == type_hoe
                 || selectedItem.type == type_watering_can
+                || selectedItem.type == type_seed
             ){
                 currentWeapon = selectedItem;
+                System.out.println("Selected item: "+selectedItem.name);
                 attack = getAttackValue();
                 getPlayerAttackImage();
             }
