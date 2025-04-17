@@ -63,7 +63,7 @@ public class GamePanel implements ApplicationListener {
 
     //ENTITIES AND OBJECTS
     public Player player;
-    public Entity[][] objects = new Entity[maxMap][10];
+    public Entity[][] objects = new Entity[maxMap][20];
     public Entity[][] npc = new Entity[maxMap][10];
     public Entity[][] monsters = new Entity[maxMap][10];
     public InteractiveTile[][] iTiles = new InteractiveTile[maxMap][10];

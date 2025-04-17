@@ -45,6 +45,10 @@ public class AssetSetter {
         gp.objects[mapNum][9].worldX = 38 * gp.tileSize;
         gp.objects[mapNum][9].worldY =  41 * gp.tileSize;
 
+        gp.objects[mapNum][10] = new Lantern(gp);
+        gp.objects[mapNum][10].worldX = 40 * gp.tileSize;
+        gp.objects[mapNum][10].worldY =  40 * gp.tileSize;
+
 
     }
 

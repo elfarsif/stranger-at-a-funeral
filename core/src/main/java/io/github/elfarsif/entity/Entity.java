@@ -74,6 +74,7 @@ public abstract class Entity {
     public Entity currentWeapon;
     public Entity currentShield;
     public Projectile projectile;
+    public Entity currentLight;
 
 
     //TYPE
@@ -88,6 +89,7 @@ public abstract class Entity {
     public final int type_hoe=9;
     public final int type_watering_can=10;
     public final int type_seed=11;
+    public final int type_light=12;
 
     //ITEM ATTRIBUTES
     public ArrayList<Entity> inventory = new ArrayList<Entity>();
@@ -101,6 +103,7 @@ public abstract class Entity {
      */
     public boolean stackable = false;
     public int amount = 1;
+    public int lightRadius;
 
     //Pixmaps
     Pixmap collisionArea;

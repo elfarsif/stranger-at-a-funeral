@@ -16,6 +16,7 @@ public class Player extends Entity {
     private KeyHandler keyHandler;
     public final int screenX;
     public final int screenY;
+    public boolean lightUpdated = false;
 
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
@@ -589,6 +590,16 @@ public class Player extends Entity {
                 System.out.println("Selected item: "+selectedItem.name);
                 attack = getAttackValue();
                 getPlayerAttackImage();
+            }
+
+            if (selectedItem.type == type_light){
+                if (currentLight == selectedItem){
+                    currentLight = null;
+                }else {
+                    currentLight = selectedItem;
+                    gp.ui.addMessage("You equipped " + selectedItem.name);
+                }
+                lightUpdated = true;
             }
 
             if (selectedItem.type == type_shield){
