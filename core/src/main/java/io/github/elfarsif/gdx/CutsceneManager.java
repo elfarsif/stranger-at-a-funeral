@@ -1,5 +1,6 @@
 package io.github.elfarsif.gdx;
 
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,17 +19,19 @@ public class CutsceneManager {
     public final int gameStart =2;
 
     //Intro Cutscene Assets
-    public Sprite image;
+    public Sprite blackBackground;
+    public Sprite firstCutsceneImage;
 
     public CutsceneManager(GamePanel gp){
         this.gp = gp;
-        loadGameStartCutsceneAssets();
+        generateBlackBackgroundSprite();
+        loadCutsceneAssets();
     }
 
-    private void loadGameStartCutsceneAssets() {
+    private void loadCutsceneAssets() {
         try {
-            image = new Sprite(new Texture("ui/stardewValley.png"));
-            image.setSize(gp.screenWidth, gp.screenHeight);
+            firstCutsceneImage = new Sprite(new Texture("cutscene/intro-cutscene-1.png"));
+            firstCutsceneImage.setSize(gp.screenWidth/2, gp.screenHeight/2);
         } catch (Exception e) {
             throw new RuntimeException("Error reading image for mushroom:" + e);
         }
@@ -78,10 +81,32 @@ public class CutsceneManager {
 
     }
 
+    private void generateBlackBackgroundSprite(){
+        // Create a 1x1 black pixel texture
+        Texture blackTexture;
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(0, 0, 0, 1);
+        pixmap.fill();
+        blackTexture = new Texture(pixmap);
+        pixmap.dispose(); // No longer needed after texture creation
+
+        blackBackground = new Sprite(blackTexture);
+        blackBackground.setSize(gp.screenWidth, gp.screenHeight);
+
+
+    }
+
 
     public void gameStartCutscene(){
-        batch.draw(image, 0, 0,image.getWidth(), image.getHeight());
+        batch.draw(blackBackground, 0, 0,blackBackground.getWidth(), blackBackground.getHeight());
+        addFirstCutsceneImage();
 
+    }
+
+    private void addFirstCutsceneImage() {
+        int imageXposition = (int) (gp.screenWidth/2-(firstCutsceneImage.getWidth()/2));
+        int imageYposition = (int) (gp.screenHeight-(firstCutsceneImage.getHeight()+gp.tileSize));
+        batch.draw(firstCutsceneImage, imageXposition, imageYposition, firstCutsceneImage.getWidth(), firstCutsceneImage.getHeight());
     }
 
 }
