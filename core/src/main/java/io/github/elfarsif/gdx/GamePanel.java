@@ -118,7 +118,7 @@ public class GamePanel implements ApplicationListener {
     }
 
     public void setupGame(){
-        gameState = playState;
+        gameState = titleState;
         assetSetter.setObject();
         assetSetter.setNPC();
         assetSetter.setMonster();

@@ -1,5 +1,7 @@
 package io.github.elfarsif.gdx;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.entity.PlayerCutsceneDummy;
 
@@ -15,8 +17,21 @@ public class CutsceneManager {
     public final int oscaelIntro =1;
     public final int gameStart =2;
 
+    //Intro Cutscene Assets
+    public Sprite image;
+
     public CutsceneManager(GamePanel gp){
         this.gp = gp;
+        loadGameStartCutsceneAssets();
+    }
+
+    private void loadGameStartCutsceneAssets() {
+        try {
+            image = new Sprite(new Texture("ui/stardewValley.png"));
+            image.setSize(gp.screenWidth, gp.screenHeight);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading image for mushroom:" + e);
+        }
     }
 
     public void draw(SpriteBatch g2d){
@@ -65,10 +80,8 @@ public class CutsceneManager {
 
 
     public void gameStartCutscene(){
-        System.out.println("gameStartCutscene");
-        gp.currentMap = 2;
-        gp.player.worldX = 5 * gp.tileSize;
-        gp.player.worldY = 5 * gp.tileSize;
+        batch.draw(image, 0, 0,image.getWidth(), image.getHeight());
+
     }
 
 }

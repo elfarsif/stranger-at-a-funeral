@@ -32,6 +32,8 @@ public class UI {
     ArrayList<Integer> messageCounter = new ArrayList<>();
     int counter = 0;
     public Entity npc;
+    int charIndex = 0;
+    String combinedText = "";
 
     private Texture blackTexture;
 
@@ -590,8 +592,20 @@ public class UI {
 
         //DIALOGUE PAGINATION
         if (npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex]!=null){
-            currentDialogue = npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex];
+//            currentDialogue = npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex];
+           char characters[] = npc.dialogues[npc.dialogueSetNumber][npc.dialogueIndex].toCharArray();
+           if (charIndex<characters.length) {
+               String s = String.valueOf(characters[charIndex]);
+               combinedText += s;
+               currentDialogue = combinedText;
+               charIndex++;
+           }
+
             if (gp.keyHandler.spacePressed){
+                //reset letter by letter
+                charIndex = 0;
+                combinedText = "";
+
                 if (gp.gameState == gp.dialogueState){
                     npc.dialogueIndex++;
                     gp.keyHandler.spacePressed = false;
