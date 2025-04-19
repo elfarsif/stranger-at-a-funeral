@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.elfarsif.ai.PathFinder;
+import io.github.elfarsif.cutscene.CutsceneManager;
 import io.github.elfarsif.entity.Entity;
 import io.github.elfarsif.entity.Player;
-import com.badlogic.gdx.graphics.Pixmap;
 
 import io.github.elfarsif.environment.EnvironmentManager;
 import io.github.elfarsif.tile.Map;

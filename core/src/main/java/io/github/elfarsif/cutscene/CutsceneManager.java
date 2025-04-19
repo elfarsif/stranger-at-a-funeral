@@ -1,10 +1,8 @@
-package io.github.elfarsif.gdx;
+package io.github.elfarsif.cutscene;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.elfarsif.entity.PlayerCutsceneDummy;
+import io.github.elfarsif.gdx.GamePanel;
 
 public class CutsceneManager {
 
@@ -12,6 +10,8 @@ public class CutsceneManager {
     SpriteBatch batch;
     public int sceneNum;
     public int scenePhase;
+    int charIndex=0;
+
 
     //Scene Number
     public final int NA =0;
@@ -19,22 +19,13 @@ public class CutsceneManager {
     public final int gameStart =2;
 
     //Intro Cutscene Assets
-    public Sprite blackBackground;
-    public Sprite firstCutsceneImage;
+    GameIntroCutscene gameIntroCutscene;
+
 
     public CutsceneManager(GamePanel gp){
         this.gp = gp;
-        generateBlackBackgroundSprite();
-        loadCutsceneAssets();
-    }
+        this.gameIntroCutscene = new GameIntroCutscene(gp);
 
-    private void loadCutsceneAssets() {
-        try {
-            firstCutsceneImage = new Sprite(new Texture("cutscene/intro-cutscene-1.png"));
-            firstCutsceneImage.setSize(gp.screenWidth/2, gp.screenHeight/2);
-        } catch (Exception e) {
-            throw new RuntimeException("Error reading image for mushroom:" + e);
-        }
     }
 
     public void draw(SpriteBatch g2d){
@@ -45,7 +36,7 @@ public class CutsceneManager {
                 oscaelIntroCutscene();
                 break;
             case gameStart:
-                gameStartCutscene();
+                gameIntroCutscene.start(batch);
                 break;
         }
     }
@@ -81,32 +72,5 @@ public class CutsceneManager {
 
     }
 
-    private void generateBlackBackgroundSprite(){
-        // Create a 1x1 black pixel texture
-        Texture blackTexture;
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(0, 0, 0, 1);
-        pixmap.fill();
-        blackTexture = new Texture(pixmap);
-        pixmap.dispose(); // No longer needed after texture creation
-
-        blackBackground = new Sprite(blackTexture);
-        blackBackground.setSize(gp.screenWidth, gp.screenHeight);
-
-
-    }
-
-
-    public void gameStartCutscene(){
-        batch.draw(blackBackground, 0, 0,blackBackground.getWidth(), blackBackground.getHeight());
-        addFirstCutsceneImage();
-
-    }
-
-    private void addFirstCutsceneImage() {
-        int imageXposition = (int) (gp.screenWidth/2-(firstCutsceneImage.getWidth()/2));
-        int imageYposition = (int) (gp.screenHeight-(firstCutsceneImage.getHeight()+gp.tileSize));
-        batch.draw(firstCutsceneImage, imageXposition, imageYposition, firstCutsceneImage.getWidth(), firstCutsceneImage.getHeight());
-    }
 
 }
